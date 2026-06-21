@@ -175,14 +175,14 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
         </>
       )}
 
-      {nodeVars.systemHighlighted === nodeVars.solarSystemId && (
+      {nodeVars.systemHighlighted === nodeVars.solarSystemId && ( //fanaberiatracker - tutaj sa te migajace brakety po uzyciu wyszukiwania i systemu lub gracza
         <div
           className={clsx('absolute top-[-4px] left-[-4px]', 'w-[calc(100%+8px)] h-[calc(100%+8px)]', 'animate-pulse')}
         >
-          <div className="absolute left-0 top-0 w-3 h-2 border-t-2 border-l-2 border-sky-300"></div>
-          <div className="absolute right-0 top-0 w-3 h-2 border-t-2 border-r-2 border-sky-300"></div>
-          <div className="absolute left-0 bottom-0 w-3 h-2 border-b-2 border-l-2 border-sky-300"></div>
-          <div className="absolute right-0 bottom-0 w-3 h-2 border-b-2 border-r-2 border-sky-300"></div>
+          <div className="absolute left-0 top-0 w-5 h-3 border-t-4 border-l-4 border-sky-300"></div>
+          <div className="absolute right-0 top-0 w-5 h-3 border-t-4 border-r-4 border-sky-300"></div>
+          <div className="absolute left-0 bottom-0 w-5 h-3 border-b-4 border-l-4 border-sky-300"></div>
+          <div className="absolute right-0 bottom-0 w-5 h-3 border-b-4 border-r-4 border-sky-300"></div>
         </div>
       )}
 

@@ -1,0 +1,101 @@
+@use './eve-common-variables';
+@use './eve-common';
+
+//fanaberia - komentarz do konkretnej zmiennej
+//fanaberiatracker - tag do sledzenia zmiennych ktore wiem co robia i sa istotne aby o nich wiedziec
+//fanaberiacomment - komentarz z dupy ktory uznalem je jest w tym miejscu potrzebny
+
+
+.fanaberia-theme {
+  --rf-bg-color: #0C0A09;
+  --rf-soft-bg-color: #171717;
+
+  --rf-node-bg-color: #202020;
+  --rf-node-soft-bg-color: #202020;
+  --rf-text-color: #ffffff;
+  --rf-tag-color:  #38BDF8;
+  --rf-region-name: #D6D3D1;
+  --rf-custom-name: #93C5FD;
+  --rf-node-font-family: 'Shentox', 'Rogan', sans-serif !important;
+  --rf-node-font-weight: 500;
+
+  --rf-bg-variant: "dots";
+  --rf-bg-gap: 15;
+  --rf-bg-size: 1;
+  --rf-bg-pattern-color: #81818a;
+
+  --pastel-blue: #5a7d9a;
+  --pastel-pink: #d291bc;
+  --pastel-green: #88b04b;
+  --pastel-yellow: #ffdd59;
+
+  --dark-bg: #2d2d2d;
+  --text-color: #ffffff;
+  --tooltip-bg: #202020;
+
+  --window-corner: #72716f;
+
+  --rf-local-counter-font-weight: 500;
+  --rf-node-local-counter: inherit;
+  --rf-has-user-characters: #ffc75d;
+
+  //=========== nowe zmienne
+
+$friendlyBase: #027a00;
+$friendlyAlpha: rgba(2, 122, 0, 0.5);
+$friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
+$friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
+$friendlyDark5:  color.adjust($friendlyBase, $lightness: -5%);
+
+$lookingForBase: #00aeff;
+$lookingForAlpha: #0095ff7a;
+$lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
+
+$homeBase: #9aff00;
+$homeAlpha: #b0ff0099;
+$homeBackground: #73ff0057;
+$homeDark30: color.adjust($homeBase, $lightness: -30%);
+
+//fanaberiacomment - blok zahaszowany tylko po to aby widzial przypisanie zmiennej bez przelaczania plikow - nie dotykac
+
+//  --eve-solar-system-status-home:                #{$homeAlpha};
+//  --eve-solar-system-status-color-home:          #{$homeBase};
+//  --eve-solar-system-status-color-background:    #{$homeBackground};
+//  --eve-solar-system-status-color-home-dark30:   #{$homeDark30};
+//  --eve-solar-system-status-friendly:            #{$friendlyAlpha};
+//  --eve-solar-system-status-color-friendly:      #{$friendlyBase};
+//  --eve-solar-system-status-friendly-dark30:     #{$friendlyDark30};
+//  --eve-solar-system-status-color-friendly-dark20: #{$friendlyDark20};
+//  --eve-solar-system-status-color-friendly-dark5:  #{$friendlyDark5};
+//  --eve-solar-system-status-lookingFor:              #{$lookingForAlpha};
+//  --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
+//  --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
+
+  --eve-solar-system-status-warning: #ffa40099;
+  --eve-solar-system-status-color-warning: #ffa400;
+  --eve-solar-system-status-target: #9e00ff99;
+  --eve-solar-system-status-color-target: #9e00ff;
+  --eve-solar-system-status-dangerous: #ff000099;
+  --eve-solar-system-status-color-dangerous: #fb0000;
+
+  --fanaberia-connection-border-width: 8px; //zmiana grubosci ramki polaczenia
+  --fanaberia-connection-border-width-thick: 10px;
+  --fanaberia-connection-border-dasharray: 10 10; //ramka kreskowana dla time-kryta ????
+  --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
+  --fanaberia-connection-width-thick: 6px;
+
+  --fanaberia-system-border-selected: 3px;
+  --fanaberia-system-border-selected-shadow: 0 0 20px #1e68ffae;
+
+  //--fanaberia-system-background-gradient-home: ;
+  //--fanaberia-system-background-gradient-firendly: ;
+  --fanaberia-system-background-gradient-lookingfor: linear-gradient(275deg, #00aeff, #0095ff7a);
+  //--fanaberia-system-background-gradient-warning: ;
+  //--fanaberia-system-background-gradient-dangerous: ;
+  //--fanaberia-system-background-gradient-target: ;
+
+
+
+
+
+}

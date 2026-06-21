@@ -1,23 +1,29 @@
 @use '@/hooks/Mapper/components/map/styles/eve-common-variables';
+@use '@/hooks/Mapper/components/map/styles/fanaberia-theme'; //ten @use dodalem dla zaciagania stylu
 
 .EdgePathBack {
   fill: none;
   stroke: #80a5c5;
-  stroke-width: 3px;
+  //stroke-width: 3px;
+  stroke-width: var(--fanaberia-connection-border-width);
 
   &.time1 {
     stroke: #f11ab2;
-    stroke-width: 4px;
+    //stroke-width: 4px;
+    stroke-width: var(--fanaberia-connection-border-width);
   }
 
   &.time4 {
     stroke: #a654e3;
-    stroke-width: 4px;
+    //stroke-width: 4px;
+    stroke-width: var(--fanaberia-connection-border-width);
   }
 
   &.TimeCrit {
     stroke: #f11ab2;
-    stroke-width: 4px;
+    //stroke-width: 4px;
+    stroke-width: var(--fanaberia-connection-border-width);
+    stroke-dasharray: var(--fanaberia-connection-border-dasharray);
   }
 
   &.Hovered {
@@ -29,10 +35,14 @@
   }
 
   &.Tick {
-    stroke-width: 5px;
+    //stroke-width: 5px;
+    stroke-width: var(--fanaberia-connection-border-width-thick);
+    //fanaberia - tutaj chyba paramet dla "grubszych kresek" sprawddzic pozniej
 
     &.TimeCrit {
-      stroke-width: 6px;
+      //stroke-width: 6px;
+      stroke-width: var(--fanaberia-connection-border-width-thick);
+    //fanaberia - tutaj chyba paramet dla "grubszych kresek" sprawddzic pozniej
     }
   }
 
@@ -43,7 +53,7 @@
   &.Bridge {
     stroke: #9aff40;
 
-    stroke-dasharray: 10 5;
+    stroke-dasharray: 10 10;
     stroke-linecap: round;
   }
 }
@@ -51,7 +61,8 @@
 .EdgePathFront {
   fill: none;
   stroke: #2c3844;
-  stroke-width: 2px;
+  //stroke-width: 2px;
+  stroke-width: var(--fanaberia-connection-width);
 
   &.MassVerge:not(&.Frigate) {
     stroke: #af0000;
@@ -71,7 +82,8 @@
 
   &.Hovered {
     stroke: #4e5d6c;
-    stroke-width: 2px;
+    //stroke-width: 2px;
+    stroke-width: var(--fanaberia-connection-width);
 
     &.MassVerge:not(&.Frigate) {
       stroke: #9d4c34;
@@ -87,10 +99,12 @@
   }
 
   &.Tick {
-    stroke-width: 3px;
+    //stroke-width: 3px;
+    stroke-width: var(--fanaberia-connection-width-thick);
 
     &.Hovered {
-      stroke-width: 3px;
+      //stroke-width: 3px;
+      stroke-width: var(--fanaberia-connection-width-thick);
     }
   }
 }
