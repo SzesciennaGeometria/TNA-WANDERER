@@ -57,20 +57,20 @@ $homeAlpha: #b0ff0099;
 $homeBackground: #73ff0057;
 $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
-//fanaberiacomment - blok zahaszowany tylko po to aby widzial przypisanie zmiennej bez przelaczania plikow - nie dotykac
 
-//  --eve-solar-system-status-home:                #{$homeAlpha};
-//  --eve-solar-system-status-color-home:          #{$homeBase};
-//  --eve-solar-system-status-color-background:    #{$homeBackground};
-//  --eve-solar-system-status-color-home-dark30:   #{$homeDark30};
-//  --eve-solar-system-status-friendly:            #{$friendlyAlpha};
-//  --eve-solar-system-status-color-friendly:      #{$friendlyBase};
-//  --eve-solar-system-status-friendly-dark30:     #{$friendlyDark30};
-//  --eve-solar-system-status-color-friendly-dark20: #{$friendlyDark20};
-//  --eve-solar-system-status-color-friendly-dark5:  #{$friendlyDark5};
-//  --eve-solar-system-status-lookingFor:              #{$lookingForAlpha};
-//  --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
-//  --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
+
+  --eve-solar-system-status-home:                #{$homeAlpha};
+  --eve-solar-system-status-color-home:          #{$homeBase};
+  --eve-solar-system-status-color-background:    #{$homeBackground};
+  --eve-solar-system-status-color-home-dark30:   #{$homeDark30};
+  --eve-solar-system-status-friendly:            #{$friendlyAlpha};
+  --eve-solar-system-status-color-friendly:      #{$friendlyBase};
+  --eve-solar-system-status-friendly-dark30:     #{$friendlyDark30};
+  --eve-solar-system-status-color-friendly-dark20: #{$friendlyDark20};
+  --eve-solar-system-status-color-friendly-dark5:  #{$friendlyDark5};
+  --eve-solar-system-status-lookingFor:              #{$lookingForAlpha};
+  --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
+  --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
 
   --eve-solar-system-status-warning: #ffa40099;
   --eve-solar-system-status-color-warning: #ffa400;
@@ -88,6 +88,14 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-system-border-selected: 3px;
   --fanaberia-system-border-selected-shadow: 0 0 20px #1e68ffae;
 
+//fanaberiacomment - lista parametrow do rozwoju na pryszlosc aby zmieniac tez rozmiar cczcionek tylko na stylu (aktualnie zmienilem czcionke dla calej szaty, nawet defaulta)
+
+  //fanaberia-system-class-hisek: "H";
+  //fanaberia-system-class-hisek: "L";
+  //fanaberia-system-class-hisek: "0.0";
+  //fanaberia-system-class-pochven: "T";
+
+
   //--fanaberia-system-background-gradient-home: ;
   //--fanaberia-system-background-gradient-firendly: ;
   --fanaberia-system-background-gradient-lookingfor: linear-gradient(275deg, #00aeff, #0095ff7a);
@@ -95,6 +103,10 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   //--fanaberia-system-background-gradient-dangerous: ;
   //--fanaberia-system-background-gradient-target: ;
 
+  //--fanaberia-font-size-systemname: ;
+  //--fanaberia-font-size-customname: ;
+  //--fanaberia-font-size-statics: ;
+  //--fanaberia-font-size-systemclass: ;
 
 
 
