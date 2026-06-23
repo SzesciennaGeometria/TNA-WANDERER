@@ -1,3 +1,5 @@
+//yo mamma so fat when she takes the gate she can be seen on both locals
+
 @use './eve-common-variables';
 @use './eve-common';
 @use "sass:color";
@@ -5,6 +7,8 @@
 //fanaberia - komentarz do konkretnej zmiennej
 //fanaberiatracker - tag do sledzenia zmiennych ktore wiem co robia i sa istotne aby o nich wiedziec
 //fanaberiacomment - komentarz z dupy ktory uznalem je jest w tym miejscu potrzebny
+//fanaberiatodo - lista zyczen do zrobienia
+
 
 
 .fanaberia-theme {
@@ -43,7 +47,7 @@
   //=========== nowe zmienne
 
 $friendlyBase: #027a00;
-$friendlyAlpha: rgba(2, 122, 0, 0.5);
+$friendlyAlpha: #027a0080;
 $friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
 $friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
 $friendlyDark5:  color.adjust($friendlyBase, $lightness: -5%);
@@ -57,7 +61,7 @@ $homeAlpha: #b0ff0099;
 $homeBackground: #73ff0057;
 $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
-
+//fanaberiatodo -- nabrawic firndly bo sie wyswietla jak9o czarny hgw czemu
 
   --eve-solar-system-status-home:                #{$homeAlpha};
   --eve-solar-system-status-color-home:          #{$homeBase};
@@ -72,12 +76,12 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
   --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
 
-  --eve-solar-system-status-warning: #ffa40099;
-  --eve-solar-system-status-color-warning: #ffa400;
+  --eve-solar-system-status-warning: #ff710099;
+  --eve-solar-system-status-color-warning: #ff7100;
   --eve-solar-system-status-target: #9e00ff99;
   --eve-solar-system-status-color-target: #9e00ff;
   --eve-solar-system-status-dangerous: #ff000099;
-  --eve-solar-system-status-color-dangerous: #fb0000;
+  --eve-solar-system-status-color-dangerous: #ff0000;
 
   --fanaberia-connection-border-width: 8px; //zmiana grubosci ramki polaczenia
   --fanaberia-connection-border-width-thick: 10px;
@@ -86,7 +90,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width-thick: 6px;
 
   --fanaberia-system-border-selected: 3px;
-  --fanaberia-system-border-selected-shadow: 0 0 20px #1e68ffae;
+  --fanaberia-system-border-selected-shadow:  0 0 20px #1e68ffae;
 
 //fanaberiacomment - lista parametrow do rozwoju na pryszlosc aby zmieniac tez rozmiar cczcionek tylko na stylu (aktualnie zmienilem czcionke dla calej szaty, nawet defaulta)
 
@@ -95,18 +99,25 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   //fanaberia-system-class-hisek: "0.0";
   //fanaberia-system-class-pochven: "T";
 
-
+  //fanaberiatodo - zrobic gradienty dla pozostalych systemow z przekazaniem zmiennej przez common-variables.
+  //
   //--fanaberia-system-background-gradient-home: ;
   //--fanaberia-system-background-gradient-firendly: ;
-  --fanaberia-system-background-gradient-lookingfor: linear-gradient(275deg, #00aeff, #0095ff7a);
+  --fanaberia-system-background-gradient-lookingfor: linear-gradient(330deg, #0065a9ff, #001c30ff, #0065a9ff, #001c30ff);
   //--fanaberia-system-background-gradient-warning: ;
   //--fanaberia-system-background-gradient-dangerous: ;
   //--fanaberia-system-background-gradient-target: ;
 
+  //fanaberiatodo - zrobic zmiane czcionki z przekazaniem parametru przez common-variables
+  //
   //--fanaberia-font-size-systemname: ;
+  //--fanaberia-font-weight-systemname: ;
   //--fanaberia-font-size-customname: ;
+  //--fanaberia-font-weight-customname: ;
   //--fanaberia-font-size-statics: ;
+  //--fanaberia-font-weight-statics: ;
   //--fanaberia-font-size-systemclass: ;
+  //--fanaberia-font-weight-systemclass: ;
 
 
 

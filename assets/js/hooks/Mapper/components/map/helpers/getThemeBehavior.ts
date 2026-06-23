@@ -26,7 +26,7 @@ const THEME_BEHAVIORS: {
     connectionMode: ConnectionMode.Loose,
   },
   fanaberia: {
-    isPanAndDrag: true,
+    isPanAndDrag: true, //fanaberia - tutaj zmieniamy draga czy lewy(false) czy prawy(true) ???
     nodeComponent: SolarSystemNodeTheme,
     connectionMode: ConnectionMode.Loose,
   },

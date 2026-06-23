@@ -106,6 +106,8 @@
     border-width: var(--fanaberia-system-border-selected);
     //box-shadow: 0 0 10px #9a1af1c2; //fanaberiatraker - to tutaj jest ta poswiata wokolo kliknietego systemu
     box-shadow: var(--fanaberia-system-border-selected-shadow);
+
+    //fanaberiatodo - obczaic czy da sie animowac cien/ramke
   }
 
   &.rally {  //fanaberiatraker - STATUS PING
@@ -272,15 +274,16 @@
   .classTitle {
     font-size: 12px; //fanaberia - klasa dziury ??
     font-weight: bold;
-    text-shadow: 0 0 2px rgb(0 0 0 / 73%);
+    //text-shadow: 0 0 2px #000000;
+    text-shadow: -1px 0 #1e1e1e, 1px 0 #1e1e1e, 0 -1px #1e1e1e, 0 1px #1e1e1e; //fanaberia - ramka na okolo tekstu
   }
 
   .TagTitle {
     font-size: 14px;     //fanaberia - oj tu sie chyba cois zesra z tagami bo to wyglada inaczej na lajwie i na testowym
     font-weight: 600;
-    background-color: #befd00;
+    background-color: #fdee00;
     //text-shadow: 0 0 2px #e79234ba;
-    color: var(--rf-tag-color, #000000);
+    color: #000000;
   }
 
   /* Firefox kostyl */
@@ -329,7 +332,8 @@
 .statics {
   display: flex;
   gap: 2px;
-  font-size: 10px; //fanaberia - wielkosc czcionki statyków ??
+  font-size: 10px; //fanaberia - wielkosc czcionki statyków
+  //background-color: #1e1e1e; //fanaberia - kolor tla statykow wyglada do dupy trzeba pokombinowac
 
   & > * {
     line-height: 10px;
