@@ -1,9 +1,6 @@
 @use "sass:color";
 @use '@/hooks/Mapper/components/map/styles/eve-common-variables';
 @use '@/hooks/Mapper/components/map/styles/solar-system-node' as v;
-@use '@/hooks/Mapper/components/map/styles/fanaberia-theme'; ///ten @use dodalem dla zaciagania stylu
-
-//fanaberiacomment - zasadniczo nie jestem pewein czy jakies zmany tutaj beda uwzgledniane bo jest jakis osobny override na to
 
 @keyframes move-stripes {
   from {
@@ -14,10 +11,10 @@
   }
 }
 
-.RootCustomNode {
+.RootCustomNode { //fanaberiatracker - domyslnma konfiguracja ramki systemowej
   display: flex;
-  width: 130px;
-  height: 34px;
+  width: 130px; //szerokosc
+  height: 34px; //wysokosc
 
   font-family: var(--rf-node-font-family, inherit) !important;
   font-weight: var(--rf-node-font-weight, inherit) !important;
@@ -26,12 +23,12 @@
   padding: 2px 6px;
   font-size: 10px;
 
-  background-color: var(--rf-node-bg-color, #202020) !important;
-  color: var(--rf-text-color, #ffffff);
+  background-color: var(--rf-node-bg-color, #202020) !important; //szare tlo
+  color: var(--rf-text-color, #ffffff); //toto nie mam pojecia za co dpowiada
 
   box-shadow: 0 0 5px rgba(v.$dark-bg, 0.5);
-  border: 1px solid color.adjust(v.$pastel-blue, $lightness: -10%); //fanaberiatracker - domyslne wartosci formatu dla ramki systemow
-  border-radius: 5px;
+  border: 1px solid color.adjust(v.$pastel-blue, $lightness: -10%); //grubosc ramki domyslnej
+  border-radius: 5px; //zaokraglenie ramki na rogach wiecej = okraglejsza
   position: relative;
   z-index: 3;
   overflow: hidden;
@@ -101,16 +98,15 @@
     }
   }
 
-  &.selected { //fanaberiatraker - podswietlenie kliknietego systemu
+  &.selected { //fanberiatracker - oznaczenie ramka systemu AKTYWNEGO/KILKNIETEGO
     border-color: v.$pastel-pink;
-    border-width: var(--fanaberia-system-border-selected);
-    //box-shadow: 0 0 10px #9a1af1c2; //fanaberiatraker - to tutaj jest ta poswiata wokolo kliknietego systemu
-    box-shadow: var(--fanaberia-system-border-selected-shadow);
-
-    //fanaberiatodo - obczaic czy da sie animowac cien/ramke
+    outline: var(--fanaberia-system-selected-border-outline);
+    outline-offset: var(--fanaberia-system-selected-border-outline-offset);
+    //box-shadow: 0 0 10px #9a1af1c2;
+    box-shadow: var(--fanaberia-system-selected-border-shadow);
   }
 
-  &.rally {  //fanaberiatraker - STATUS PING
+  &.rally { //fanaberiatracker - animacja i tlo systemu oznaczonego jako PING
     &::before {
       content: '';
       position: absolute;
@@ -133,42 +129,46 @@
     }
   }
 
-  &.eve-system-status-home { //fanaberiatraker - STATUS HOME
+  &.eve-system-status-home { //fanaberiatracker - tlo systemu oznaczonego jako HOME
     border: 1px solid var(--eve-solar-system-status-color-home-dark30);
-    background-image: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
+    //background-image: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
+    background-image: var(--fanaberia-system-status-kolor-HOME);
     &.selected {
       border-color: var(--eve-solar-system-status-color-home);
     }
   }
 
-  &.eve-system-status-friendly { //fanaberiatraker - STATUS FRIENDLY
+  &.eve-system-status-friendly { //fanaberiatracker - tlo systemu oznaczonego jako FIRENDLY
     border: 1px solid var(--eve-solar-system-status-color-friendly-dark20);
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
+    background-image: var(--fanaberia-system-status-kolor-FRIENDLY);
     &.selected {
       border-color: var(--eve-solar-system-status-color-friendly-dark5);
     }
   }
 
-  &.eve-system-status-lookingFor { //fanaberiatraker - STATUS POSZYKIWANY
+  &.eve-system-status-lookingFor { //fanaberiatracker - tlo systemu oznaczonego jako LOOKING FOR
     border: 1px solid var(--eve-solar-system-status-color-lookingFor-dark15);
-    // background-image: linear-gradient(275deg, #45ff8f2f, #457fff2f);
-    background-image: var(--fanaberia-system-background-gradient-lookingfor); //fanaberiatracker - zmiana gradienta dla systemu
-
+    //background-image: linear-gradient(275deg, #45ff8f2f, #457fff2f);
+    background-image: var(--fanaberia-system-status-kolor-LOOKINGFOR);
     &.selected {
       border-color: v.$pastel-pink;
     }
   }
 
-  &.eve-system-status-warning { //fanaberiatraker - STATUS UWAGA
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-warning), transparent);
+  &.eve-system-status-warning { //fanaberiatracker - tlo systemu oznaczonego jako WARNING
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-warning), transparent);
+    background-image: var(--fanaberia-system-status-kolor-WARNING);
   }
 
-  &.eve-system-status-dangerous { //fanaberiatraker - STATUS GROZNY
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
+  &.eve-system-status-dangerous { //fanaberiatracker - tlo systemu oznaczonego jako DANGROUS
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
+    background-image: var(--fanaberia-system-status-kolor-DANGEROUS);
   }
 
-  &.eve-system-status-target { //fanaberiatraker - STATUS TARGET
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
+  &.eve-system-status-target { //fanaberiatracker - tlo systemu oznaczonego jako TARGET
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
+    background-image: var(--fanaberia-system-status-kolor-TARGET);
   }
 }
 
@@ -219,7 +219,7 @@
   }
 }
 
-.Unsplashed {
+.Unsplashed {  //fanaberiatracker - te male znaczniki o nieprzeskoczonym wormholu
   position: absolute;
   width: calc(50% - 4px);
   z-index: -1;
@@ -265,25 +265,26 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 12px;      //fanaberia - wielkosc nazwy systemu ??
+  font-size: 11px;
   line-height: 14px;
   font-weight: 500;
   position: relative;
   top: 1px;
 
-  .classTitle {
-    font-size: 12px; //fanaberia - klasa dziury ??
+  .classTitle { //fanaberiatracker - osnaczenie klasy/sec status systemu
+    font-size: 11px;
     font-weight: bold;
-    //text-shadow: 0 0 2px #000000;
-    text-shadow: -1px 0 #1e1e1e, 1px 0 #1e1e1e, 0 -1px #1e1e1e, 0 1px #1e1e1e; //fanaberia - ramka na okolo tekstu
+    text-shadow: 0 0 2px rgb(0 0 0 / 73%);
   }
 
-  .TagTitle {
-    font-size: 14px;     //fanaberia - oj tu sie chyba cois zesra z tagami bo to wyglada inaczej na lajwie i na testowym
-    font-weight: 600;
-    background-color: #fdee00;
-    //text-shadow: 0 0 2px #e79234ba;
-    color: #000000;
+  .TagTitle { //fanaberiatracker - tabliczka z tagiem systemu
+    //font-size: 11px;
+    //font-weight: 500;
+    font-size: var(--fanaberia-tag-text-size);
+    font-weight: var(--fanaberia-tag-text-weight);
+    background-color: var(--fanaberia-tag-text-backgroundcolor);
+    text-shadow: 0 0 2px rgba(231, 146, 52, 0.73);
+    color: var(--rf-tag-color, #38bdf8); //kolor litery zaciaga pliku -theme
   }
 
   /* Firefox kostyl */
@@ -332,8 +333,7 @@
 .statics {
   display: flex;
   gap: 2px;
-  font-size: 10px; //fanaberia - wielkosc czcionki statyków
-  //background-color: #1e1e1e; //fanaberia - kolor tla statykow wyglada do dupy trzeba pokombinowac
+  font-size: 8px;
 
   & > * {
     line-height: 10px;

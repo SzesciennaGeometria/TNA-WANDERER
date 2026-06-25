@@ -2,12 +2,12 @@
 
 $friendlyBase: #3bbd39;
 $friendlyAlpha: #3bbd3952;
-$friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
 $friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
+$friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
 $friendlyDark5:  color.adjust($friendlyBase, $lightness: -5%);
 
 $lookingForBase: #43c2fd;
-$lookingForAlpha: rgba(67, 176, 253, 0.48);
+$lookingForAlpha: #43b0fd7a;
 $lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
 
 $homeBase: rgb(179, 253, 67);
@@ -122,7 +122,13 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --conn-save: rgba(155, 102, 45, 0.85);
   --selected-item-bg: rgba(98, 98, 98, 0.33);
 
-  //======= nowe zmienne
+
+
+  //======= nowe zmienne wartosci domyslnych NIE DOTYKAC BO NAMIESZA W WYSWIETLANIU DEFAULT
+
+  --fanaberia-tag-text-size: 11px;
+  --fanaberia-tag-text-weight: 500;
+  --fanaberia-tag-text-backgroundcolor: transparent;
 
   --fanaberia-connection-border-width: 4px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-border-width-thick: 6px;
@@ -130,15 +136,16 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width: 2px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-width-thick: 4px;
 
-  --fanaberia-system-border-selected: 1px; //nie jestem pewien czy to nadpisuje wartosc domyslna bez stylu ale dalem a wszelki niewypal
-   --fanaberia-system-border-selected-shadow: 0 0 10px #9a1af1c2;
+  --fanaberia-system-selected-border-outline: transparent;
+  --fanaberia-system-selected-border-shadow: 0 0 10px #9a1af1c2; //kolor i szerokosc poswiaty wybranego systemu
+
+  --fanaberia-system-status-kolor-HOME: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
+  --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
+  --fanaberia-system-status-kolor-WARNING: linear-gradient(275deg, var(--eve-solar-system-status-warning), transparent);
+  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
+  --fanaberia-system-status-kolor-TARGET: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
+  --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(275deg, #45ff8f2f, #457fff2f);
 
 
-  //--fanaberia-system-background-gradient-home: ;
-  //--fanaberia-system-background-gradient-firendly: ;
-  --fanaberia-system-background-gradient-lookingfor: linear-gradient(330deg, #0065a9ff, #001c30ff, #0065a9ff, #001c30ff);
-  //--fanaberia-system-background-gradient-warning: ;
-  //--fanaberia-system-background-gradient-dangerous: ;
-  //--fanaberia-system-background-gradient-target: ;
 
 }

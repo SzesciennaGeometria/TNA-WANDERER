@@ -18,7 +18,7 @@
   --rf-node-bg-color: #202020;
   --rf-node-soft-bg-color: #202020;
   --rf-text-color: #ffffff;
-  --rf-tag-color:  #38BDF8;
+  --rf-tag-color:  #000000;  //tu zmiana koloru litery na TAGu systemu
   --rf-region-name: #D6D3D1;
   --rf-custom-name: #93C5FD;
   --rf-node-font-family: 'Shentox', 'Rogan', sans-serif !important;
@@ -44,16 +44,17 @@
   --rf-node-local-counter: inherit;
   --rf-has-user-characters: #ffc75d;
 
+
   //=========== nowe zmienne
 
-$friendlyBase: #027a00;
-$friendlyAlpha: #027a0080;
-$friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
+$friendlyBase: #3bbd39;
+$friendlyAlpha: #3bbd3952;
 $friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
+$friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
 $friendlyDark5:  color.adjust($friendlyBase, $lightness: -5%);
 
-$lookingForBase: #00aeff;
-$lookingForAlpha: #0095ff7a;
+$lookingForBase: #43c2fd;
+$lookingForAlpha: #43b0fd7a;
 $lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
 
 $homeBase: #9aff00;
@@ -61,8 +62,8 @@ $homeAlpha: #b0ff0099;
 $homeBackground: #73ff0057;
 $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
-//fanaberiatodo -- nabrawic firndly bo sie wyswietla jak9o czarny hgw czemu
-
+  --eve-solar-system-status-unknown: transparent;
+  --eve-solar-system-status-color-unknown: transparent;
   --eve-solar-system-status-home:                #{$homeAlpha};
   --eve-solar-system-status-color-home:          #{$homeBase};
   --eve-solar-system-status-color-background:    #{$homeBackground};
@@ -76,21 +77,38 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
   --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
 
-  --eve-solar-system-status-warning: #ff710099;
+
+  --eve-solar-system-status-warning: #ff8400a6;
   --eve-solar-system-status-color-warning: #ff7100;
-  --eve-solar-system-status-target: #9e00ff99;
+  --eve-solar-system-status-target: #9e00ffa6;
   --eve-solar-system-status-color-target: #9e00ff;
-  --eve-solar-system-status-dangerous: #ff000099;
+  --eve-solar-system-status-dangerous: #ff0000a6;
   --eve-solar-system-status-color-dangerous: #ff0000;
 
+
+
+  //--fanaberia-system-status-kolor-HOME: linear-gradient(45deg, #04ff00a6, #001c30ff, #04ff00a6, #001c30ff);
+  --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(330deg, #3bbd39a6, #001c30ff, #3bbd39a6, #001c30ff);
+  --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg, #faff00a6, #001c30ff, #faff00a6, #001c30ff);
+  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg, #ff0000a6, #001c30ff, #ff0000a6, #001c30ff);
+  --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg, #ab00ffa6, #001c30ff, #ab00ffa6, #001c30ff);
+  --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(330deg, #006aefa6, #001c30ff, #006aefa6, #001c30ff);
+
+
+
   --fanaberia-connection-border-width: 8px; //zmiana grubosci ramki polaczenia
-  --fanaberia-connection-border-width-thick: 10px;
+  --fanaberia-connection-border-width-thick: 14px; //zmiana grubosci ramki polaczenia -THICK
   --fanaberia-connection-border-dasharray: 10 10; //ramka kreskowana dla time-kryta ????
   --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
-  --fanaberia-connection-width-thick: 6px;
+  --fanaberia-connection-width-thick: 8px; //zmiana grubosci kreski polaczenia - THICK
 
-  --fanaberia-system-border-selected: 3px;
-  --fanaberia-system-border-selected-shadow:  0 0 20px #1e68ffae;
+  --fanaberia-system-selected-border-outline: 2px dashed #1e68ffae;
+  --fanaberia-system-selected-border-outline-offset: 2px;
+  --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
+
+  --fanaberia-tag-text-size: 12px;
+  --fanaberia-tag-text-weight: 700;
+  --fanaberia-tag-text-backgroundcolor: #ffff00;
 
 //fanaberiacomment - lista parametrow do rozwoju na pryszlosc aby zmieniac tez rozmiar cczcionek tylko na stylu (aktualnie zmienilem czcionke dla calej szaty, nawet defaulta)
 
@@ -103,9 +121,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   //
   //--fanaberia-system-background-gradient-home: ;
   //--fanaberia-system-background-gradient-firendly: ;
-  --fanaberia-system-background-gradient-lookingfor: linear-gradient(330deg, #0065a9ff, #001c30ff, #0065a9ff, #001c30ff);
   //--fanaberia-system-background-gradient-warning: ;
-  //--fanaberia-system-background-gradient-dangerous: ;
   //--fanaberia-system-background-gradient-target: ;
 
   //fanaberiatodo - zrobic zmiane czcionki z przekazaniem parametru przez common-variables
