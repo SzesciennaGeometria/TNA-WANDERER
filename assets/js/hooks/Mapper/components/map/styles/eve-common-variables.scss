@@ -1,5 +1,6 @@
 @use "sass:color";
 
+
 $friendlyBase: #3bbd39;
 $friendlyAlpha: #3bbd3952;
 $friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
@@ -157,7 +158,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
   --fanaberia-system-status-kolor-TARGET: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
   --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(275deg, #45ff8f2f, #457fff2f);
-
+  --fanaberia-system-status-kolor-RALLY: repeating-linear-gradient(45deg, #1b84ec66 0px, #1b84ec66 8px,transparent 8px,transparent 21px);
 
 
 }

@@ -47,17 +47,18 @@
 
   //=========== nowe zmienne
 
+
 $friendlyBase: #3bbd39;
 $friendlyAlpha: #3bbd3952;
 $friendlyDark20: color.adjust($friendlyBase, $lightness: -20%);
 $friendlyDark30: color.adjust($friendlyBase, $lightness: -30%);
 $friendlyDark5:  color.adjust($friendlyBase, $lightness: -5%);
 
+
 $lookingForBase: #43c2fd;
 $lookingForAlpha: #43b0fd7a;
 $lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
 
-/*
 
 $homeBase: #9aff00;
 $homeAlpha: #b0ff0099;
@@ -78,7 +79,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-lookingFor:              #{$lookingForAlpha};
   --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
   --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
-*/
+
 
   --eve-solar-system-status-warning: #ff8400a6;
   --eve-solar-system-status-color-warning: #ff7100;
@@ -89,12 +90,14 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
 
 
-  --fanaberia-system-status-kolor-HOME: linear-gradient(330deg, #04ff00a6, #001c30ff, #04ff00a6, #001c30ff);
-  --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(330deg, #3bbd39a6, #001c30ff, #3bbd39a6, #001c30ff);
-  --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg, #ffa200a6, #001c30ff, #ffa200a6, #001c30ff);
-  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg, #ff2c2ca6, #001c30ff, #ff2c2ca6, #001c30ff);
-  --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg, #ab00ffa6, #001c30ff, #ab00ffa6, #001c30ff);
-  --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(330deg, #006aefa6, #001c30ff, #006aefa6, #001c30ff);
+  --fanaberia-system-status-kolor-HOME: radial-gradient(#001c30ff, #04ff00cf, #001c30ff);
+  //--fanaberia-system-status-kolor-HOME: linear-gradient(330deg, #04ff00a6, #001c30ff, #04ff00a6, #001c30ff);
+  --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(330deg,/* #028000a6,*/ #001c30ff, #028000a6, #001c30ff);
+  --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg,/* #ffa200a6,*/ #001c30ff, #ffa200a6, #001c30ff);
+  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg,/* #ff2c2ca6,*/ #001c30ff, #ff2c2ca6, #001c30ff);
+  --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg,/* #ab00ffa6,*/ #001c30ff, #ab00ffa6, #001c30ff);
+  --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(330deg,/* #006aefa6,*/ #001c30ff, #006aefa6, #001c30ff);
+  --fanaberia-system-status-kolor-RALLY: repeating-linear-gradient(45deg, #1b84ec 0px,#1b84ec 8px,transparent 8px,transparent 21px);
 
 
 
@@ -112,14 +115,14 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-tag-text-weight: 700;
   --fanaberia-tag-text-backgroundcolor: #ffff00;
 
-  --fanaberia-class-text-size: 13px;
+  --fanaberia-class-text-size: 11px;
   --fanaberia-class-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
-  --fanaberia-system-name-text-size: 13px;
+  --fanaberia-system-name-text-size: 11px;
   --fanaberia-system-name-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
   --fanaberia-system-effect-size: 8px;
   --fanaberia-system-effect-border: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
-  --fanaberia-statyk-text-size: 12px;
-  //--fanaberia-statyk-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  --fanaberia-statyk-text-size: 11px;
+  --fanaberia-statyk-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
   //--fanaderia-statyk-text-shadow: -webkit-text-stroke: 0.4px black;
   //--fanaberia-icons-size: ; //na rasie nie dotykac
   --fanaberia-icons-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
@@ -129,10 +132,10 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
 //fanaberiacomment - lista parametrow do rozwoju na pryszlosc aby zmieniac tez rozmiar cczcionek tylko na stylu (aktualnie zmienilem czcionke dla calej szaty, nawet defaulta)
 
-  //fanaberia-system-class-hisek: "H";
-  //fanaberia-system-class-hisek: "L";
-  //fanaberia-system-class-hisek: "0.0";
-  //fanaberia-system-class-pochven: "T";
+  //--fanaberia-system-class-hisek: "H";
+  //--fanaberia-system-class-lowsec: "L";
+  //--fanaberia-system-class-nullsec: "0.0";
+  //--fanaberia-system-class-pochven: "T";
 
   //fanaberiatodo - zrobic gradienty dla pozostalych systemow z przekazaniem zmiennej przez common-variables.
   //

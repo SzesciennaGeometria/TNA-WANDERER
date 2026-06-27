@@ -117,13 +117,15 @@
       z-index: -1;
 
       border-color: v.$neon-color-1;
+      background: var(--fanaberia-system-status-kolor-RALLY);
+      /*
       background: repeating-linear-gradient(
           45deg,
           v.$neon-color-3 0px,
           v.$neon-color-3 8px,
           transparent 8px,
           transparent 21px
-      );
+      );*/
       background-size: 30px 30px;
       animation: move-stripes 3s linear infinite;
     }
@@ -179,7 +181,7 @@
   display: flex;
   left: 4px;
 
-  & > .Bookmark {
+  & > .Bookmark { //fanaberiatracker - nie mam pojecia co to robi.... jeszcze...
     min-width: 13px;
     height: 22px;
     position: relative;
@@ -346,6 +348,7 @@
   font-size: var(--fanaberia-statyk-text-size);
   //-webkit-text-stroke: 0.5px black; //tylko to dziala
   //text-shadow: var(--fanaberia-statyk-text-shadow); //w tej sekcji to nie dziala
+  //dodalem wlasciwosc w eve-common.scss
 
   & > * {
     line-height: 10px;
