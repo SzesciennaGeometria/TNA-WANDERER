@@ -136,35 +136,41 @@
   }
 
   &.eve-system-status-home {
-    background-image: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
+    //background-image: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
+    background-image: var(--fanaberia-system-status-kolor-HOME);
     &.selected {
       border-color: var(--eve-solar-system-status-color-home);
     }
   }
 
   &.eve-system-status-friendly {
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
+    background-image: var(--fanaberia-system-status-kolor-FRIENDLY);
     &.selected {
       border-color: var(--eve-solar-system-status-color-friendly-dark5);
     }
   }
 
   &.eve-system-status-lookingFor {
-    background-image: linear-gradient(275deg, #45ff8f2f, #457fff2f);
+    //background-image: linear-gradient(275deg, #45ff8f2f, #457fff2f);
+    background-image: var(--fanaberia-system-status-kolor-LOOKINGFOR);
     &.selected {
       border-color: v.$pastel-pink;
     }
   }
 
   &.eve-system-status-warning {
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-warning), transparent);
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-warning), transparent);
+    background-image: var(--fanaberia-system-status-kolor-WARNING);
   }
 
   &.eve-system-status-dangerous {
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-dangerous), transparent);
+    background-image: var(--fanaberia-system-status-kolor-DANGEROUS);
   }
 
   &.eve-system-status-target {
-    background-image: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
+    //background-image: linear-gradient(275deg, var(--eve-solar-system-status-target), transparent);
+    background-image: var(--fanaberia-system-status-kolor-TARGET);
   }
 }

@@ -10,8 +10,8 @@ $lookingForBase: #43c2fd;
 $lookingForAlpha: #43b0fd7a;
 $lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
 
-$homeBase: rgb(179, 253, 67);
-$homeAlpha: rgba(186, 248, 48, 0.32);
+$homeBase: #b3fd43;
+$homeAlpha: #baf83052;
 $homeBackground: #a0fa5636;
 $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
@@ -130,13 +130,25 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-tag-text-weight: 500;
   --fanaberia-tag-text-backgroundcolor: transparent;
 
+  --fanaberia-class-text-size: 11px;
+  --fanaberia-class-text-shadow: 0 0 2px rgb(0 0 0 / 73%);
+  --fanaberia-system-name-text-size: 11px;
+  --fanaberia-system-name-shadow: transparent;
+  --fanaberia-system-effect-size: 8px;
+  --fanaberia-system-effect-border: transparent;
+  --fanaberia-statyk-text-size: 8px;
+  --fanaberia-statyk-text-shadow: transparent;
+  //--fanaberia-icons-size: ; //na rasie nie dotykac
+  --fanaberia-icons-shadow: transparent;
+
+
   --fanaberia-connection-border-width: 4px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-border-width-thick: 6px;
   --fanaberia-connection-border-dasharray: 0; //kreskowanie dla time-kryta domyslnie linia ciagla ???
   --fanaberia-connection-width: 2px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-width-thick: 4px;
 
-  --fanaberia-system-selected-border-outline: transparent;
+  --fanaberia-system-selected-border-outline333333: transparent;
   --fanaberia-system-selected-border-shadow: 0 0 10px #9a1af1c2; //kolor i szerokosc poswiaty wybranego systemu
 
   --fanaberia-system-status-kolor-HOME: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);

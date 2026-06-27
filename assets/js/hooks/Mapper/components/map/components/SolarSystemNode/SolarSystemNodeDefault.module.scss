@@ -261,20 +261,24 @@
   font-size: 8px;
 }
 
-.HeadRow {
+.HeadRow { //fanaberiatracker - nazwa systemu aka gorna linijka
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 11px;
+  //font-size: 11px;
   line-height: 14px;
   font-weight: 500;
+  font-size: var(--fanaberia-system-name-text-size);
+  // text-shadow: var(--fanaberia-system-name-shadow); to tutaj nie zadziala wstawic w .classsystemname
   position: relative;
   top: 1px;
 
   .classTitle { //fanaberiatracker - osnaczenie klasy/sec status systemu
-    font-size: 11px;
+    //font-size: 11px;
+    //text-shadow: 0 0 2px rgb(0 0 0 / 73%);
     font-weight: bold;
-    text-shadow: 0 0 2px rgb(0 0 0 / 73%);
+    font-size: var(--fanaberia-class-text-size);
+    text-shadow: var(--fanaberia-class-text-shadow);
   }
 
   .TagTitle { //fanaberiatracker - tabliczka z tagiem systemu
@@ -288,18 +292,20 @@
   }
 
   /* Firefox kostyl */
-  @-moz-document url-prefix() {
-    .classSystemName {
+  //@-moz-document url-prefix() {
+    .classSystemName { //fanaberiatracker - to co sie wyswietla jako nazwa systemu + manipulacja czcionkami
       font-weight: bold;
+      text-shadow: var(--fanaberia-system-name-shadow);
     }
-  }
+  //}
 }
 
-.BottomRow {
+.BottomRow { //fanaberiatracker - te male znaczki u dolu systemu
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 19px;
+  text-shadow: var(--fanaberia-icons-shadow);
 
   .hasLocalCounter {
     margin-right: 2px;
@@ -321,19 +327,25 @@
   }
 }
 
-.effect {
-  width: 8px;
-  height: 8px;
+.effect { //fanaberiatracker - efekt systemu
+  //width: 8px;
+  //height: 8px;
+  width: var(--fanaberia-system-effect-size);
+  height: var(--fanaberia-system-effect-size);
   margin-top: -2px;
   box-sizing: border-box;
   border-radius: 2px;
   margin-left: 1px;
+  box-shadow: var(--fanaberia-system-effect-border);
 }
 
-.statics {
+.statics { //fanaberiatracker - to manipuluje lista statykow ale jeszcze nei wiem jak dziala
   display: flex;
   gap: 2px;
-  font-size: 8px;
+  //font-size: 8px;
+  font-size: var(--fanaberia-statyk-text-size);
+  //-webkit-text-stroke: 0.5px black; //tylko to dziala
+  //text-shadow: var(--fanaberia-statyk-text-shadow); //w tej sekcji to nie dziala
 
   & > * {
     line-height: 10px;

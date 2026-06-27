@@ -57,6 +57,8 @@ $lookingForBase: #43c2fd;
 $lookingForAlpha: #43b0fd7a;
 $lookingForDark15: color.adjust($lookingForBase, $lightness: -15%);
 
+/*
+
 $homeBase: #9aff00;
 $homeAlpha: #b0ff0099;
 $homeBackground: #73ff0057;
@@ -76,7 +78,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-lookingFor:              #{$lookingForAlpha};
   --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
   --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
-
+*/
 
   --eve-solar-system-status-warning: #ff8400a6;
   --eve-solar-system-status-color-warning: #ff7100;
@@ -87,10 +89,10 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
 
 
-  //--fanaberia-system-status-kolor-HOME: linear-gradient(45deg, #04ff00a6, #001c30ff, #04ff00a6, #001c30ff);
+  --fanaberia-system-status-kolor-HOME: linear-gradient(330deg, #04ff00a6, #001c30ff, #04ff00a6, #001c30ff);
   --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(330deg, #3bbd39a6, #001c30ff, #3bbd39a6, #001c30ff);
-  --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg, #faff00a6, #001c30ff, #faff00a6, #001c30ff);
-  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg, #ff0000a6, #001c30ff, #ff0000a6, #001c30ff);
+  --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg, #ffa200a6, #001c30ff, #ffa200a6, #001c30ff);
+  --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg, #ff2c2ca6, #001c30ff, #ff2c2ca6, #001c30ff);
   --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg, #ab00ffa6, #001c30ff, #ab00ffa6, #001c30ff);
   --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(330deg, #006aefa6, #001c30ff, #006aefa6, #001c30ff);
 
@@ -102,13 +104,28 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
   --fanaberia-connection-width-thick: 8px; //zmiana grubosci kreski polaczenia - THICK
 
-  --fanaberia-system-selected-border-outline: 2px dashed #1e68ffae;
+  --fanaberia-system-selected-border-outline: 2px dashed #1e93ffae;
   --fanaberia-system-selected-border-outline-offset: 2px;
   --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
 
   --fanaberia-tag-text-size: 12px;
   --fanaberia-tag-text-weight: 700;
   --fanaberia-tag-text-backgroundcolor: #ffff00;
+
+  --fanaberia-class-text-size: 13px;
+  --fanaberia-class-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  --fanaberia-system-name-text-size: 13px;
+  --fanaberia-system-name-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  --fanaberia-system-effect-size: 8px;
+  --fanaberia-system-effect-border: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  --fanaberia-statyk-text-size: 12px;
+  //--fanaberia-statyk-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  //--fanaderia-statyk-text-shadow: -webkit-text-stroke: 0.4px black;
+  //--fanaberia-icons-size: ; //na rasie nie dotykac
+  --fanaberia-icons-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+
+
+
 
 //fanaberiacomment - lista parametrow do rozwoju na pryszlosc aby zmieniac tez rozmiar cczcionek tylko na stylu (aktualnie zmienilem czcionke dla calej szaty, nawet defaulta)
 
