@@ -11,8 +11,8 @@ import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
 import { MassState, OutCommand, SignatureGroup, SystemSignature, TimeStatus } from '@/hooks/Mapper/types';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { useCallback, useEffect, useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useCallback, useEffect, useState, inputRef} from 'react';
+import { Controller, FormProvider, useForm, useRef } from 'react-hook-form';
 
 type SystemSignaturePrepared = Omit<SystemSignature, 'linked_system'> & {
   linked_system: string;
@@ -35,9 +35,23 @@ export const SignatureSettings = ({ systemId, show, onHide, signatureData }: Map
     data: { systemSignatures, systems, wormholesData },
   } = useMapRootState();
 
-  const handleShow = async () => {};
+  //const handleShow = async () => {}; //fanaberiatracker - funkcja focusujaca pole w oknie na starcie
+/*
+  const handleShow = useCallback(() => {
+  setTimeout(() => {
+    inputRef.current?.focus();
+  }, 50); //fanaberiatracker - funkcja focusujaca pole w oknie na starcie opoznienie po pojawieniu okna
+}, []);
+*/
+const signatureForm = useForm<Partial<SystemSignaturePrepared>>({});
 
-  const signatureForm = useForm<Partial<SystemSignaturePrepared>>({});
+const { setFocus } = signatureForm;
+
+ const handleShow = useCallback(() => {
+  setTimeout(() => {
+    setFocus("description");
+  }, 60);
+}, [setFocus]);
 
   const [userSettings, setUserSettings] = useState<any>(null);
 
@@ -266,7 +280,7 @@ export const SignatureSettings = ({ systemId, show, onHide, signatureData }: Map
                     name="description"
                     control={signatureForm.control}
                     render={({ field }) => (
-                      <InputText placeholder="Type description" value={field.value} onChange={field.onChange} />
+                      <InputText placeholder="Type description" ref ={field.ref} value={field.value} onChange={field.onChange}  />
                     )}
                   />
                 </label>
