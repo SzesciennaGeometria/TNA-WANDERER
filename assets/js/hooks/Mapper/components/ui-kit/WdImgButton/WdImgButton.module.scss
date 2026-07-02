@@ -1,6 +1,6 @@
 .WdImgButtonRoot {
   transition: opacity 200ms;
-  opacity: 0.5;
+  opacity: 1;
   pointer-events: initial !important;
 
   &.Disabled {
@@ -18,5 +18,5 @@
 }
 
 .Large {
-  font-size: 16px;
+  font-size: 18px;
 }

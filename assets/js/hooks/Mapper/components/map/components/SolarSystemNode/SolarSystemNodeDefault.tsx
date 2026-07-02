@@ -32,7 +32,7 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
 
   return (
     <>
-      {nodeVars.visible && (
+      {nodeVars.visible && ( //fanberiatracker - tutaj jest zabeklarowany znaczek szatereda
         <div className={classes.Bookmarks}>
           {nodeVars.isShattered && (
             <div className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES.shattered, '!pr-[2px]')}>
@@ -43,7 +43,7 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
           )}
 
           {localKillsCount != null && localKillsCount > 0 && nodeVars.solarSystemId && localKillsActivityType && (
-            <KillsCounter
+            <KillsCounter //fanberiatracker - tutaj jest zadeklaroany ten piorunek z killcoutem w systemie
               killsCount={localKillsCount}
               systemId={nodeVars.solarSystemId}
               size={TooltipSize.lg}
@@ -57,7 +57,7 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
             </KillsCounter>
           )}
 
-          {nodeVars.labelCustom !== '' && (
+          {nodeVars.labelCustom !== '' && ( //fanberiatracker - tutaj jest zadeklarowana custom labelka
             <div className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES.custom)}>
               <span className="[text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">{nodeVars.labelCustom}</span>
             </div>

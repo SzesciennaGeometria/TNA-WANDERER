@@ -181,11 +181,11 @@
   display: flex;
   left: 4px;
 
-  & > .Bookmark { //fanaberiatracker - nie mam pojecia co to robi.... jeszcze...
+  & > .Bookmark { //fanaberiatracker - tutaj jest rozmiar tej tabliczki z custom labelka
     min-width: 13px;
     height: 22px;
     position: relative;
-    top: -13px;
+    top: -17px; //fanaberia - jak bardzo ta tabliczka wystaje
     border-radius: 5px;
     color: #ffffff;
     font-size: 8px;
