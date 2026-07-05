@@ -206,6 +206,14 @@ export const Connections = ({ selectedConnection, onHide }: OnTheMapProps) => {
                 </InfoDrawer>
               )}
             </div>
+            <div>
+              {isWormhole && info?.bubled_at && (
+                <InfoDrawer title="Bubled">
+                  <TimeAgo timestamp={info.bubled_at} />
+                  {info.bubled_by_name && <span className="text-neutral-400"> by {info.bubled_by_name}</span>}
+                </InfoDrawer>
+              )}
+            </div>
             {/*Right column*/}
             <InfoDrawer title="Connection" rightSide>
               <div className="flex justify-end gap-2 items-center">

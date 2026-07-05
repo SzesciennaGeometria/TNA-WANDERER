@@ -125,6 +125,23 @@ export const useContextMenuConnectionHandlers = () => {
     });
   }, []);
 
+  const onToggleBubled = useCallback((bubled: boolean) => { //fanaberia - bubled
+    const { edge, outCommand } = ref.current;
+
+    if (!edge) {
+      return;
+    }
+
+    outCommand({
+      type: OutCommand.updateConnectionBubled,
+      data: {
+        source: edge.source,
+        target: edge.target,
+        value: bubled,
+      },
+    });
+  }, []);
+
   const onHide = useCallback(() => {
     setEdge(undefined);
   }, []);

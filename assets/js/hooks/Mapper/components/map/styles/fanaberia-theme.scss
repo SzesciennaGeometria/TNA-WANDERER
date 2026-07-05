@@ -103,13 +103,21 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
   --fanaberia-connection-border-width: 8px; //zmiana grubosci ramki polaczenia
   --fanaberia-connection-border-width-thick: 14px; //zmiana grubosci ramki polaczenia -THICK
-  --fanaberia-connection-border-dasharray: 10 10; //ramka kreskowana dla time-kryta ????
+  --fanaberia-connection-border-dasharray: 10 15; //ramka kreskowana dla time-kryta ????
   --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
   --fanaberia-connection-width-thick: 8px; //zmiana grubosci kreski polaczenia - THICK
 
-  --fanaberia-system-selected-border-outline: 2px dashed #1e93ffae;
+  --fanaberia-system-selected-border-outline: 2px dashed #2f9bffae;
+  --fanaberia-system-selected-border-outline-width: 3px;
   --fanaberia-system-selected-border-outline-offset: 2px;
   --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
+  --fanaberia-system-selected-animate-outline-puls-0: #ccddffae;
+  --fanaberia-system-selected-animate-outline-puls-100: #1e68ffae;
+  --fanaberia-system-selected-animate-border-angle-0: 0deg;
+  --fanaberia-system-selected-animate-border-angle-100: 360deg;
+
+  //--fanaberia-system-selected-border-image: conic-gradient(from var(--animate-border-angle), #1e93ffae 0deg 90deg, #ffffffae 90deg 180deg, #1e93ffae 180deg 270deg, #ffffffae 270deg 360deg) 1 stretch;
+
 
   --fanaberia-tag-text-size: 12px;
   --fanaberia-tag-text-weight: 700;
@@ -126,6 +134,10 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   //--fanaderia-statyk-text-shadow: -webkit-text-stroke: 0.4px black;
   //--fanaberia-icons-size: ; //na rasie nie dotykac
   --fanaberia-icons-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+
+
+  //fanaberiacomment - tu jest fakap nie da sie przekazac zmienniej fo pola @property lub @keyframe
+
 
 
 

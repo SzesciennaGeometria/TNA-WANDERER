@@ -20,6 +20,8 @@ export interface ContextMenuConnectionProps {
   onChangeShipSizeStatus(state: ShipSizeStatus): void;
   onChangeType(type: ConnectionType): void;
   onToggleMassSave(isLocked: boolean): void;
+  onToggleBubled(isBubled: boolean): void; //fanaberia - bubled
+  onToggleBbridge(isBridge: boolean): void; //fanaberia - bridge
   onHide(): void;
   edge?: Edge<SolarSystemConnection>;
 }
@@ -32,6 +34,8 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
   onChangeShipSizeStatus,
   onChangeType,
   onToggleMassSave,
+  onToggleBubled, //fanaberia - bubled
+  onToggleBridge, //fanaberia - bridge
   onHide,
   edge,
 }) => {
@@ -61,10 +65,29 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
           command: onDeleteConnection,
         },
       ];
-    }
-
-    if (edge.data?.type === ConnectionType.gate) {
+    } //fanaberiatracker - ustawienie prawego klika SET-BRIDGE dla wormhola NIE DOTYKAC nadpisuje cos wazniejszego
+    /*if (edge.data?.type === ConnectionType.wormhole) {
       return [
+        {
+          label: `Set as Bridge`,
+          icon: 'pi hero-forward',
+          command: () => onChangeType(ConnectionType.bridge),
+        },
+        {
+          label: 'Disconnect',
+          icon: PrimeIcons.TRASH,
+          command: onDeleteConnection,
+        }
+      ];
+    }
+ */
+    if (edge.data?.type === ConnectionType.gate) { //fanaberia - oryginalna wartosc - nie dotykac jesli sie cos zesra
+      return [
+        {
+          label: `Set as Bridge`,
+          icon: 'pi hero-forward',
+          command: () => onChangeType(ConnectionType.bridge),
+        },
         {
           label: 'Disconnect',
           icon: PrimeIcons.TRASH,
@@ -104,6 +127,19 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
         },
       },
       {
+        label: `Bubled (nie dziala)`, //fanaberia - bubled - to co sie wyswietla pod ppm
+        className: clsx({
+          [classes.ConnectionBubled]: edge.data?.bubled,
+        }),
+        icon: PrimeIcons.CIRCLE,
+        command: () => onToggleBubled(!edge.data?.bubled),
+      },
+      {
+        label: `Set as Bridge`, //fanaberia - bridge
+        icon: PrimeIcons.FORWARD,
+        command: () => onChangeType(ConnectionType.bridge),
+      },
+      {
         label: `Save mass`,
         className: clsx({
           [classes.ConnectionSave]: edge.data?.locked,
@@ -133,6 +169,8 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
     onChangeType,
     onChangeShipSizeStatus,
     onToggleMassSave,
+    onToggleBubled, //fanaberia - bubled
+    onToggleBridge, //fanaberia - bridge
     onChangeMassState,
   ]);
 

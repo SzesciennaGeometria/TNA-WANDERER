@@ -11,6 +11,41 @@
   }
 }
 
+/*
+@property --animate-border-angle {  //fanaberiatracker - do krecenia animowanej ramki systemu AKTYWNEGO/KILKNIETEGO
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes animate-border-rotate {  //fanaberiatracker - do krecenia animowanej ramki systemu AKTYWNEGO/KILKNIETEGO
+      0% {--animate-border-angle: var(--fanaberia-animate-border-angle-0);}
+    100% {--animate-border-angle: var(--fanaberia-animate-border-angle-100);}
+    }
+*/
+
+@property --animate-border-angle {  //fanaberiatracker - do krecenia animowanej ramki systemu AKTYWNEGO/KILKNIETEGO
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes animate-border-rotate {  //fanaberiatracker - do krecenia animowanej ramki systemu AKTYWNEGO/KILKNIETEGO
+  //0% {--animate-border-angle: var(--fanaberia-system-selected-animate-border-angle-0);}
+  0% {--animate-border-angle: 0deg;}
+  //100% {--animate-border-angle: var(--fanaberia-system-selected-animate-border-angle-100);}
+  100% {--animate-border-angle: 360deg;}
+}
+
+
+  @property --outline-puls-progress { //fanaberiatracker - do pulsowania outlinu systemu AKTYWNEGO/KILKNIETEGO
+  syntax: "<number>";
+  initial-value:  0;
+  inherits: false;
+}
+  @keyframes animate-color-puls {  //fanaberiatracker - do pulsowania outlinu systemu AKTYWNEGO/KILKNIETEGO
+  0% {--outline-puls-progress: 0;}
+  100% {--outline-puls-progress: 1;}
+}
+
 .RootCustomNode { //fanaberiatracker - domyslnma konfiguracja ramki systemowej
   display: flex;
   width: 130px; //szerokosc
@@ -97,14 +132,50 @@
       background-position-y: -13px;
     }
   }
-
-  &.selected { //fanberiatracker - oznaczenie ramka systemu AKTYWNEGO/KILKNIETEGO
+    /*
+    &.selected { //fanberiatracker - kreskowany PULSUJACY outline systemu AKTYWNEGO/KILKNIETEGO (tylko fanaberia)
+    --outline-puls: color-mix(in srgb, var(--fanaberia-system-selected-animate-outline-puls-100) calc(var(--outline-puls-progress) * 100%), var(--fanaberia-system-selected-animate-outline-puls-0));
     border-color: v.$pastel-pink;
-    outline: var(--fanaberia-system-selected-border-outline);
+    outline: var(--fanaberia-system-selected-border-outline-width) dashed var(--outline-puls);
     outline-offset: var(--fanaberia-system-selected-border-outline-offset);
-    //box-shadow: 0 0 10px #9a1af1c2;
+    animation: animate-color-puls 1s ease-in-out infinite alternate;
     box-shadow: var(--fanaberia-system-selected-border-shadow);
   }
+  */
+  /*
+  &.selected { //fanberiatracker - animowana ramka systemu AKTYWNEGO/KILKNIETEGO (na wszsytkich themach)
+    border-image: conic-gradient(from var(--animate-border-angle), #1e93ffae 0deg 90deg, #ffffffae 90deg 180deg, #1e93ffae 180deg 270deg, #ffffffae 270deg 360deg) 1 stretch;
+    border-image-width: 1px;
+    animation: animate-border-rotate 2s linear infinite;
+    box-shadow: var(--fanaberia-system-selected-border-shadow);
+  }
+  */
+  /*
+  &.selected { //fanberiatracker - animowana ramka systemu AKTYWNEGO/KILKNIETEGO (tylko fanaberia)
+  --color-primary: var(--fanaberia-system-selected-animate-outline-puls-0);
+  --color-secondary: var(--fanaberia-system-selected-animate-outline-puls-100);
+  --step: 90deg;
+    border-image: repeating-conic-gradient(from var(--animate-border-angle), var(--color-primary) 0deg var(--step), var(--color-secondary) var(--step) calc(var(--step) * 2)) 1 stretch;
+    border-image-width: 1px;
+    animation: animate-border-rotate 2s linear infinite;
+    box-shadow: var(--fanaberia-system-selected-border-shadow);
+  }
+ */
+
+&.selected {  //fanaberiatracker - poaczenie obydwu animowanych ramek aby dzialaly jednoczesnie
+  --outline-puls: color-mix(in srgb, var(--fanaberia-system-selected-animate-outline-puls-100) calc(var(--outline-puls-progress) * 100%), var(--fanaberia-system-selected-animate-outline-puls-0));
+  --color-primary: var(--fanaberia-system-selected-animate-outline-puls-0);
+  --color-secondary: var(--fanaberia-system-selected-animate-outline-puls-100);
+  --step: 90deg;
+  border-color: v.$pastel-pink;
+  border-image: repeating-conic-gradient(from var(--animate-border-angle), var(--color-primary) 0deg var(--step), var(--color-secondary) var(--step) calc(var(--step) * 2)) 1 stretch;
+  border-image-width: 1px;
+  outline: var(--fanaberia-system-selected-border-outline-width) dashed var(--outline-puls);
+  outline-offset: var(--fanaberia-system-selected-border-outline-offset);
+  box-shadow: var(--fanaberia-system-selected-border-shadow);
+  animation: animate-color-puls 1s ease-in-out infinite alternate, animate-border-rotate 2s linear infinite;
+}
+
 
   &.rally { //fanaberiatracker - animacja i tlo systemu oznaczonego jako PING
     &::before {
@@ -137,6 +208,7 @@
     background-image: var(--fanaberia-system-status-kolor-HOME);
     &.selected {
       border-color: var(--eve-solar-system-status-color-home);
+      @extend .selected; //fanaberia - zasysa klase SELECTED dla tego typu systemu
     }
   }
 
@@ -146,6 +218,7 @@
     background-image: var(--fanaberia-system-status-kolor-FRIENDLY);
     &.selected {
       border-color: var(--eve-solar-system-status-color-friendly-dark5);
+      @extend .selected; //fanaberia - zasysa klase SELECTED dla tego typu systemu
     }
   }
 
@@ -155,6 +228,7 @@
     background-image: var(--fanaberia-system-status-kolor-LOOKINGFOR);
     &.selected {
       border-color: v.$pastel-pink;
+      @extend .selected; //fanaberia - zasysa klase SELECTED dla tego typu systemu
     }
   }
 
@@ -211,12 +285,12 @@
     & > .icon {
       width: 8px;
       height: 8px;
-      font-size: 8px;
+      font-size: 10px;
     }
 
     & > .text {
       margin-top: 1px;
-      font-size: 9px;
+      font-size: 10px;
     }
   }
 }
@@ -260,7 +334,7 @@
 .icon {
   width: 8px;
   height: 8px;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .HeadRow { //fanaberiatracker - nazwa systemu aka gorna linijka
@@ -371,12 +445,12 @@
   height: 100%;
 }
 
-.Handle {
+.Handle {  //fanaberiatracker - te male kropeczki dfo polaczen jak sie na system najedzie
   min-width: initial;
   min-height: initial;
   border: 1px solid v.$pastel-blue;
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
   pointer-events: auto;
 
   &.selected {

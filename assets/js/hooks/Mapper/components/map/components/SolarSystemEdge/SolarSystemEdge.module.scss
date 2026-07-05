@@ -53,7 +53,8 @@
   &.Bridge {
     stroke: #9aff40;
 
-    stroke-dasharray: 10 10;
+    //stroke-dasharray: 10 10;
+    stroke-dasharray: var(--fanaberia-connection-border-dasharray);
     stroke-linecap: round;
   }
 }
@@ -115,15 +116,15 @@
   stroke-width: 8px;
 }
 
-.Handle {
+.Handle { //fanaberiatracker - tem ale kropeczki ktore sa jak jest system polaczony
   border: 1px solid var(--pastel-blue);
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
   z-index: 1001;
 
   &.Tick {
-    width: 7px;
-    height: 7px;
+    width: 10px;
+    height: 10px;
   }
 
   &.Right {

@@ -139,6 +139,18 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           }}
         >
+          {isWormhole && data.bubled && (
+            <WdTooltipWrapper
+              content="Bubled"
+              className={clsx(
+                classes.LinkLabel,
+                'pointer-events-auto bg-cyan-300 rounded opacity-100 cursor-auto text-neutral-900',
+              )}
+            >
+              <span className={clsx(PrimeIcons.CIRCLE, classes.icon)} />
+            </WdTooltipWrapper>
+          )}
+
           {isWormhole && data.locked && (
             <WdTooltipWrapper
               content="Save mass"

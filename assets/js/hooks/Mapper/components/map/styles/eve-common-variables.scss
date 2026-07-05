@@ -120,12 +120,14 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --conn-time-eol: #7452c3e3;
   --conn-frigate: #325d88;
   --conn-bridge: rgba(135, 185, 93, 0.85);
+  --conn-bubled: #008cb1;
   --conn-save: rgba(155, 102, 45, 0.85);
   --selected-item-bg: rgba(98, 98, 98, 0.33);
 
 
 
   //======= nowe zmienne wartosci domyslnych NIE DOTYKAC BO NAMIESZA W WYSWIETLANIU DEFAULT
+
 
   --fanaberia-tag-text-size: 11px;
   --fanaberia-tag-text-weight: 500;
@@ -139,7 +141,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-system-effect-border: transparent;
   --fanaberia-statyk-text-size: 8px;
   --fanaberia-statyk-text-shadow: transparent;
-  //--fanaberia-icons-size: ; //na rasie nie dotykac
+  //--fanaberia-icons-size: ; //na razie nie dotykac
   --fanaberia-icons-shadow: transparent;
 
 
@@ -149,8 +151,10 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width: 2px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-width-thick: 4px;
 
-  --fanaberia-system-selected-border-outline333333: transparent;
+  --fanaberia-system-selected-border-outline: ; //(null)
   --fanaberia-system-selected-border-shadow: 0 0 10px #9a1af1c2; //kolor i szerokosc poswiaty wybranego systemu
+  --fanaberia-system-selected-animate-outline-puls-0: ; //(null) - bo inaczej znika
+  --fanaberia-system-selected-animate-outline-puls-100: ; //(null - bo inaczej znika)
 
   --fanaberia-system-status-kolor-HOME: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
   --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
