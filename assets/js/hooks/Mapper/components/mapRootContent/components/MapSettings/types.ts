@@ -3,6 +3,8 @@ import { InterfaceStoredSettings } from '@/hooks/Mapper/mapRootProvider/types.ts
 export enum UserSettingsRemoteProps {
   link_signature_on_splash = 'link_signature_on_splash',
   select_on_spash = 'select_on_spash',
+  select_animated_border = 'select_animated_border', //fanaberia - opdja wlaczania animowanych ramek
+  select_animated_outline = 'select_animated_outline',
   delete_connection_with_sigs = 'delete_connection_with_sigs',
   bookmark_name_format = 'bookmark_name_format',
   bookmark_custom_mapping = 'bookmark_custom_mapping',
@@ -17,6 +19,8 @@ export enum UserSettingsRemoteProps {
 
 export type UserSettingsRemote = {
   link_signature_on_splash: boolean;
+  select_animated_border: boolean; //fanaberia - opcja wlaczania animowanych ramek
+  select_animated_outline: boolean;
   select_on_spash: boolean;
   delete_connection_with_sigs: boolean;
   bookmark_name_format: string;

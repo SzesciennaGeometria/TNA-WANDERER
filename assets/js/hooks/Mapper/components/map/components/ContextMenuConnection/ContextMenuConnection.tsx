@@ -127,7 +127,7 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
         },
       },
       {
-        label: `Bubled (nie dziala)`, //fanaberia - bubled - to co sie wyswietla pod ppm
+        label: `Bubled (niebangla)`, //fanaberia - bubled - to co sie wyswietla pod ppm
         className: clsx({
           [classes.ConnectionBubled]: edge.data?.bubled,
         }),

@@ -100,6 +100,9 @@ export const SystemSignaturesContent = ({
   useHotkey(false, ['Backspace', 'Delete'], (event: KeyboardEvent) => {
     const targetWindow = (event.target as HTMLHtmlElement)?.closest(`[data-window-id="${SIGNATURE_WINDOW_ID}"]`);
 
+    //fanaberiatracker - klawisz delet na oknie sygnatur ?
+    //fanaberiatodo - jak bede sie tym bawil dodac checkboxa w oknie ustawien aby del orespektowal lazydeleta czy kazowal od razu
+
     if (!targetWindow) {
       return;
     }

@@ -5,6 +5,8 @@ import { SettingsListItem, UserSettingsRemoteProps } from './types.ts';
 export const DEFAULT_REMOTE_SETTINGS = {
   [UserSettingsRemoteProps.link_signature_on_splash]: false,
   [UserSettingsRemoteProps.select_on_spash]: false,
+  [UserSettingsRemoteProps.select_animated_border]: false, //fanaberia - opdja wlaczania animowanych ramek
+  [UserSettingsRemoteProps.select_animated_outline]: false,
   [UserSettingsRemoteProps.delete_connection_with_sigs]: false,
   [UserSettingsRemoteProps.bookmark_name_format]: '',
   [UserSettingsRemoteProps.bookmark_custom_mapping]: {},
@@ -28,6 +30,8 @@ export const AUTO_FORMAT_OPTIONS = [
 export const UserSettingsRemoteList = [
   UserSettingsRemoteProps.link_signature_on_splash,
   UserSettingsRemoteProps.select_on_spash,
+  UserSettingsRemoteProps.select_animated_border, //fanaberia - opdja wlaczania animowanych ramek
+  UserSettingsRemoteProps.select_animated_outline,
   UserSettingsRemoteProps.delete_connection_with_sigs,
   UserSettingsRemoteProps.bookmark_name_format,
   UserSettingsRemoteProps.bookmark_custom_mapping,
@@ -57,6 +61,18 @@ export const SYSTEMS_CHECKBOXES_PROPS: SettingsListItem[] = [
   {
     prop: UserSettingsRemoteProps.select_on_spash,
     label: 'Auto-select splashed',
+    type: 'checkbox',
+  },
+  { //fanaberia - opdja wlaczania animowanych ramek UWAGA NAJPIERW TRZEBA PODEFINIOWAC ZMIENNE INACZEJ KRASZNIE
+    //prop: InterfaceStoredSettingsProps.select_animated_border,
+    prop: InterfaceStoredSettingsProps.isShowKSpace, //PLACEHOLDER
+    label: 'Animate selected-system border (niebangla)',
+    type: 'checkbox',
+  },
+  {
+    prop: InterfaceStoredSettingsProps.select_animated_outline,
+    prop: InterfaceStoredSettingsProps.isShowKSpace, //PLACEHOLDER
+    label: 'Animate selected-system outline (niebangla)',
     type: 'checkbox',
   },
 ];
