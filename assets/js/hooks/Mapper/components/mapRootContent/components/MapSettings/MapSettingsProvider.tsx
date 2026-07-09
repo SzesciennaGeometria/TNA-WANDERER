@@ -73,6 +73,12 @@ export const MapSettingsProvider = ({ children }: WithChildren) => {
           ...interfaceSettings,
           [prop]: value,
         });
+        if (prop === 'show_animated_border') { //fanaberia - animowana ramka
+          document.body.classList.toggle('fanaberia-border-active', !!value);
+        }
+        if (prop === 'show_animated_outline') { //fanaberia - animowany outline
+          document.body.classList.toggle('fanaberia-outline-active', !!value);
+        }
       }
     },
     [],

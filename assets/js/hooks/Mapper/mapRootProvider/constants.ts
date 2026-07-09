@@ -15,6 +15,8 @@ import { DEFAULT_WIDGETS, STORED_VISIBLE_WIDGETS_DEFAULT } from '@/hooks/Mapper/
 export const STORED_INTERFACE_DEFAULT_VALUES: InterfaceStoredSettings = {
   isShowMenu: false,
   isShowKSpace: false,
+  show_animated_border: false, //fanaberia - animowana ramka
+  show_animated_outline: false, //fanaberia - animowany outline
   isThickConnections: false,
   isShowUnsplashedSignatures: false,
   isShowBackgroundPattern: true,

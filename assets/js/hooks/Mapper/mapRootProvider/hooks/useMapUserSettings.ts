@@ -186,6 +186,21 @@ export const useMapUserSettings = ({ map_slug }: MapRootData, outCommand: OutCom
     location.reload();
   }, [isReady, resetSettings, windowsSettings]);
 
+
+  // fanaberiatracker - GLOBALNA SYNCHRONIZACJA KLAS USTAWIEN W INTERFEJSIE (ODPORNA NA RESTART)
+  // Ten hook żyje przez cały czas i ooswiezy animacje ramek natychmiast po wczytaniu czegokolwiek bo inaczej trzeba odpalic menu i dopiero zatrybia
+  useEffect(() => {
+    if (map_slug && mapUserSettings?.[map_slug]?.interface) {
+      const currentInterface = mapUserSettings[map_slug].interface;
+
+      const hasBorder = currentInterface.show_animated_border;
+      const hasOutline = currentInterface.show_animated_outline;
+
+      document.body.classList.toggle('fanaberia-border-active', !!hasBorder);
+      document.body.classList.toggle('fanaberia-outline-active', !!hasOutline);
+    }
+  }, [map_slug, mapUserSettings]); // Nasłuchuje zmian całego obiektu ustawień - monitorowac zuzycie pamieci na serwerze !!
+
   return {
     isReady,
     hasOldSettings,

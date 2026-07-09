@@ -95,7 +95,8 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(330deg,/* #028000a6,*/ #001c30ff, #028000a6, #001c30ff);
   --fanaberia-system-status-kolor-WARNING: linear-gradient(330deg,/* #ffa200a6,*/ #001c30ff, #ffa200a6, #001c30ff);
   --fanaberia-system-status-kolor-DANGEROUS: linear-gradient(330deg,/* #ff2c2ca6,*/ #001c30ff, #ff2c2ca6, #001c30ff);
-  --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg,/* #ab00ffa6,*/ #001c30ff, #ab00ffa6, #001c30ff);
+  //--fanaberia-system-status-kolor-TARGET: linear-gradient(330deg,/* #ab00ffa6,*/ #001c30ff, #ab00ffa6, #001c30ff);
+  --fanaberia-system-status-kolor-TARGET: linear-gradient(330deg,/* #ab00ffa6,*/ #001c30ff, #ab00ffa6, #001c30ff,#ab00ffa6, #001c30ff, #ab00ffa6, #001c30ff, #ab00ffa6, #001c30ff);
   --fanaberia-system-status-kolor-LOOKINGFOR: linear-gradient(330deg,/* #006aefa6,*/ #001c30ff, #006aefa6, #001c30ff);
   --fanaberia-system-status-kolor-RALLY: repeating-linear-gradient(45deg, #1b84ec 0px,#1b84ec 8px,transparent 8px,transparent 21px);
 

@@ -206,7 +206,7 @@ const MapComp = ({
     [getNodes, onNodesChange],
   );
 
-  useEffect(() => {
+  useEffect(() => { //fanaberiatracker - definiuje liste "efektow" nalozonych na system ? w sumie hgw jak to dziala byc moze tutaj nie potrzeba nic doklejac w kwestii ramek
     update(x => ({
       ...x,
       showKSpaceBG: showKSpaceBG,

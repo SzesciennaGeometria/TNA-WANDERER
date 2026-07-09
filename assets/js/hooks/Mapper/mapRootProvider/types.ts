@@ -25,6 +25,8 @@ export enum PingsPlacement {
 export type InterfaceStoredSettings = {
   isShowMenu: boolean;
   isShowKSpace: boolean;
+  show_animated_border: boolean; //fanaberia - animowana ramka
+  show_animated_outline: boolean; //fanaberia - animowany outline
   isThickConnections: boolean;
   isShowUnsplashedSignatures: boolean;
   isShowBackgroundPattern: boolean;
