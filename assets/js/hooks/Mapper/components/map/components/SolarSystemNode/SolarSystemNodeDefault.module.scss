@@ -183,8 +183,8 @@
   box-shadow: var(--fanaberia-system-selected-border-shadow);
 
     :global(body.fanaberia-border-active) & {
-      --color-primary: var(--fanaberia-system-selected-animate-outline-puls-0);
-      --color-secondary: var(--fanaberia-system-selected-animate-outline-puls-100);
+      --color-primary: var(--fanaberia-system-selected-animate-border-puls-0);
+      --color-secondary: var(--fanaberia-system-selected-animate-border-puls-100);
       --step: 90deg;
       border-image: repeating-conic-gradient(from var(--animate-border-angle), var(--color-primary) 0deg var(--step), var(--color-secondary) var(--step) calc(var(--step) * 2)) 1 stretch;
       animation: animate-border-rotate 2s linear infinite !important;

@@ -109,14 +109,16 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
   --fanaberia-connection-width-thick: 8px; //zmiana grubosci kreski polaczenia - THICK
 
-  --fanaberia-system-selected-border-outline: 2px dashed #2f9bffae;
+  --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
+  // --fanaberia-system-selected-border-outline: 2px dashed #2f9bffae; // w tej iteracji nieuzywane
   --fanaberia-system-selected-border-outline-width: 3px;
   --fanaberia-system-selected-border-outline-offset: 2px;
-  --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
   --fanaberia-system-selected-animate-outline-puls-0: #ccddffae;
   --fanaberia-system-selected-animate-outline-puls-100: #1e68ffae;
   --fanaberia-system-selected-animate-border-angle-0: 0deg;
   --fanaberia-system-selected-animate-border-angle-100: 360deg;
+  --fanaberia-system-selected-animate-border-puls-0: #ccddffae;
+  --fanaberia-system-selected-animate-border-puls-100: #1e68ffae;
 
   //--fanaberia-system-selected-border-image: conic-gradient(from var(--animate-border-angle), #1e93ffae 0deg 90deg, #ffffffae 90deg 180deg, #1e93ffae 180deg 270deg, #ffffffae 270deg 360deg) 1 stretch;
 

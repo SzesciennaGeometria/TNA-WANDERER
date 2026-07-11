@@ -151,10 +151,14 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-connection-width: 2px; //szerokosci ramki przekazywany jako paramert aby mozna bylo go nadpisac innym stylem
   --fanaberia-connection-width-thick: 4px;
 
-  --fanaberia-system-selected-border-outline: ; //(null)
+  //--fanaberia-system-selected-border-outline: ; //(null) - w tej iteracji nieuzywany
   --fanaberia-system-selected-border-shadow: 0 0 10px #9a1af1c2; //kolor i szerokosc poswiaty wybranego systemu
-  --fanaberia-system-selected-animate-outline-puls-0: ; //(null) - bo inaczej znika
-  --fanaberia-system-selected-animate-outline-puls-100: ; //(null - bo inaczej znika)
+  --fanaberia-system-selected-animate-outline-puls-0: #ccddffae; //(null) - jesli bez wartosci bo inaczej znika
+  --fanaberia-system-selected-animate-outline-puls-100: #ccddff00; //(null - jesli bez wartosci bo inaczej znika)
+  --fanaberia-system-selected-border-outline-width: 2px;
+  --fanaberia-system-selected-border-outline-offset: 2px;
+  --fanaberia-system-selected-animate-border-puls-0: #ccddffae ; //(null) - jesli bez wartosci bo inaczej znika
+  --fanaberia-system-selected-animate-border-puls-100: #ccddff00; //(null - jesli bez wartosci bo inaczej znika)
 
   --fanaberia-system-status-kolor-HOME: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
   --fanaberia-system-status-kolor-FRIENDLY: linear-gradient(275deg, var(--eve-solar-system-status-friendly-dark30), transparent);
