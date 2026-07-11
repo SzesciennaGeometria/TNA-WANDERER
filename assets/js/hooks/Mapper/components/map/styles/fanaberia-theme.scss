@@ -103,11 +103,11 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
 
 
-  --fanaberia-connection-border-width: 8px; //zmiana grubosci ramki polaczenia
-  --fanaberia-connection-border-width-thick: 14px; //zmiana grubosci ramki polaczenia -THICK
+  --fanaberia-connection-border-width: 7px; //zmiana grubosci ramki polaczenia
+  --fanaberia-connection-border-width-thick: 12px; //zmiana grubosci ramki polaczenia -THICK
   --fanaberia-connection-border-dasharray: 10 15; //ramka kreskowana dla time-kryta ????
-  --fanaberia-connection-width: 4px; //zmiana grubosci kreski polaczenia
-  --fanaberia-connection-width-thick: 8px; //zmiana grubosci kreski polaczenia - THICK
+  --fanaberia-connection-width: 3px; //zmiana grubosci kreski polaczenia
+  --fanaberia-connection-width-thick: 5px; //zmiana grubosci kreski polaczenia - THICK
 
   --fanaberia-system-selected-border-shadow:  0 0 30px #1e68ffae;
   // --fanaberia-system-selected-border-outline: 2px dashed #2f9bffae; // w tej iteracji nieuzywane
@@ -134,7 +134,7 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --fanaberia-system-effect-size: 8px;
   --fanaberia-system-effect-border: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
   --fanaberia-statyk-text-size: 11px;
-  --fanaberia-statyk-text-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
+  --fanaberia-statyk-text-shadow: 1px 0 #060606, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;
   //--fanaderia-statyk-text-shadow: -webkit-text-stroke: 0.4px black;
   //--fanaberia-icons-size: ; //na rasie nie dotykac
   --fanaberia-icons-shadow: 1px 0 #0e0e0e, 0 1px #0e0e0e, -1px 0 #0e0e0e, 0 -1px #0e0e0e;

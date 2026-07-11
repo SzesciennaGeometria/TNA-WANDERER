@@ -23,7 +23,7 @@ export function getSignatureRowClass(
   if (row.deleted) {
     return clsx([...baseCls, 'bg-red-400/40 hover:bg-red-400/50']);
   }
-
+/*
   if (row.inserted_at) { //fanaberiatracker - kolorowanie wklejonych wierszy do okna sygnatur
     const localNow = new Date().getTime();
     const timeDiff = (localNow - 7200000) //fanaberia - korekta strefy czasowej serwera eve +2h w milisekundach
@@ -35,7 +35,22 @@ export function getSignatureRowClass(
     if (updatedAge > 0 && updatedAge < 1000) {
       return clsx([...baseCls, 'transition duration-500 bg-orange-300/20 hover:bg-orange-300/60']);
     }
+    */
+
+  if (row.inserted_at) {
+  const localNow = new Date();
+  const insertedTime = new Date(row.inserted_at).getTime();
+  const updatedTime = row.updated_at ? new Date(row.updated_at).getTime() : null;
+  const nowUtc = localNow.getTime() + (localNow.getTimezoneOffset() * 60000);
+  const insertedAge = Math.abs(nowUtc - insertedTime);
+  const updatedAge = updatedTime ? Math.abs(nowUtc - updatedTime) : Infinity;
+  if (insertedAge < 5000 && (!updatedTime || insertedAge === updatedAge)) {
+    return clsx([...baseCls, 'transition duration-500 bg-green-900/40 hover:bg-green-900/60']);
   }
+  if (updatedAge < 1000) {
+    return clsx([...baseCls, 'transition duration-500 bg-orange-300/20 hover:bg-orange-300/60']);
+  }
+}
 
   // Apply color by type styling if enabled
   if (colorByType) {
