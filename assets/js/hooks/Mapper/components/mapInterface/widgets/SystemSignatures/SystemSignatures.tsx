@@ -39,6 +39,7 @@ export const SystemSignatures = () => {
     handleSelectAll,
     handlePaste,
     hasUnsupportedLanguage,
+    glowingRows, //fanaberia - kolorowanie wierszy przekaznie zmiennej
   } = useSystemSignaturesData({
     systemId,
     settings: settingsSignatures,
@@ -98,6 +99,7 @@ export const SystemSignatures = () => {
           onPaste={handlePaste}
           hasUnsupportedLanguage={hasUnsupportedLanguage}
           settings={settingsSignatures}
+          glowingRows={glowingRows} //fanaberia - kolorowanie wierszy przekaznie zmiennej
         />
       )}
 

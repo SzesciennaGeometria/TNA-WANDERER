@@ -7,10 +7,11 @@ export function getSignatureRowClass(
   row: ExtendedSystemSignature,
   selectedSignatures: ExtendedSystemSignature[],
   colorByType?: boolean,
+  glowingRows?: Map<string, { isNew: boolean }>, //fanaberia - kolorowanie wierszy przekazanie parametru ktore maja sie sweicic
 ): string {
   const isSelected = selectedSignatures.some(s => s.eve_id === row.eve_id);
 
-  const baseCls = [ //fanaberiatracker - kolorowanie wierszy w oknie sygnatur, pytanie czy da sie zrobic oninsert czy cos
+  const baseCls = [
     classes.TableRowCompact,
     getRowBackgroundColor(row.inserted_at ? new Date(row.inserted_at) : undefined),
     'transition duration-200 my-2 hover:bg-purple-400/20',
@@ -23,34 +24,20 @@ export function getSignatureRowClass(
   if (row.deleted) {
     return clsx([...baseCls, 'bg-red-400/40 hover:bg-red-400/50']);
   }
-/*
-  if (row.inserted_at) { //fanaberiatracker - kolorowanie wklejonych wierszy do okna sygnatur
-    const localNow = new Date().getTime();
-    const timeDiff = (localNow - 7200000) //fanaberia - korekta strefy czasowej serwera eve +2h w milisekundach
-    const insertedAge = timeDiff - new Date(row.inserted_at).getTime();
-    const updatedAge = row.updated_at ? timeDiff - new Date(row.updated_at).getTime() : Infinity;
-    if (insertedAge > 0 && insertedAge < 5000 && (insertedAge === updatedAge || !row.updated_at)) {
-      return clsx([...baseCls, 'transition duration-500 bg-green-900/40 hover:bg-green-900/60']);
-    }
-    if (updatedAge > 0 && updatedAge < 1000) {
-      return clsx([...baseCls, 'transition duration-500 bg-orange-300/20 hover:bg-orange-300/60']);
-    }
-    */
 
-  if (row.inserted_at) {
-  const localNow = new Date();
-  const insertedTime = new Date(row.inserted_at).getTime();
-  const updatedTime = row.updated_at ? new Date(row.updated_at).getTime() : null;
-  const nowUtc = localNow.getTime() + (localNow.getTimezoneOffset() * 60000);
-  const insertedAge = Math.abs(nowUtc - insertedTime);
-  const updatedAge = updatedTime ? Math.abs(nowUtc - updatedTime) : Infinity;
-  if (insertedAge < 5000 && (!updatedTime || insertedAge === updatedAge)) {
-    return clsx([...baseCls, 'transition duration-500 bg-green-900/40 hover:bg-green-900/60']);
+//fanaberiatracker - kolorowanie wierszy warunek kolorystyczny - czas ustawiany w pliku useSystemSignaturesData.ts
+//fanaberiatracker - kolorowanie wierszy renderowanie tabeli ustawiamy w pliku  systemSignatures.tsx
+//fanaberiatracker - kolorowanie wierszy jak sie cos zesra tropic bydlaka po parametrze glowingRows
+
+  const glowInfo = glowingRows.get(row.eve_id);
+  if (glowInfo) {
+    if (glowInfo.isNew) {
+      return clsx([...baseCls, 'transition duration-500 bg-green-900/40 hover:bg-green-900/60']);
+    } else {
+      return clsx([...baseCls, 'transition duration-500 bg-orange-300/10 hover:bg-orange-300/60']);
+    }
   }
-  if (updatedAge < 1000) {
-    return clsx([...baseCls, 'transition duration-500 bg-orange-300/20 hover:bg-orange-300/60']);
-  }
-}
+
 
   // Apply color by type styling if enabled
   if (colorByType) {
@@ -74,3 +61,5 @@ export function getSignatureRowClass(
   // Original styling when color by type is disabled
   return clsx(...baseCls);
 }
+
+

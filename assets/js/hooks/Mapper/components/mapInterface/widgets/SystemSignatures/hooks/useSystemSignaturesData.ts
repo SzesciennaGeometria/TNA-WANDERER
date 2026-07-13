@@ -19,6 +19,8 @@ export const useSystemSignaturesData = ({
   const [selectedSignatures, setSelectedSignatures] = useState<ExtendedSystemSignature[]>([]);
   const [hasUnsupportedLanguage, setHasUnsupportedLanguage] = useState<boolean>(false);
 
+  const [glowingRows, setGlowingRows] = useState<Map<string, { isNew: boolean }>>(new Map()); //fanaberia - kolorowanie wierszy  mapa id-wierszy
+
   const { handleGetSignatures, handleUpdateSignatures } = useSignatureFetching({
     systemId,
     settings,
@@ -40,6 +42,24 @@ export const useSystemSignaturesData = ({
         return;
       }
 
+      const newGlowing = new Map(glowingRows); //fanaberia - kolorowanie wierszy, nadanie wklejce parametru glowing
+      incomingSignatures.forEach(sig => {
+        const existing = signaturesRef.current.find(s => s.eve_id === sig.eve_id); //fanaberia - kolorowanie wierszy check czy taki juz istnieje
+        const isBrandNew = !existing || !existing.updated_at || Math.abs(new Date(existing.inserted_at).getTime() - new Date(existing.updated_at).getTime()) < 50;
+
+        newGlowing.set(sig.eve_id, { isNew: isBrandNew });
+      });
+      setGlowingRows(newGlowing);
+
+      setTimeout(() => { //fanaberia - kolorowanie wierszy utworzenie temera w momencie wklejenia
+        setGlowingRows(current => {
+          const updated = new Map(current);
+          incomingSignatures.forEach(sig => updated.delete(sig.eve_id));
+          return updated;
+        });
+      }, 3000); //fanaberia - kolorowanie wierszy - ustawienie ile czasu ma byc utrzymany kolor w ms
+
+
       // Check if any signatures might be using unsupported languages
       // This is a basic heuristic: if we have signatures where the original group wasn't mapped
       const clipboardRows = clipboardString.split('\n').filter(row => row.trim() !== '');
@@ -59,7 +79,7 @@ export const useSystemSignaturesData = ({
         onLazyDeleteChange?.(false);
       }
     },
-    [settings, handleUpdateSignatures, onLazyDeleteChange],
+    [settings, handleUpdateSignatures, onLazyDeleteChange, glowingRows], //fanaberia - kolorowanie wierszy
   );
 
   const handleDeleteSelected = useCallback(async () => {
@@ -100,5 +120,6 @@ export const useSystemSignaturesData = ({
     handleSelectAll,
     handlePaste,
     hasUnsupportedLanguage,
+    glowingRows, //fanaberia - kolorowanie wierszy
   };
 };

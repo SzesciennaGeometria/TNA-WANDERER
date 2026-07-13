@@ -50,6 +50,7 @@ interface SystemSignaturesContentProps {
   selectable?: boolean;
   onSelect?: (signature: SystemSignature) => void;
   filterSignature?: (signature: SystemSignature) => boolean;
+  glowingRows?: Map<string, { isNew: boolean }>; //fanaberia - kolorowanie wierszy
 }
 
 export const SystemSignaturesContent = ({
@@ -66,6 +67,7 @@ export const SystemSignaturesContent = ({
   selectable,
   onSelect,
   filterSignature,
+  glowingRows,
 }: SystemSignaturesContentProps) => {
   const [selectedSignatureForDialog, setSelectedSignatureForDialog] = useState<SystemSignature | null>(null);
   const [showSignatureSettings, setShowSignatureSettings] = useState(false);
@@ -230,8 +232,9 @@ export const SystemSignaturesContent = ({
       rowData as ExtendedSystemSignature,
       refVars.current.selectedSignatures || [],
       refVars.current.settings[SETTINGS_KEYS.COLOR_BY_TYPE] as boolean,
+      glowingRows, //fanaberia - kolorowanie wierszy
     );
-  }, []);
+  }, [glowingRows]); //fanaberia - kolorowanie wierszy
 
   const handleSortSettings = useCallback((e: DataTableStateEvent) => {
     refVars.current.settingsSignaturesUpdate({
