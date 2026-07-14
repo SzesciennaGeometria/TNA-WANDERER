@@ -32,7 +32,7 @@ export function getSignatureRowClass(
   const glowInfo = glowingRows.get(row.eve_id);
   if (glowInfo) {
     if (glowInfo.isNew) {
-      return clsx([...baseCls, 'transition duration-500 bg-green-900/40 hover:bg-green-900/60']);
+      return clsx([...baseCls, 'transition duration-500 bg-lime-700/50 hover:bg-lime-700/60']);
     } else {
       return clsx([...baseCls, 'transition duration-500 bg-orange-300/10 hover:bg-orange-300/60']);
     }

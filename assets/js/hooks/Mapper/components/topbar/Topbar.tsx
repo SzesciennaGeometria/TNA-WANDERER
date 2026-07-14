@@ -24,7 +24,7 @@ const Topbar = ({ children }: WithChildren) => {
     >
       <span className="flex-1"></span>
       <span className="mr-2"></span>
-      <span className="flex-1 text-sm text-stone-200 font-medium">TNA-wanderer v260713-2</span>
+      <span className="flex-1 text-sm text-stone-200 font-medium">TNA-wanderer v260713-3</span>
       <div className="flex gap-1 items-center">
         <Characters data={charsToShow} />
       </div>

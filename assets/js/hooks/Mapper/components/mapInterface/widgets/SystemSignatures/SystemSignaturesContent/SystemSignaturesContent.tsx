@@ -67,7 +67,7 @@ export const SystemSignaturesContent = ({
   selectable,
   onSelect,
   filterSignature,
-  glowingRows,
+  glowingRows = new Map(),
 }: SystemSignaturesContentProps) => {
   const [selectedSignatureForDialog, setSelectedSignatureForDialog] = useState<SystemSignature | null>(null);
   const [showSignatureSettings, setShowSignatureSettings] = useState(false);

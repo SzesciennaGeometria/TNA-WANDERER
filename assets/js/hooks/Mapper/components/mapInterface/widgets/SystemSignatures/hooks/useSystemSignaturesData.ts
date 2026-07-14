@@ -42,19 +42,25 @@ export const useSystemSignaturesData = ({
         return;
       }
 
-      const newGlowing = new Map(glowingRows); //fanaberia - kolorowanie wierszy, nadanie wklejce parametru glowing
-      incomingSignatures.forEach(sig => {
-        const existing = signaturesRef.current.find(s => s.eve_id === sig.eve_id); //fanaberia - kolorowanie wierszy check czy taki juz istnieje
-        const isBrandNew = !existing || !existing.updated_at || Math.abs(new Date(existing.inserted_at).getTime() - new Date(existing.updated_at).getTime()) < 50;
+      setGlowingRows(current => { //fanaberia - kolorowanie wierszy, nadanie wklejce parametru glowing
+        const newGlowing = new Map(current);
+        incomingSignatures.forEach(sig => {
+          const existing = signaturesRef.current.find(s => s.eve_id === sig.eve_id);
+          const isBrandNew = !existing || !existing.updated_at ||
+            Math.abs(new Date(existing.inserted_at).getTime() - new Date(existing.updated_at).getTime()) < 50;
 
-        newGlowing.set(sig.eve_id, { isNew: isBrandNew });
+          newGlowing.set(sig.eve_id, { isNew: isBrandNew });
+        });
+        return newGlowing;
       });
-      setGlowingRows(newGlowing);
+
+      const idsToRemove = incomingSignatures.map(sig => sig.eve_id);
 
       setTimeout(() => { //fanaberia - kolorowanie wierszy utworzenie temera w momencie wklejenia
         setGlowingRows(current => {
+          if (!current) return new Map();
           const updated = new Map(current);
-          incomingSignatures.forEach(sig => updated.delete(sig.eve_id));
+          idsToRemove.forEach(id => updated.delete(id));
           return updated;
         });
       }, 3000); //fanaberia - kolorowanie wierszy - ustawienie ile czasu ma byc utrzymany kolor w ms
@@ -79,7 +85,7 @@ export const useSystemSignaturesData = ({
         onLazyDeleteChange?.(false);
       }
     },
-    [settings, handleUpdateSignatures, onLazyDeleteChange, glowingRows], //fanaberia - kolorowanie wierszy
+    [settings, handleUpdateSignatures, onLazyDeleteChange],
   );
 
   const handleDeleteSelected = useCallback(async () => {
