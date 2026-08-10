@@ -10,7 +10,6 @@ defmodule WandererApp.MapUserSettingsRepo do
     "bookmark_custom_mapping" => %{},
     "system_auto_tag" => "",
     "system_custom_label_name" => "",
-    "system_labels" => [],
     "bookmark_return_hole_ignore" => false,
     "bookmark_return_hole_symbol" => ""
   }

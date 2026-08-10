@@ -306,6 +306,7 @@ export enum OutCommand {
   showTracking = 'show_tracking',
   getUserSettings = 'get_user_settings',
   updateUserSettings = 'update_user_settings',
+  updateMapSystemLabels = 'update_map_system_labels',
   saveDefaultSettings = 'save_default_settings',
   getDefaultSettings = 'get_default_settings',
   unlinkSignature = 'unlink_signature',
