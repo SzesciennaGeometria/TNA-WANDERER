@@ -6,7 +6,7 @@ export const to_5: MigrationStructure = {
   to: 5,
   up: (prev: any) => {
     const interfaceSettings = prev?.interface || {};
- const signatureSettings = prev?.signatures || {};
+    const signatureSettings = prev?.signatures || {};
 
     return {
       ...prev,
@@ -16,6 +16,7 @@ export const to_5: MigrationStructure = {
         show_animated_border: interfaceSettings.show_animated_border ?? false,
         show_animated_outline: interfaceSettings.show_animated_outline ?? false,
         disable_animated_outlineborder: interfaceSettings.disable_animated_outlineborder ?? false,
+      },
       signatures: {
         ...signatureSettings,
         glowingrows_timing: signatureSettings.glowingrows_timing ?? SIGNATURES_GLOWINGROWS_TIMING.GLOWDEFAULT,

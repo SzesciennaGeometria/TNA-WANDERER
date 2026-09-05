@@ -25,6 +25,8 @@ COPY priv priv
 COPY lib lib
 COPY assets assets
 
+RUN cd assets && (yarn config set ignore-engines true 2>/dev/null || true) && (npm config set engine-strict false 2>/dev/null || true)
+
 RUN mix assets.deploy
 RUN mix compile
 
