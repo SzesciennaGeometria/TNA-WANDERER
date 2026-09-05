@@ -22,6 +22,9 @@ const Topbar = ({ children }: WithChildren) => {
         'bg-opacity-70 bg-neutral-900',
       )}
     >
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none font-medium text-stone-200">
+        TNA-wanderer_v260904-3
+      </div>
       <span className="flex-1"></span>
       <span className="mr-2"></span>
       <div className="flex gap-1 items-center">
