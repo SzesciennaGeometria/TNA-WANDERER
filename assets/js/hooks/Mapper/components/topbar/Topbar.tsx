@@ -16,13 +16,14 @@ const Topbar = ({ children }: WithChildren) => {
 
   return (
     <nav
+      style={{ position: 'relative' }}
       className={clsx(
         'px-2 flex items-center justify-center min-w-0 h-12 pointer-events-auto',
         'border-b border-stone-800 bg-gray-800 bg-opacity-5',
         'bg-opacity-70 bg-neutral-900',
       )}
     >
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none font-medium text-stone-200">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none font-medium text-stone-200 z-10 whitespace-nowrap">
         TNA-wanderer_v260904-3
       </div>
       <span className="flex-1"></span>
