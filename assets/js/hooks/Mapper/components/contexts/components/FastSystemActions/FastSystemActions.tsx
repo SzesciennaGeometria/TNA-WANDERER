@@ -43,7 +43,7 @@ export const FastSystemActions = ({
     }
 
     return window.open(
-      `https://evemaps.dotlan.net/map/${ref.current.regionName.replace(/ /gim, '_')}/${ref.current.systemName}#jumps`,
+      `https://evemaps.dotlan.net/map/${ref.current.regionName.replace(/ /gim, '_')}/${ref.current.systemName}#sec`,
       '_blank',
     );
   }, []);
