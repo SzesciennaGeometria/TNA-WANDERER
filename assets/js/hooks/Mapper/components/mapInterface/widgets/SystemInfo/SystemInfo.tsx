@@ -89,7 +89,7 @@ export const SystemInfo = () => {
                 <img src={ANOIK_ICON} alt="Anoikis" width="14" height="14" className="external-icon" />
               </button>
               <button type="button" onClick={handleOpenDotlan} className="cursor-pointer">
-                <img src={DOTLAN_ICON} alt="Dotlan" alt="" width="14" height="14" className="external-icon" />
+                <img src={DOTLAN_ICON} alt="Dotlan" width="14" height="14" className="external-icon" />
               </button>
             </LayoutEventBlocker>
           </div>
