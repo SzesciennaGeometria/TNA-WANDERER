@@ -2,6 +2,8 @@ import { LayoutEventBlocker, TooltipPosition, WdImageSize, WdImgButton } from '@
 import { ANOIK_ICON, DOTLAN_ICON, ZKB_ICON } from '@/hooks/Mapper/icons';
 import { useCallback, useRef } from 'react';
 
+import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
+
 import clsx from 'clsx';
 import { PrimeIcons } from 'primereact/api';
 import classes from './FastSystemActions.module.scss';
@@ -23,8 +25,14 @@ export const FastSystemActions = ({
   onOpenSettings,
   showEdit,
 }: FastSystemActionsProps) => {
-  const ref = useRef({ systemId, systemName, regionName, isWH });
-  ref.current = { systemId, systemName, regionName, isWH };
+  const {
+    storedSettings: { interfaceSettings },
+  } = useMapRootState();
+
+  const dotlanBehavior = interfaceSettings?.dotlan_behavior || 'system';
+
+  const ref = useRef({ systemId, systemName, regionName, isWH, dotlanBehavior });
+  ref.current = { systemId, systemName, regionName, isWH, dotlanBehavior };
 
   const handleOpenZKB = useCallback(
     () => window.open(`https://zkillboard.com/system/${ref.current.systemId}/`, '_blank'),
@@ -32,20 +40,25 @@ export const FastSystemActions = ({
   );
 
   const handleOpenAnoikis = useCallback(
-    () => window.open(`http://anoik.is/systems/${ref.current.systemName}`, '_blank'),
+    () => window.open(`https://anoik.is/systems/${ref.current.systemName}`, '_blank'),
     [],
   );
 
   const handleOpenDotlan = useCallback(() => {
-    if (ref.current.isWH) {
-      window.open(`https://evemaps.dotlan.net/system/${ref.current.systemName}`, '_blank');
+    const { isWH, systemName, regionName, dotlanBehavior } = ref.current;
+
+    if (isWH) {
+      window.open(`https://evemaps.dotlan.net/system/${systemName}`, '_blank');
       return;
     }
 
-    return window.open(
-      `https://evemaps.dotlan.net/map/${ref.current.regionName.replace(/ /gim, '_')}/${ref.current.systemName}#sec`,
-      '_blank',
-    );
+    const formattedRegion = regionName.replace(/ /gim, '_');
+    if (dotlanBehavior === 'system') {
+      window.open(`https://evemaps.dotlan.net/system/${systemName}`, '_blank');
+      return;
+    }
+
+    window.open(`https://evemaps.dotlan.net/map/${formattedRegion}/${systemName}#${dotlanBehavior}`, '_blank');
   }, []);
 
   const copySystemNameToClipboard = useCallback(async () => {

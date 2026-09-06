@@ -40,6 +40,7 @@ export type InterfaceStoredSettings = {
   minimapPlacement: MiniMapPlacement;
   pingsPlacement: PingsPlacement;
   hideBookmarkWarning: boolean;
+  dotlan_behavior: string;
 };
 
 export type RoutesType = {

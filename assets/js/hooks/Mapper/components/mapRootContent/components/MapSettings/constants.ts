@@ -15,6 +15,7 @@ export const DEFAULT_REMOTE_SETTINGS = {
   [UserSettingsRemoteProps.system_custom_label_name]: '',
   [UserSettingsRemoteProps.bookmark_return_hole_ignore]: false,
   [UserSettingsRemoteProps.bookmark_return_hole_symbol]: '',
+  [UserSettingsRemoteProps.dotlan_behavior]: 'system',
 };
 
 export const AUTO_FORMAT_OPTIONS = [
@@ -39,6 +40,31 @@ export const UserSettingsRemoteList = [
   UserSettingsRemoteProps.bookmark_return_hole_ignore,
   UserSettingsRemoteProps.bookmark_return_hole_symbol,
 ];
+
+export const DOTLAN_DEFAULTBEHAVIOR_PROPS: SettingsListItem = {
+  prop: UserSettingsRemoteProps.dotlan_behavior,
+  label: 'Dotlan Shortcut Opens',
+  type: 'dropdown',
+  options: [
+    { label: 'System info', value: 'system' },
+    { label: '(map) Security lvl', value: 'sec' },
+    { label: '(map) Sovereignty', value: 'sov' },
+    { label: '(map) Constellation', value: 'const' },
+    { label: '(map) Gate Jumps', value: 'jumps' },
+    { label: '(map) PvP Kills', value: 'kills' },
+    { label: '(map) NPC Kills', value: 'npc' },
+    { label: '(map) NPC Kills-delta', value: 'npc_delta' },
+  ],
+  placeholder: 'System info (default)',
+};
+
+export const DOTLAN_BEHAVIOR_VALUES = DOTLAN_DEFAULTBEHAVIOR_PROPS.options!.reduce(
+  (acc, opt) => {
+    acc[opt.value] = opt.value;
+    return acc;
+  },
+  {} as Record<string, string>,
+);
 
 // export const COMMON_CHECKBOXES_PROPS: SettingsListItem[] = [
 //   // {
