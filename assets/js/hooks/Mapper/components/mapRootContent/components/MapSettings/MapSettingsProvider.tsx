@@ -81,13 +81,13 @@ export const MapSettingsProvider = ({ children }: WithChildren) => {
   const renderSettingItem = useCallback(
     (item: SettingsListItem) => {
       if (item.dependsOn) {
-        const dependsOnValue = refVars.current.mergedSettings[item.dependsOn];
+        const dependsOnValue = mergedSettings[item.dependsOn];
         if (!dependsOnValue) {
           return null;
         }
       }
 
-      const currentValue = refVars.current.mergedSettings[item.prop];
+      const currentValue = mergedSettings[item.prop];
 
       if (item.type === 'checkbox') {
         return (
@@ -110,7 +110,9 @@ export const MapSettingsProvider = ({ children }: WithChildren) => {
               value={currentValue}
               options={item.options}
               onChange={e => handleSettingChange(item.prop, e.value)}
-              placeholder="Select a theme"
+              optionLabel="label"
+              optionValue="value"
+              placeholder={item.placeholder || 'Select Theme'}
             />
           </div>
         );
@@ -133,7 +135,7 @@ export const MapSettingsProvider = ({ children }: WithChildren) => {
 
       return null;
     },
-    [handleSettingChange],
+    [handleSettingChange, mergedSettings],
   );
 
   return (

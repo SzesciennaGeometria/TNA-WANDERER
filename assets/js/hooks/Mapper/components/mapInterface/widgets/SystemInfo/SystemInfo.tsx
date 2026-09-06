@@ -4,6 +4,7 @@ import { LayoutEventBlocker, SystemView, TooltipPosition, WdImgButton } from '@/
 import { ANOIK_ICON, DOTLAN_ICON, ZKB_ICON } from '@/hooks/Mapper/icons';
 import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
 import { getSystemStaticInfo } from '@/hooks/Mapper/mapRootProvider/hooks/useLoadSystemStatic';
+import { isWormholeSpace } from '@/hooks/Mapper/components/map/helpers/isWormholeSpace.ts';
 import { PrimeIcons } from 'primereact/api';
 import { useCallback, useState } from 'react';
 import { SystemInfoContent } from './SystemInfoContent';
@@ -13,12 +14,17 @@ export const SystemInfo = () => {
 
   const {
     data: { selectedSystems },
+    storedSettings: { interfaceSettings },
   } = useMapRootState();
 
   const [systemId] = selectedSystems;
 
   const systemStaticInfo = getSystemStaticInfo(systemId)!;
-  const { solar_system_name: solarSystemName } = systemStaticInfo || {};
+  const {
+    solar_system_name: solarSystemName,
+    region_name: regionName,
+    system_class: systemClass,
+  } = systemStaticInfo || {};
 
   const isNotSelectedSystem = selectedSystems.length !== 1;
 
@@ -29,6 +35,34 @@ export const SystemInfo = () => {
       console.error(err);
     }
   }, [solarSystemName]);
+
+  const handleOpenZKB = useCallback(() => {
+    if (!systemId) return;
+    window.open(`https://zkillboard.com/system/${systemId}/`, '_blank');
+  }, [systemId]);
+
+  const handleOpenAnoikis = useCallback(() => {
+    if (!solarSystemName) return;
+    window.open(`https://anoik.is/systems/${solarSystemName}`, '_blank');
+  }, [solarSystemName]);
+
+  const handleOpenDotlan = useCallback(() => {
+    if (!solarSystemName || !regionName) return;
+
+    const isWH = isWormholeSpace(systemClass);
+    const dotlanBehavior = interfaceSettings?.dotlan_behavior || 'system';
+    if (isWH) {
+      window.open(`https://evemaps.dotlan.net/system/${solarSystemName}`, '_blank');
+      return;
+    }
+
+    const formattedRegion = regionName.replace(/ /gim, '_');
+    if (dotlanBehavior === 'system') {
+      window.open(`https://evemaps.dotlan.net/system/${solarSystemName}`, '_blank');
+      return;
+    }
+    window.open(`https://evemaps.dotlan.net/map/${formattedRegion}/${solarSystemName}#${dotlanBehavior}`, '_blank');
+  }, [solarSystemName, regionName, systemClass, interfaceSettings]);
 
   return (
     <Widget
@@ -48,15 +82,15 @@ export const SystemInfo = () => {
             </div>
 
             <LayoutEventBlocker className="flex gap-1 items-center">
-              <a href={`https://zkillboard.com/system/${systemId}/`} rel="noreferrer" target="_blank">
-                <img src={ZKB_ICON} width="14" height="14" className="external-icon" />
-              </a>
-              <a href={`http://anoik.is/systems/${solarSystemName}`} rel="noreferrer" target="_blank">
-                <img src={ANOIK_ICON} width="14" height="14" className="external-icon" />
-              </a>
-              <a href={`https://evemaps.dotlan.net/system/${solarSystemName}`} rel="noreferrer" target="_blank">
-                <img src={DOTLAN_ICON} alt="" width="14" height="14" className="external-icon" />
-              </a>
+              <button type="button" onClick={handleOpenZKB} className="cursor-pointer">
+                <img src={ZKB_ICON} alt="zKillboard" width="14" height="14" className="external-icon" />
+              </button>
+              <button type="button" onClick={handleOpenAnoikis} className="cursor-pointer">
+                <img src={ANOIK_ICON} alt="Anoikis" width="14" height="14" className="external-icon" />
+              </button>
+              <button type="button" onClick={handleOpenDotlan} className="cursor-pointer">
+                <img src={DOTLAN_ICON} alt="Dotlan" alt="" width="14" height="14" className="external-icon" />
+              </button>
             </LayoutEventBlocker>
           </div>
         )

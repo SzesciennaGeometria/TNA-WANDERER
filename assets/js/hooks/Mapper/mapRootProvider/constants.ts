@@ -23,6 +23,7 @@ export const STORED_INTERFACE_DEFAULT_VALUES: InterfaceStoredSettings = {
   pingsPlacement: PingsPlacement.rightTop,
   minimapPlacement: MiniMapPlacement.rightBottom,
   hideBookmarkWarning: false,
+  dotlan_behavior: 'system',
 };
 
 export const DEFAULT_ROUTES_SETTINGS: RoutesType = {

@@ -39,37 +39,32 @@ export const UserSettingsRemoteList = [
   UserSettingsRemoteProps.system_custom_label_name,
   UserSettingsRemoteProps.bookmark_return_hole_ignore,
   UserSettingsRemoteProps.bookmark_return_hole_symbol,
-  UserSettingsRemoteProps.dotlan_behavior,
-];
-
-export const DOTLAN_BEHAVIOR_VALUES = {
-  DEFAULT: 'system',
-  MAP_SECURITY: 'sec',
-  MAP_SOVEREIGNTY: 'sov',
-  MAP_CONSTELLATION: 'constellation',
-  MAP_JUMPS: 'jumps',
-  MAP_PVP_KILLS: 'kills',
-  MAP_NPC_KILLS: 'npc',
-  MAP_NPC_KILLS_DELTA: 'npcdelta',
-};
-
-export const DOTLAN_BEHAVIOR_OPTIONS = [
-  { label: 'System info', value: DOTLAN_BEHAVIOR_VALUES.DEFAULT },
-  { label: '(map) Security lvl', value: DOTLAN_BEHAVIOR_VALUES.MAP_SECURITY },
-  { label: '(map) Sovereignty', value: DOTLAN_BEHAVIOR_VALUES.MAP_SOVEREIGNTY },
-  { label: '(map) Constellation', value: DOTLAN_BEHAVIOR_VALUES.MAP_CONSTELLATION },
-  { label: '(map) Gate Jumps', value: DOTLAN_BEHAVIOR_VALUES.MAP_JUMPS },
-  { label: '(map) PvP Kills', value: DOTLAN_BEHAVIOR_VALUES.MAP_PVP_KILLS },
-  { label: '(map) NPC Kills', value: DOTLAN_BEHAVIOR_VALUES.MAP_NPC_KILLS },
-  { label: '(map) NPC Kills-delta', value: DOTLAN_BEHAVIOR_VALUES.MAP_NPC_KILLS_DELTA },
 ];
 
 export const DOTLAN_DEFAULTBEHAVIOR_PROPS: SettingsListItem = {
   prop: UserSettingsRemoteProps.dotlan_behavior,
-  label: 'Dotlan Opens',
+  label: 'Dotlan Shortcut Opens',
   type: 'dropdown',
-  options: DOTLAN_BEHAVIOR_OPTIONS,
+  options: [
+    { label: 'System info', value: 'system' },
+    { label: '(map) Security lvl', value: 'sec' },
+    { label: '(map) Sovereignty', value: 'sov' },
+    { label: '(map) Constellation', value: 'const' },
+    { label: '(map) Gate Jumps', value: 'jumps' },
+    { label: '(map) PvP Kills', value: 'kills' },
+    { label: '(map) NPC Kills', value: 'npc' },
+    { label: '(map) NPC Kills-delta', value: 'npc_delta' },
+  ],
+  placeholder: 'System info (default)',
 };
+
+export const DOTLAN_BEHAVIOR_VALUES = DOTLAN_DEFAULTBEHAVIOR_PROPS.options!.reduce(
+  (acc, opt) => {
+    acc[opt.value] = opt.value;
+    return acc;
+  },
+  {} as Record<string, string>,
+);
 
 // export const COMMON_CHECKBOXES_PROPS: SettingsListItem[] = [
 //   // {
