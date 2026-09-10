@@ -90,6 +90,17 @@ export type MapSettings = {
   viewport: MapViewPort;
 };
 
+export type JumpSkillLevel = 0 | 1 | 2 | 3 | 4 | 5;
+
+export type JumpPlannerSettings = {
+  shipType: string;
+  jumpDriveCalibration: JumpSkillLevel;
+  jumpFuelConservation: JumpSkillLevel;
+  jumpFreighter: JumpSkillLevel;
+  preferStationSystems: boolean;
+  avoidIncursions: boolean;
+};
+
 export type SettingsWrapper<T> = T;
 
 export type MapUserSettings = {
@@ -104,6 +115,7 @@ export type MapUserSettings = {
   signaturesWidget: SettingsWrapper<SignatureSettingsType>;
   killsWidget: SettingsWrapper<KillsWidgetSettings>;
   map: SettingsWrapper<MapSettings>;
+  jumpPlanner: SettingsWrapper<JumpPlannerSettings>;
 };
 
 export type MapUserSettingsStructure = {
@@ -124,6 +136,7 @@ export enum SettingsTypes {
   signaturesWidget = 'signaturesWidget',
   interface = 'interface',
   map = 'map',
+  jumpPlanner = 'jumpPlanner',
 }
 
 export type MigrationFunc = (prev: any) => any;
