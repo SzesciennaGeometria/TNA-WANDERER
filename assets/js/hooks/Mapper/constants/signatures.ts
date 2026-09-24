@@ -1,4 +1,4 @@
-import { SignatureGroup, SignatureKind } from '@/hooks/Mapper/types';
+import {SignatureGroup, SignatureKind} from '@/hooks/Mapper/types';
 
 export const SIGNATURE_WINDOW_ID = 'system_signatures_window';
 
@@ -6,6 +6,14 @@ export enum SIGNATURES_DELETION_TIMING {
   IMMEDIATE,
   DEFAULT,
   EXTENDED,
+}
+
+export enum SIGNATURES_GLOWINGROWS_TIMING {
+  GLOWIMMEDIATE,
+  GLOWDEFAULT,
+  GLOWLONG,
+  GLOWEXTRA,
+  GLOWEXTENDED,
 }
 
 export enum SETTINGS_KEYS {
@@ -21,6 +29,7 @@ export enum SETTINGS_KEYS {
   LAZY_DELETE_SIGNATURES = 'lazy_delete_signatures',
   KEEP_LAZY_DELETE = 'keep_lazy_delete_enabled',
   DELETION_TIMING = 'deletion_timing',
+  GLOWINGROWS_TIMING = 'glowingrows_timing',
   COLOR_BY_TYPE = 'color_by_type',
 
   // From SignatureKind
@@ -55,6 +64,7 @@ export const DEFAULT_SIGNATURE_SETTINGS: SignatureSettingsType = {
   [SETTINGS_KEYS.LAZY_DELETE_SIGNATURES]: true,
   [SETTINGS_KEYS.KEEP_LAZY_DELETE]: false,
   [SETTINGS_KEYS.DELETION_TIMING]: SIGNATURES_DELETION_TIMING.DEFAULT,
+  [SETTINGS_KEYS.GLOWINGROWS_TIMING]: SIGNATURES_GLOWINGROWS_TIMING.GLOWDEFAULT,
   [SETTINGS_KEYS.COLOR_BY_TYPE]: true,
   [SETTINGS_KEYS.SHOW_CHARACTER_PORTRAIT]: true,
 

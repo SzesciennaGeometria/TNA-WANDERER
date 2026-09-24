@@ -1,4 +1,9 @@
-import { SETTINGS_KEYS, SIGNATURES_DELETION_TIMING, SignatureSettingsType } from '@/hooks/Mapper/constants/signatures';
+import {
+  SETTINGS_KEYS,
+  SIGNATURES_DELETION_TIMING,
+  SIGNATURES_GLOWINGROWS_TIMING,
+  SignatureSettingsType,
+} from '@/hooks/Mapper/constants/signatures';
 import {
   GroupType,
   SignatureGroup,
@@ -33,16 +38,16 @@ export const GROUPS_LIST = [
   SignatureGroup.CosmicSignature,
 ];
 
-const wh = { w: 14, h: 14 };
+const wh = {w: 14, h: 14};
 
 export const GROUPS: Record<SignatureGroup, GroupType> = {
-  [SignatureGroup.GasSite]: { id: SignatureGroup.GasSite, icon: '/icons/brackets/harvestableCloud.png', ...wh },
-  [SignatureGroup.RelicSite]: { id: SignatureGroup.RelicSite, icon: '/icons/brackets/relic_Site_16.png', ...wh },
-  [SignatureGroup.DataSite]: { id: SignatureGroup.DataSite, icon: '/icons/brackets/data_Site_16.png', ...wh },
-  [SignatureGroup.OreSite]: { id: SignatureGroup.OreSite, icon: '/icons/brackets/ore_Site_16.png', ...wh },
-  [SignatureGroup.CombatSite]: { id: SignatureGroup.CombatSite, icon: '/icons/brackets/combatSite_16.png', ...wh },
-  [SignatureGroup.Wormhole]: { id: SignatureGroup.Wormhole, icon: '/icons/brackets/wormhole.png', ...wh },
-  [SignatureGroup.CosmicSignature]: { id: SignatureGroup.CosmicSignature, icon: '/icons/x_close14.png', w: 9, h: 9 },
+  [SignatureGroup.GasSite]: {id: SignatureGroup.GasSite, icon: '/icons/brackets/harvestableCloud.png', ...wh},
+  [SignatureGroup.RelicSite]: {id: SignatureGroup.RelicSite, icon: '/icons/brackets/relic_Site_16.png', ...wh},
+  [SignatureGroup.DataSite]: {id: SignatureGroup.DataSite, icon: '/icons/brackets/data_Site_16.png', ...wh},
+  [SignatureGroup.OreSite]: {id: SignatureGroup.OreSite, icon: '/icons/brackets/ore_Site_16.png', ...wh},
+  [SignatureGroup.CombatSite]: {id: SignatureGroup.CombatSite, icon: '/icons/brackets/combatSite_16.png', ...wh},
+  [SignatureGroup.Wormhole]: {id: SignatureGroup.Wormhole, icon: '/icons/brackets/wormhole.png', ...wh},
+  [SignatureGroup.CosmicSignature]: {id: SignatureGroup.CosmicSignature, icon: '/icons/x_close14.png', w: 9, h: 9},
 };
 
 export const LANGUAGE_GROUP_MAPPINGS = {
@@ -113,36 +118,38 @@ export type Setting = {
 // Now use a stricter type: every timing key maps to a number
 export type SignatureDeletionTimingType = Record<SIGNATURES_DELETION_TIMING, number>;
 
+export type SignatureGlowingRowsTimingType = Record<SIGNATURES_GLOWINGROWS_TIMING, number>;
+
 export const SIGNATURE_SETTINGS = {
   filterFlags: [
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.COSMIC_ANOMALY, name: 'Show Anomalies' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.COSMIC_SIGNATURE, name: 'Show Cosmic Signatures' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.DEPLOYABLE, name: 'Show Deployables' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.STRUCTURE, name: 'Show Structures' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.STARBASE, name: 'Show Starbase' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHIP, name: 'Show Ships' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.DRONE, name: 'Show Drones And Charges' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.WORMHOLE, name: 'Show Wormholes' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.RELIC_SITE, name: 'Show Relic Sites' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.DATA_SITE, name: 'Show Data Sites' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.ORE_SITE, name: 'Show Ore Sites' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.GAS_SITE, name: 'Show Gas Sites' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.COMBAT_SITE, name: 'Show Combat Sites' },
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.COSMIC_ANOMALY, name: 'Show Anomalies'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.COSMIC_SIGNATURE, name: 'Show Cosmic Signatures'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.DEPLOYABLE, name: 'Show Deployables'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.STRUCTURE, name: 'Show Structures'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.STARBASE, name: 'Show Starbase'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHIP, name: 'Show Ships'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.DRONE, name: 'Show Drones And Charges'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.WORMHOLE, name: 'Show Wormholes'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.RELIC_SITE, name: 'Show Relic Sites'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.DATA_SITE, name: 'Show Data Sites'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.ORE_SITE, name: 'Show Ore Sites'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.GAS_SITE, name: 'Show Gas Sites'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.COMBAT_SITE, name: 'Show Combat Sites'},
   ],
   uiFlags: [
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_GROUP_COLUMN, name: 'Show Group Column' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_ADDED_COLUMN, name: 'Show Added Column' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_UPDATED_COLUMN, name: 'Show Updated Column' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_DESCRIPTION_COLUMN, name: 'Show Description Column' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_CHARACTER_COLUMN, name: 'Show Character Column' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.LAZY_DELETE_SIGNATURES, name: 'Lazy Delete Signatures' },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.KEEP_LAZY_DELETE, name: 'Keep "Lazy Delete" Enabled' },
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_GROUP_COLUMN, name: 'Show Group Column'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_ADDED_COLUMN, name: 'Show Added Column'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_UPDATED_COLUMN, name: 'Show Updated Column'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_DESCRIPTION_COLUMN, name: 'Show Description Column'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.SHOW_CHARACTER_COLUMN, name: 'Show Character Column'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.LAZY_DELETE_SIGNATURES, name: 'Lazy Delete Signatures'},
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.KEEP_LAZY_DELETE, name: 'Keep "Lazy Delete" Enabled'},
     {
       type: SettingsTypes.flag,
       key: SETTINGS_KEYS.SHOW_CHARACTER_PORTRAIT,
       name: 'Show Character Portrait in Tooltip',
     },
-    { type: SettingsTypes.flag, key: SETTINGS_KEYS.COLOR_BY_TYPE, name: 'Color Signatures by Type' },
+    {type: SettingsTypes.flag, key: SETTINGS_KEYS.COLOR_BY_TYPE, name: 'Color Signatures by Type'},
   ],
   uiOther: [
     {
@@ -150,9 +157,21 @@ export const SIGNATURE_SETTINGS = {
       key: SETTINGS_KEYS.DELETION_TIMING,
       name: 'Deletion Timing',
       options: [
-        { value: SIGNATURES_DELETION_TIMING.IMMEDIATE, label: '0s' },
-        { value: SIGNATURES_DELETION_TIMING.DEFAULT, label: '10s' },
-        { value: SIGNATURES_DELETION_TIMING.EXTENDED, label: '30s' },
+        {value: SIGNATURES_DELETION_TIMING.IMMEDIATE, label: '0s'},
+        {value: SIGNATURES_DELETION_TIMING.DEFAULT, label: '10s'},
+        {value: SIGNATURES_DELETION_TIMING.EXTENDED, label: '30s'},
+      ],
+    },
+    {
+      type: SettingsTypes.dropdown,
+      key: SETTINGS_KEYS.GLOWINGROWS_TIMING,
+      name: 'Paste-Flash Timing',
+      options: [
+        {value: SIGNATURES_GLOWINGROWS_TIMING.GLOWIMMEDIATE, label: '0s'},
+        {value: SIGNATURES_GLOWINGROWS_TIMING.GLOWDEFAULT, label: '1s'},
+        {value: SIGNATURES_GLOWINGROWS_TIMING.GLOWLONG, label: '5s'},
+        {value: SIGNATURES_GLOWINGROWS_TIMING.GLOWEXTRA, label: '10s'},
+        {value: SIGNATURES_GLOWINGROWS_TIMING.GLOWEXTENDED, label: '30s'},
       ],
     },
   ],
@@ -165,18 +184,25 @@ export const SIGNATURE_DELETION_TIMEOUTS: SignatureDeletionTimingType = {
   [SIGNATURES_DELETION_TIMING.EXTENDED]: 30_000,
 };
 
-/**
+export const SIGNATURE_GLOWINGROWS_TIMEOUTS: SignatureGlowingRowsTimingType = {
+  [SIGNATURES_GLOWINGROWS_TIMING.GLOWIMMEDIATE]: 0,
+  [SIGNATURES_GLOWINGROWS_TIMING.GLOWDEFAULT]: 1_000,
+  [SIGNATURES_GLOWINGROWS_TIMING.GLOWLONG]: 5_000,
+  [SIGNATURES_GLOWINGROWS_TIMING.GLOWEXTRA]: 10_000,
+  [SIGNATURES_GLOWINGROWS_TIMING.GLOWEXTENDED]: 30_000,
+};
+
+/*
  * Helper function to extract the deletion timeout in milliseconds from settings
  */
 export function getDeletionTimeoutMs(settings: SignatureSettingsType): number {
   const raw = settings[SETTINGS_KEYS.DELETION_TIMING];
-  const timing =
-    raw && typeof raw === 'object' && 'value' in raw
-      ? (raw as { value: SIGNATURES_DELETION_TIMING }).value
-      : (raw as SIGNATURES_DELETION_TIMING | undefined);
-
+  if (raw && typeof raw === 'object' && 'value' in raw) {
+    const timing = (raw as { value: SIGNATURES_DELETION_TIMING }).value;
+    return SIGNATURE_DELETION_TIMEOUTS[timing] ?? SIGNATURE_DELETION_TIMEOUTS[SIGNATURES_DELETION_TIMING.DEFAULT];
+  }
+  const timing = raw as SIGNATURES_DELETION_TIMING | undefined;
   const validTiming = typeof timing === 'number' ? timing : SIGNATURES_DELETION_TIMING.DEFAULT;
-
   return SIGNATURE_DELETION_TIMEOUTS[validTiming];
 }
 

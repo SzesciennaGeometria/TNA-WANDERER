@@ -1,12 +1,13 @@
-import { ExtendedSystemSignature, SignatureGroup } from '@/hooks/Mapper/types';
+import {ExtendedSystemSignature, SignatureGroup} from '@/hooks/Mapper/types';
 import clsx from 'clsx';
-import { getRowBackgroundColor } from './getRowBackgroundColor';
+import {getRowBackgroundColor} from './getRowBackgroundColor';
 import classes from './rowStyles.module.scss';
 
 export function getSignatureRowClass(
   row: ExtendedSystemSignature,
   selectedSignatures: ExtendedSystemSignature[],
   colorByType?: boolean,
+  glowingRows?: Map<string, { isNew: boolean }>,
 ): string {
   const isSelected = selectedSignatures.some(s => s.eve_id === row.eve_id);
 
@@ -22,6 +23,15 @@ export function getSignatureRowClass(
 
   if (row.deleted) {
     return clsx([...baseCls, 'bg-red-400/40 hover:bg-red-400/50']);
+  }
+
+  const glowInfo = glowingRows?.get(row.eve_id);
+  if (glowInfo) {
+    if (glowInfo.isNew) {
+      return clsx([...baseCls, 'transition duration-500 bg-lime-500/30 hover:bg-lime-500/50']);
+    } else {
+      return clsx([...baseCls, 'transition duration-500 bg-orange-200/10 hover:bg-orange-200/50']);
+    }
   }
 
   // Apply color by type styling if enabled
@@ -40,7 +50,7 @@ export function getSignatureRowClass(
     }
 
     // Default for color by type - apply same color as CosmicSignature (red) and small text size
-    return clsx([...baseCls, '[&_td:nth-child(-n+3)]:text-rose-400/100']);
+    return clsx([...baseCls, '[&_td:nth-child(-n+3)]:text-rose-900/100']);
   }
 
   // Original styling when color by type is disabled
