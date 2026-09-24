@@ -1,5 +1,5 @@
-import { PrimeIcons } from 'primereact/api';
-import { Column } from 'primereact/column';
+import {PrimeIcons} from 'primereact/api';
+import {Column} from 'primereact/column';
 import {
   DataTable,
   DataTableRowClickEvent,
@@ -7,9 +7,9 @@ import {
   DataTableStateEvent,
   SortOrder,
 } from 'primereact/datatable';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import { SignatureView } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/SignatureView';
+import {SignatureView} from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/SignatureView';
 import {
   COMPACT_MAX_WIDTH,
   getGroupIdByRawGroup,
@@ -17,9 +17,9 @@ import {
   MEDIUM_MAX_WIDTH,
   OTHER_COLUMNS_WIDTH,
 } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants';
-import { SignatureSettings } from '@/hooks/Mapper/components/mapRootContent/components/SignatureSettings';
-import { TooltipPosition, WdTooltip, WdTooltipHandlers, WdTooltipWrapper } from '@/hooks/Mapper/components/ui-kit';
-import { ExtendedSystemSignature, SignatureGroup, SignatureKind, SystemSignature } from '@/hooks/Mapper/types';
+import {SignatureSettings} from '@/hooks/Mapper/components/mapRootContent/components/SignatureSettings';
+import {TooltipPosition, WdTooltip, WdTooltipHandlers, WdTooltipWrapper} from '@/hooks/Mapper/components/ui-kit';
+import {ExtendedSystemSignature, SignatureGroup, SignatureKind, SystemSignature} from '@/hooks/Mapper/types';
 
 import {
   renderAddedTimeLeft,
@@ -28,11 +28,15 @@ import {
   renderInfoColumn,
   renderUpdatedTimeLeft,
 } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/renders';
-import { SETTINGS_KEYS, SIGNATURE_WINDOW_ID, SignatureSettingsType } from '@/hooks/Mapper/constants/signatures.ts';
-import { useClipboard, useHotkey } from '@/hooks/Mapper/hooks';
+import {SETTINGS_KEYS, SIGNATURE_WINDOW_ID, SignatureSettingsType} from '@/hooks/Mapper/constants/signatures.ts';
+import {useClipboard, useHotkey} from '@/hooks/Mapper/hooks';
 import useMaxWidth from '@/hooks/Mapper/hooks/useMaxWidth';
-import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
-import { getSignatureRowClass } from '../helpers/rowStyles';
+import {useMapRootState} from '@/hooks/Mapper/mapRootProvider';
+import {getSignatureRowClass} from '../helpers/rowStyles';
+
+type GlowingRowInfo = {
+  isNew: boolean;
+};
 
 const renderColIcon = (sig: SystemSignature) => renderIcon(sig);
 
@@ -50,30 +54,32 @@ interface SystemSignaturesContentProps {
   selectable?: boolean;
   onSelect?: (signature: SystemSignature) => void;
   filterSignature?: (signature: SystemSignature) => boolean;
+  glowingRows?: Map<string, GlowingRowInfo>;
 }
 
 export const SystemSignaturesContent = ({
-  systemId,
-  signatures,
-  selectedSignatures,
-  onSelectSignatures,
-  onDeleteSelected,
-  onSelectAll,
-  onPaste,
-  settings,
-  hideLinkedSignatures,
-  hasUnsupportedLanguage,
-  selectable,
-  onSelect,
-  filterSignature,
-}: SystemSignaturesContentProps) => {
+                                          systemId,
+                                          signatures,
+                                          selectedSignatures,
+                                          onSelectSignatures,
+                                          onDeleteSelected,
+                                          onSelectAll,
+                                          onPaste,
+                                          settings,
+                                          hideLinkedSignatures,
+                                          hasUnsupportedLanguage,
+                                          selectable,
+                                          onSelect,
+                                          filterSignature,
+                                          glowingRows,
+                                        }: SystemSignaturesContentProps) => {
   const [selectedSignatureForDialog, setSelectedSignatureForDialog] = useState<SystemSignature | null>(null);
   const [showSignatureSettings, setShowSignatureSettings] = useState(false);
   const [nameColumnWidth, setNameColumnWidth] = useState('auto');
   const [hoveredSignature, setHoveredSignature] = useState<SystemSignature | null>(null);
 
   const {
-    storedSettings: { settingsSignatures, settingsSignaturesUpdate },
+    storedSettings: {settingsSignatures, settingsSignaturesUpdate},
   } = useMapRootState();
 
   const tableRef = useRef<HTMLDivElement>(null);
@@ -82,7 +88,7 @@ export const SystemSignaturesContent = ({
   const isCompact = useMaxWidth(tableRef, COMPACT_MAX_WIDTH);
   const isMedium = useMaxWidth(tableRef, MEDIUM_MAX_WIDTH);
 
-  const { clipboardContent, setClipboardContent } = useClipboard();
+  const {clipboardContent, setClipboardContent} = useClipboard();
 
   const deletedSignatures = useMemo(() => signatures.filter(s => s.deleted), [signatures]);
 
@@ -214,21 +220,25 @@ export const SystemSignaturesContent = ({
     tooltipRef.current?.hide();
   }, []);
 
-  const refVars = useRef({ settings, selectedSignatures, settingsSignatures, settingsSignaturesUpdate });
-  refVars.current = { settings, selectedSignatures, settingsSignatures, settingsSignaturesUpdate };
+  const refVars = useRef({settings, selectedSignatures, settingsSignatures, settingsSignaturesUpdate});
+  refVars.current = {settings, selectedSignatures, settingsSignatures, settingsSignaturesUpdate};
 
   // @ts-ignore
-  const getRowClassName = useCallback(rowData => {
-    if (!rowData) {
-      return null;
-    }
+  const getRowClassName = useCallback(
+    (rowData: ExtendedSystemSignature) => {
+      if (!rowData) {
+        return '';
+      }
 
-    return getSignatureRowClass(
-      rowData as ExtendedSystemSignature,
-      refVars.current.selectedSignatures || [],
-      refVars.current.settings[SETTINGS_KEYS.COLOR_BY_TYPE] as boolean,
-    );
-  }, []);
+      return getSignatureRowClass(
+        rowData,
+        refVars.current.selectedSignatures || [],
+        refVars.current.settings[SETTINGS_KEYS.COLOR_BY_TYPE] as boolean,
+        glowingRows,
+      );
+    },
+    [glowingRows],
+  );
 
   const handleSortSettings = useCallback((e: DataTableStateEvent) => {
     refVars.current.settingsSignaturesUpdate({
@@ -247,8 +257,9 @@ export const SystemSignaturesContent = ({
       ) : (
         <>
           {hasUnsupportedLanguage && (
-            <div className="w-full flex justify-center items-center text-amber-500 text-xs p-1 bg-amber-950/20 border-b border-amber-800/30">
-              <i className={PrimeIcons.EXCLAMATION_TRIANGLE + ' mr-1'} />
+            <div
+              className="w-full flex justify-center items-center text-amber-500 text-xs p-1 bg-amber-950/20 border-b border-amber-800/30">
+              <i className={PrimeIcons.EXCLAMATION_TRIANGLE + ' mr-1'}/>
               Non-English signatures detected. Some signatures may not display correctly. Double-click to edit signature
               details.
             </div>
@@ -279,13 +290,13 @@ export const SystemSignaturesContent = ({
               header=""
               body={renderColIcon}
               bodyClassName="p-0 px-1"
-              style={{ maxWidth: 26, minWidth: 26, width: 26 }}
+              style={{maxWidth: 26, minWidth: 26, width: 26}}
             />
             <Column
               field="eve_id"
               header="Id"
               bodyClassName="text-ellipsis overflow-hidden whitespace-nowrap"
-              style={{ maxWidth: 72, minWidth: 72, width: 72 }}
+              style={{maxWidth: 72, minWidth: 72, width: 72}}
               sortable
             />
             {showGroupColumn && (
@@ -293,7 +304,7 @@ export const SystemSignaturesContent = ({
                 field="group"
                 header="Group"
                 bodyClassName="text-ellipsis overflow-hidden whitespace-nowrap"
-                style={{ maxWidth: 110, minWidth: 110, width: 110 }}
+                style={{maxWidth: 110, minWidth: 110, width: 110}}
                 body={sig => sig.group ?? ''}
                 hidden={isCompact}
                 sortable
@@ -303,7 +314,7 @@ export const SystemSignaturesContent = ({
               field="info"
               header="Info"
               bodyClassName="text-ellipsis overflow-hidden whitespace-nowrap"
-              style={{ maxWidth: nameColumnWidth }}
+              style={{maxWidth: nameColumnWidth}}
               hidden={isCompact || isMedium}
               body={renderInfoColumn}
               sortable
@@ -325,7 +336,7 @@ export const SystemSignaturesContent = ({
                 header="Added"
                 dataType="date"
                 body={renderAddedTimeLeft}
-                style={{ minWidth: 70, maxWidth: 80 }}
+                style={{minWidth: 70, maxWidth: 80}}
                 bodyClassName="ssc-header text-ellipsis overflow-hidden whitespace-nowrap"
                 sortable
               />
@@ -336,7 +347,7 @@ export const SystemSignaturesContent = ({
                 header="Updated"
                 dataType="date"
                 body={renderUpdatedTimeLeft}
-                style={{ minWidth: 70, maxWidth: 80 }}
+                style={{minWidth: 70, maxWidth: 80}}
                 bodyClassName="text-ellipsis overflow-hidden whitespace-nowrap"
                 sortable
               />
@@ -357,11 +368,11 @@ export const SystemSignaturesContent = ({
                 body={() => (
                   <div className="flex justify-end items-center gap-2 mr-[4px]">
                     <WdTooltipWrapper content="Double-click a row to edit signature">
-                      <span className={PrimeIcons.PENCIL + ' text-[10px]'} />
+                      <span className={PrimeIcons.PENCIL + ' text-[10px]'}/>
                     </WdTooltipWrapper>
                   </div>
                 )}
-                style={{ maxWidth: 26, minWidth: 26, width: 26 }}
+                style={{maxWidth: 26, minWidth: 26, width: 26}}
                 bodyClassName="p-0 pl-1 pr-2"
               />
             )}
@@ -375,7 +386,7 @@ export const SystemSignaturesContent = ({
         position={TooltipPosition.top}
         content={
           hoveredSignature ? (
-            <SignatureView signature={hoveredSignature} showCharacterPortrait={showCharacterPortrait} />
+            <SignatureView signature={hoveredSignature} showCharacterPortrait={showCharacterPortrait}/>
           ) : null
         }
       />
