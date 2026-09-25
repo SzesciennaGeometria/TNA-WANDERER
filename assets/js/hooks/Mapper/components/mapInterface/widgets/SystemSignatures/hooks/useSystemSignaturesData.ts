@@ -1,25 +1,49 @@
-import { useMapEventListener } from '@/hooks/Mapper/events';
-import { parseSignatures } from '@/hooks/Mapper/helpers';
-import { Commands, ExtendedSystemSignature, SignatureKind } from '@/hooks/Mapper/types';
-import { useCallback, useEffect, useState } from 'react';
+import {useMapEventListener} from '@/hooks/Mapper/events';
+import {parseSignatures} from '@/hooks/Mapper/helpers';
+import {Commands, ExtendedSystemSignature, SignatureKind} from '@/hooks/Mapper/types';
+import {useCallback, useEffect, useState, useRef} from 'react';
 import useRefState from 'react-usestateref';
 
-import { SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures.ts';
-import { UseSystemSignaturesDataProps } from './types';
-import { useSignatureFetching } from './useSignatureFetching';
+import {SETTINGS_KEYS} from '@/hooks/Mapper/constants/signatures.ts';
+import {
+  SIGNATURE_GLOWINGROWS_TIMEOUTS
+} from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
+import {UseSystemSignaturesDataProps} from './types';
+import {useSignatureFetching} from './useSignatureFetching';
+
+type GlowingRowInfo = {
+  isNew: boolean;
+};
+const DEFAULT_GLOWINGROWS_TIMEOUT = 1000;
+
+const checkIfSignatureIsBrandNew = (sigId: string, existingSignatures: ExtendedSystemSignature[]): boolean => {
+  const existing = existingSignatures.find(s => s.eve_id === sigId);
+  return !existing;
+};
+
+const extractGlowingRowsTimingKey = (glowingRowsValue: unknown): unknown => {
+  if (glowingRowsValue && typeof glowingRowsValue === 'object' && 'value' in glowingRowsValue) {
+    return (glowingRowsValue as Record<string, unknown>).value;
+  }
+  return glowingRowsValue;
+};
 
 export const useSystemSignaturesData = ({
-  systemId,
-  settings,
-  onLazyDeleteChange,
-}: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
+                                          systemId,
+                                          settings,
+                                          onLazyDeleteChange,
+                                        }: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
   onSignatureDeleted?: (deletedSignatures: ExtendedSystemSignature[]) => void;
 }) => {
   const [signatures, setSignatures, signaturesRef] = useRefState<ExtendedSystemSignature[]>([]);
   const [selectedSignatures, setSelectedSignatures] = useState<ExtendedSystemSignature[]>([]);
   const [hasUnsupportedLanguage, setHasUnsupportedLanguage] = useState<boolean>(false);
 
-  const { handleGetSignatures, handleUpdateSignatures } = useSignatureFetching({
+  const [glowingRows, setGlowingRows] = useState<Map<string, GlowingRowInfo>>(new Map());
+
+  const timeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
+
+  const {handleGetSignatures, handleUpdateSignatures} = useSignatureFetching({
     systemId,
     settings,
     signaturesRef,
@@ -33,19 +57,53 @@ export const useSystemSignaturesData = ({
       // Parse the incoming signatures
       const incomingSignatures = parseSignatures(
         clipboardString,
-        Object.keys(settings).filter(skey => skey in SignatureKind),
+        Object.keys(settings).filter(skye => skye in SignatureKind),
       ) as ExtendedSystemSignature[];
-
       if (incomingSignatures.length === 0) {
         return;
       }
 
-      // Check if any signatures might be using unsupported languages
-      // This is a basic heuristic: if we have signatures where the original group wasn't mapped
+      const currentPasteIds = incomingSignatures.map(sig => sig.eve_id);
+      const glowingRowsValue = settings[SETTINGS_KEYS.GLOWINGROWS_TIMING];
+      const timingKey = extractGlowingRowsTimingKey(glowingRowsValue);
+      const glowingRowsTimeoutDuration =
+        SIGNATURE_GLOWINGROWS_TIMEOUTS[timingKey as keyof typeof SIGNATURE_GLOWINGROWS_TIMEOUTS] ??
+        DEFAULT_GLOWINGROWS_TIMEOUT;
+
+      setGlowingRows(current => {
+        const newGlowing = new Map(current);
+
+        incomingSignatures.forEach((sig, index) => {
+          const alreadyGlowing = current.get(sig.eve_id);
+          let isBrandNew: boolean;
+          if (alreadyGlowing) {
+            isBrandNew = alreadyGlowing.isNew;
+          } else {
+            const isDuplicateInThisPaste = currentPasteIds.indexOf(sig.eve_id) < index;
+            isBrandNew = !isDuplicateInThisPaste && checkIfSignatureIsBrandNew(sig.eve_id, signaturesRef.current);
+          }
+
+          newGlowing.set(sig.eve_id, {isNew: isBrandNew});
+          if (timeoutsRef.current[sig.eve_id]) {
+            clearTimeout(timeoutsRef.current[sig.eve_id]);
+          }
+
+          timeoutsRef.current[sig.eve_id] = setTimeout(() => {
+            setGlowingRows(prev => {
+              const updatedMap = new Map(prev);
+              updatedMap.delete(sig.eve_id);
+              return updatedMap;
+            });
+            delete timeoutsRef.current[sig.eve_id];
+          }, glowingRowsTimeoutDuration);
+        });
+
+        return newGlowing;
+      });
+
       const clipboardRows = clipboardString.split('\n').filter(row => row.trim() !== '');
       const detectedSignatureCount = clipboardRows.filter(row => row.match(/^[A-Z]{3}-\d{3}/)).length;
 
-      // If we detected valid IDs but got fewer parsed signatures, we might have language issues
       if (detectedSignatureCount > 0 && incomingSignatures.length < detectedSignatureCount) {
         setHasUnsupportedLanguage(true);
       } else {
@@ -59,8 +117,17 @@ export const useSystemSignaturesData = ({
         onLazyDeleteChange?.(false);
       }
     },
-    [settings, handleUpdateSignatures, onLazyDeleteChange],
+    [settings, handleUpdateSignatures, onLazyDeleteChange, signaturesRef],
   );
+
+  useEffect(() => {
+    const currentTimeouts = timeoutsRef.current;
+    return () => {
+      if (currentTimeouts) {
+        Object.values(currentTimeouts).forEach(clearTimeout);
+      }
+    };
+  }, []);
 
   const handleDeleteSelected = useCallback(async () => {
     if (!selectedSignatures.length) return;
@@ -79,7 +146,8 @@ export const useSystemSignaturesData = ({
 
   useMapEventListener(event => {
     if (event.name === Commands.signaturesUpdated && String(event.data) === String(systemId)) {
-      handleGetSignatures();
+      handleGetSignatures().then(() => {
+      });
       return true;
     }
   });
@@ -89,8 +157,8 @@ export const useSystemSignaturesData = ({
       setSignatures([]);
       return;
     }
-    handleGetSignatures();
-  }, [systemId]);
+    void handleGetSignatures();
+  }, [systemId, handleGetSignatures, setSignatures]);
 
   return {
     signatures,
@@ -100,5 +168,6 @@ export const useSystemSignaturesData = ({
     handleSelectAll,
     handlePaste,
     hasUnsupportedLanguage,
+    glowingRows,
   };
 };
