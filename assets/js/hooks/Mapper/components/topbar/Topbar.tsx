@@ -24,7 +24,7 @@ const Topbar = ({children}: WithChildren) => {
     >
       {}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-neutral-200 pointer-events-none">
-        TNA-wanderer_v260904-6
+        TNA-wanderer_v260904-6B
       </div>
       <span className="flex-1"></span>
       <span className="mr-2"></span>
