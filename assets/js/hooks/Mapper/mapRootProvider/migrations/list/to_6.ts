@@ -1,6 +1,4 @@
-import {
-  SIGNATURES_GLOWINGROWS_TIMING,
-} from '@/hooks/Mapper/constants/signatures.ts';
+import { SIGNATURES_GLOWINGROWS_TIMING } from '@/hooks/Mapper/constants/signatures.ts';
 import { DotlanBehavior, MigrationStructure } from '@/hooks/Mapper/mapRootProvider/types.ts';
 
 export const to_6: MigrationStructure = {

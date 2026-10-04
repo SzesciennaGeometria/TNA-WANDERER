@@ -85,8 +85,7 @@ export const SystemSignatures = () => {
       windowId={SIGNATURE_WINDOW_ID}
     >
       {!isSystemSelected ? (
-        <div
-          className="w-full h-full flex justify-center items-center select-none text-center text-stone-400/80 text-sm">
+        <div className="w-full h-full flex justify-center items-center select-none text-center text-stone-400/80 text-sm">
           System is not selected
         </div>
       ) : (

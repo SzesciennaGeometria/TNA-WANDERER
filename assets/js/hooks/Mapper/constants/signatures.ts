@@ -19,7 +19,6 @@ export enum SIGNATURES_GLOWINGROWS_TIMING {
 export enum SETTINGS_KEYS {
   SORT_FIELD = 'sortField',
   SORT_ORDER = 'sortOrder',
-
   SHOW_ADDED_COLUMN = 'show_added_column',
   SHOW_CHARACTER_COLUMN = 'show_character_column',
   SHOW_CHARACTER_PORTRAIT = 'show_character_portrait',

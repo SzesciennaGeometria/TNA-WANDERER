@@ -5,9 +5,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import useRefState from 'react-usestateref';
 
 import { SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures.ts';
-import {
-  SIGNATURE_GLOWINGROWS_TIMEOUTS,
-} from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
+import { SIGNATURE_GLOWINGROWS_TIMEOUTS } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
 import { UseSystemSignaturesDataProps } from './types';
 import { useSignatureFetching } from './useSignatureFetching';
 
@@ -29,10 +27,10 @@ const extractGlowingRowsTimingKey = (glowingRowsValue: unknown): unknown => {
 };
 
 export const useSystemSignaturesData = ({
-                                          systemId,
-                                          settings,
-                                          onLazyDeleteChange,
-                                        }: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
+  systemId,
+  settings,
+  onLazyDeleteChange,
+}: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
   onSignatureDeleted?: (deletedSignatures: ExtendedSystemSignature[]) => void;
 }) => {
   const [signatures, setSignatures, signaturesRef] = useRefState<ExtendedSystemSignature[]>([]);
@@ -146,8 +144,7 @@ export const useSystemSignaturesData = ({
 
   useMapEventListener(event => {
     if (event.name === Commands.signaturesUpdated && String(event.data) === String(systemId)) {
-      handleGetSignatures().then(() => {
-      });
+      handleGetSignatures().then(() => {});
       return true;
     }
   });
