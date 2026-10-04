@@ -1,6 +1,6 @@
-import {ExtendedSystemSignature, SignatureGroup} from '@/hooks/Mapper/types';
+import { ExtendedSystemSignature, SignatureGroup } from '@/hooks/Mapper/types';
 import clsx from 'clsx';
-import {getRowBackgroundColor} from './getRowBackgroundColor';
+import { getRowBackgroundColor } from './getRowBackgroundColor';
 import classes from './rowStyles.module.scss';
 
 export function getSignatureRowClass(

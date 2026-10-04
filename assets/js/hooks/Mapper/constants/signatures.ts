@@ -1,4 +1,4 @@
-import {SignatureGroup, SignatureKind} from '@/hooks/Mapper/types';
+import { SignatureGroup, SignatureKind } from '@/hooks/Mapper/types';
 
 export const SIGNATURE_WINDOW_ID = 'system_signatures_window';
 
@@ -11,7 +11,7 @@ export enum SIGNATURES_DELETION_TIMING {
 export enum SIGNATURES_GLOWINGROWS_TIMING {
   GLOWIMMEDIATE,
   GLOWDEFAULT,
-  GLOWLONG,
+  GLOWING,
   GLOWEXTRA,
   GLOWEXTENDED,
 }

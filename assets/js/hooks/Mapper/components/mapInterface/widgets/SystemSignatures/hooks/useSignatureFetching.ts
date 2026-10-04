@@ -1,19 +1,19 @@
-import {SETTINGS_KEYS} from '@/hooks/Mapper/constants/signatures';
-import {useMapRootState} from '@/hooks/Mapper/mapRootProvider';
-import {ExtendedSystemSignature, SystemSignature} from '@/hooks/Mapper/types';
-import {OutCommand} from '@/hooks/Mapper/types/mapHandlers';
-import {useCallback, useMemo} from 'react';
-import {getDeletionTimeoutMs} from '../constants';
-import {getActualSigs, prepareUpdatePayload} from '../helpers';
-import {UseFetchingParams} from './types';
+import { SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures';
+import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
+import { ExtendedSystemSignature, SystemSignature } from '@/hooks/Mapper/types';
+import { OutCommand } from '@/hooks/Mapper/types/mapHandlers';
+import { useCallback, useMemo } from 'react';
+import { getDeletionTimeoutMs } from '../constants';
+import { getActualSigs, prepareUpdatePayload } from '../helpers';
+import { UseFetchingParams } from './types';
 
 type GetSignaturesResponse = {
   signatures?: SystemSignature[];
 };
 
-export const useSignatureFetching = ({systemId, settings, signaturesRef, setSignatures}: UseFetchingParams) => {
+export const useSignatureFetching = ({ systemId, settings, signaturesRef, setSignatures }: UseFetchingParams) => {
   const {
-    data: {characters},
+    data: { characters },
     outCommand,
   } = useMapRootState();
 
@@ -33,7 +33,7 @@ export const useSignatureFetching = ({systemId, settings, signaturesRef, setSign
     }
     const resp = await outCommand({
       type: OutCommand.getSignatures,
-      data: {system_id: systemId},
+      data: { system_id: systemId },
     });
 
     const serverSigs = ((resp as GetSignaturesResponse)?.signatures ?? []) as SystemSignature[];
@@ -50,12 +50,12 @@ export const useSignatureFetching = ({systemId, settings, signaturesRef, setSign
     async (newList: ExtendedSystemSignature[], updateOnly: boolean, skipUpdateUntouched?: boolean) => {
       const actualSigs = getActualSigs(signaturesRef.current, newList, updateOnly, skipUpdateUntouched);
 
-      const {added, updated, removed} = actualSigs;
+      const { added, updated, removed } = actualSigs;
 
       if (updated.length !== 0 || added.length !== 0 || removed.length !== 0) {
         await outCommand({
           type: OutCommand.updateSignatures,
-          data: {...prepareUpdatePayload(systemId, added, updated, removed), deleteTimeout},
+          data: { ...prepareUpdatePayload(systemId, added, updated, removed), deleteTimeout },
         });
 
         setSignatures(prev => {

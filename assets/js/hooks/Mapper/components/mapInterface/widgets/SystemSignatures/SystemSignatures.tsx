@@ -1,21 +1,21 @@
-import {Widget} from '@/hooks/Mapper/components/mapInterface/components';
-import {SETTINGS_KEYS, SIGNATURE_WINDOW_ID, SignatureSettingsType} from '@/hooks/Mapper/constants/signatures';
-import {useHotkey} from '@/hooks/Mapper/hooks/useHotkey';
-import {useMapRootState} from '@/hooks/Mapper/mapRootProvider';
-import {useCallback, useMemo, useState} from 'react';
-import {useSignatureUndo} from './hooks/useSignatureUndo';
-import {useSystemSignaturesData} from './hooks/useSystemSignaturesData';
-import {SystemSignaturesHeader} from './SystemSignatureHeader';
-import {SystemSignaturesContent} from './SystemSignaturesContent';
-import {SystemSignatureSettingsDialog} from './SystemSignatureSettingsDialog';
+import { Widget } from '@/hooks/Mapper/components/mapInterface/components';
+import { SETTINGS_KEYS, SIGNATURE_WINDOW_ID, SignatureSettingsType } from '@/hooks/Mapper/constants/signatures';
+import { useHotkey } from '@/hooks/Mapper/hooks/useHotkey';
+import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
+import { useCallback, useMemo, useState } from 'react';
+import { useSignatureUndo } from './hooks/useSignatureUndo';
+import { useSystemSignaturesData } from './hooks/useSystemSignaturesData';
+import { SystemSignaturesHeader } from './SystemSignatureHeader';
+import { SystemSignaturesContent } from './SystemSignaturesContent';
+import { SystemSignatureSettingsDialog } from './SystemSignatureSettingsDialog';
 
 export const SystemSignatures = () => {
   const [showSettings, setShowSettings] = useState(false);
 
   const {
-    data: {selectedSystems},
+    data: { selectedSystems },
     outCommand,
-    storedSettings: {settingsSignatures, settingsSignaturesUpdate},
+    storedSettings: { settingsSignatures, settingsSignaturesUpdate },
   } = useMapRootState();
 
   const [systemId] = selectedSystems;
@@ -49,7 +49,7 @@ export const SystemSignatures = () => {
   const sigCount = useMemo(() => signatures.length, [signatures]);
   const deletedSignatures = useMemo(() => signatures.filter(s => s.deleted), [signatures]);
 
-  const {countdown, handleUndo} = useSignatureUndo(systemId, settingsSignatures, deletedSignatures, outCommand);
+  const { countdown, handleUndo } = useSignatureUndo(systemId, settingsSignatures, deletedSignatures, outCommand);
 
   useHotkey(true, ['z', 'Z'], (event: KeyboardEvent) => {
     if (deletedSignatures.length > 0 && countdown > 0) {

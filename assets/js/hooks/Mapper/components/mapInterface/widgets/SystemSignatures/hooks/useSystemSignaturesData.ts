@@ -1,15 +1,15 @@
-import {useMapEventListener} from '@/hooks/Mapper/events';
-import {parseSignatures} from '@/hooks/Mapper/helpers';
-import {Commands, ExtendedSystemSignature, SignatureKind} from '@/hooks/Mapper/types';
-import {useCallback, useEffect, useState, useRef} from 'react';
+import { useMapEventListener } from '@/hooks/Mapper/events';
+import { parseSignatures } from '@/hooks/Mapper/helpers';
+import { Commands, ExtendedSystemSignature, SignatureKind } from '@/hooks/Mapper/types';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import useRefState from 'react-usestateref';
 
-import {SETTINGS_KEYS} from '@/hooks/Mapper/constants/signatures.ts';
+import { SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures.ts';
 import {
-  SIGNATURE_GLOWINGROWS_TIMEOUTS
+  SIGNATURE_GLOWINGROWS_TIMEOUTS,
 } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
-import {UseSystemSignaturesDataProps} from './types';
-import {useSignatureFetching} from './useSignatureFetching';
+import { UseSystemSignaturesDataProps } from './types';
+import { useSignatureFetching } from './useSignatureFetching';
 
 type GlowingRowInfo = {
   isNew: boolean;
@@ -43,7 +43,7 @@ export const useSystemSignaturesData = ({
 
   const timeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
 
-  const {handleGetSignatures, handleUpdateSignatures} = useSignatureFetching({
+  const { handleGetSignatures, handleUpdateSignatures } = useSignatureFetching({
     systemId,
     settings,
     signaturesRef,
@@ -83,7 +83,7 @@ export const useSystemSignaturesData = ({
             isBrandNew = !isDuplicateInThisPaste && checkIfSignatureIsBrandNew(sig.eve_id, signaturesRef.current);
           }
 
-          newGlowing.set(sig.eve_id, {isNew: isBrandNew});
+          newGlowing.set(sig.eve_id, { isNew: isBrandNew });
           if (timeoutsRef.current[sig.eve_id]) {
             clearTimeout(timeoutsRef.current[sig.eve_id]);
           }
