@@ -57,14 +57,14 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
     const safetyItems: MenuItem[] = [
       {
         label: 'Dangerous',
-        icon: clsx(PrimeIcons.EXCLAMATION_TRIANGLE, { 'text-red-400': isDangerous }),
-        className: clsx({ [classes.ConnectionSave]: isDangerous }),
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        className: clsx({ [classes.ConnectionDangerous]: isDangerous }),
         command: () => onToggleDangerous(!isDangerous),
       },
       {
         label: 'Bubbled',
         icon: PrimeIcons.CIRCLE,
-        className: clsx({ [classes.ConnectionSave]: bubbled !== BubbleState.none }),
+        className: clsx({ [classes.ConnectionBubbled]: bubbled !== BubbleState.none }),
         items: [
           { state: BubbleState.none, label: 'None' },
           { state: BubbleState.source, label: 'Source side' },
@@ -135,11 +135,11 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
           );
         },
       },
-       {
-          label: `Set as Bridge`,
-          icon: 'pi hero-forward',
-          command: () => onChangeType(ConnectionType.bridge),
-        },
+      {
+        label: `Set as Bridge`,
+        icon: 'pi hero-forward',
+        command: () => onChangeType(ConnectionType.bridge),
+      },
       {
         label: `Save mass`,
         className: clsx({

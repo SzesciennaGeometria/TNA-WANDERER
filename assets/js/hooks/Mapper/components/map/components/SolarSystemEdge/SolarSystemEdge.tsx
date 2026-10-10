@@ -210,7 +210,26 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           }}
         >
-          {isDangerous && isBridge && (
+          {(isSourceBubbled || isTargetBubbled) && (
+            <WdTooltipWrapper
+              content={
+                isSourceBubbled && isTargetBubbled
+                  ? 'Both ends bubbled'
+                  : isSourceBubbled
+                    ? 'Source system bubbled'
+                    : 'Target system bubbled'
+              }
+              position={TooltipPosition.top}
+              className={clsx(
+                classes.LinkLabel,
+                'pointer-events-auto bg-cyan-400 rounded opacity-100 cursor-auto text-neutral-900',
+              )}
+            >
+              <span className={clsx(PrimeIcons.CIRCLE, classes.icon)} />
+            </WdTooltipWrapper>
+          )}
+
+          {isDangerous && (
             <WdTooltipWrapper
               content="Marked dangerous"
               position={TooltipPosition.top}

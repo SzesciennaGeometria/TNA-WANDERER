@@ -121,6 +121,8 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --conn-frigate: #325d88;
   --conn-bridge: rgba(135, 185, 93, 0.85);
   --conn-save: rgba(155, 102, 45, 0.85);
+  --conn-dangerous: rgba(213, 64, 64, 0.85);
+  --conn-bubbled: rgba(72, 209, 204, 0.85);
   --selected-item-bg: rgba(98, 98, 98, 0.33);
 
   --selected-system-shadow: 0 0 10px #9a1af1c2;
