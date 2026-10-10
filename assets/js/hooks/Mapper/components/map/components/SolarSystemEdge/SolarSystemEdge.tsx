@@ -210,7 +210,7 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           }}
         >
-          {isDangerous && !isBridge && (
+          {isDangerous && isBridge && (
             <WdTooltipWrapper
               content="Marked dangerous"
               position={TooltipPosition.top}
@@ -242,7 +242,7 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
               className={clsx(
                 classes.LinkLabel,
                 'pointer-events-auto rounded opacity-100 cursor-auto text-neutral-900',
-                isDangerous ? 'bg-red-400' : 'bg-lime-300',
+                'bg-lime-300',
               )}
             >
               B
