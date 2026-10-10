@@ -1,13 +1,13 @@
-import {sortOnlineFunc} from '@/hooks/Mapper/components/hooks/useGetOwnOnlineCharacters.ts';
-import {useMapRootState} from '@/hooks/Mapper/mapRootProvider';
-import {WithChildren} from '@/hooks/Mapper/types/common.ts';
+import { sortOnlineFunc } from '@/hooks/Mapper/components/hooks/useGetOwnOnlineCharacters.ts';
+import { useMapRootState } from '@/hooks/Mapper/mapRootProvider';
+import { WithChildren } from '@/hooks/Mapper/types/common.ts';
 import clsx from 'clsx';
-import {useMemo} from 'react';
-import {Characters} from '../characters/Characters';
+import { useMemo } from 'react';
+import { Characters } from '../characters/Characters';
 
-const Topbar = ({children}: WithChildren) => {
+const Topbar = ({ children }: WithChildren) => {
   const {
-    data: {characters, userCharacters},
+    data: { characters, userCharacters },
   } = useMapRootState();
 
   const charsToShow = useMemo(() => {
@@ -24,12 +24,12 @@ const Topbar = ({children}: WithChildren) => {
     >
       {}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-neutral-200 pointer-events-none">
-        TNA-wanderer_v260904-6B
+        TNA_wanderer-261010-1A
       </div>
       <span className="flex-1"></span>
       <span className="mr-2"></span>
       <div className="flex gap-1 items-center">
-        <Characters data={charsToShow}/>
+        <Characters data={charsToShow} />
       </div>
 
       {children}
