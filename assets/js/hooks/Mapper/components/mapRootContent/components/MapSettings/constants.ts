@@ -8,13 +8,13 @@ import {
 import { SettingsListItem, UserSettingsRemoteProps } from './types.ts';
 import {
   BUBBLE_BORDER_RANGE,
+  BUBBLE_CSS_VARS,
   BUBBLE_DEFAULT_COLOR,
   BUBBLE_OPACITY_RANGE,
   BUBBLE_SIZE_RANGE,
 } from '@/hooks/Mapper/constants/connectionBubble.ts';
 
 export { DEFAULT_REMOTE_SETTINGS, UserSettingsRemoteList } from '@/hooks/Mapper/constants/userSettings.ts';
-
 
 // export const COMMON_CHECKBOXES_PROPS: SettingsListItem[] = [
 //   // {
@@ -64,7 +64,7 @@ export const SYSTEMS_CHECKBOXES_PROPS: SettingsListItem[] = [
     label: 'Animated selected-system outline',
     type: 'checkbox',
   },
-   {
+  {
     prop: InterfaceStoredSettingsProps.disable_animated_outlineborder,
     label: 'Disable selected-system animation',
     type: 'checkbox',
@@ -153,6 +153,7 @@ export const CONNECTION_BUBBLE_SETTINGS_PROPS: SettingsListItem[] = [
     label: 'Bubble colour',
     type: 'color',
     fallback: BUBBLE_DEFAULT_COLOR,
+    themeVar: BUBBLE_CSS_VARS.color,
   },
   {
     prop: UserSettingsRemoteProps.connection_bubble_size,
