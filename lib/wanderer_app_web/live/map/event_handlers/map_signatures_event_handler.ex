@@ -217,19 +217,6 @@ to_remove = removed_signatures |> Enum.filter(fn %{"eve_id" => eve_id} -> "#{sol
         |> assign(removed_sig_eve_ids: updated_removed_sig_eve_ids)}
   end
 
-  defp broadcast_system_update(map_id, solar_system_id) do
-    case WandererApp.Api.MapSystem.read_by_map_and_solar_system(%{
-           map_id: map_id,
-           solar_system_id: solar_system_id
-         }) do
-      {:ok, system} ->
-        WandererApp.Map.Server.Impl.broadcast!(map_id, :update_system, system)
-
-      _ ->
-        :ok
-    end
-  end
-
   def handle_ui_event(
       "get_signatures",
         %{"system_id" => solar_system_id},
@@ -499,6 +486,19 @@ to_remove = removed_signatures |> Enum.filter(fn %{"eve_id" => eve_id} -> "#{sol
 
   def handle_ui_event(event, body, socket),
     do: MapCoreEventHandler.handle_ui_event(event, body, socket)
+
+  defp broadcast_system_update(map_id, solar_system_id) do
+    case WandererApp.Api.MapSystem.read_by_map_and_solar_system(%{
+           map_id: map_id,
+           solar_system_id: solar_system_id
+         }) do
+      {:ok, system} ->
+        WandererApp.Map.Server.Impl.broadcast!(map_id, :update_system, system)
+
+      _ ->
+        :ok
+    end
+  end
 
   def get_system_signatures(system_id) do
     signatures = system_id |> WandererApp.Api.MapSystemSignature.by_system_id!()
