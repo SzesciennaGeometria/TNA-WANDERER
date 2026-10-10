@@ -24,6 +24,13 @@ defmodule WandererAppWeb.MapCoreEventHandler do
     |> MapEventHandler.push_map_event("refresh_tracking_data", %{})
   end
 
+  def handle_server_event(%{event: :map_system_labels_updated, payload: labels}, socket) do
+    socket
+    |> MapEventHandler.push_map_event("user_settings_updated", %{
+      settings: %{"system_labels" => labels}
+    })
+  end
+
   def handle_server_event(
         :refresh_permissions,
         %{assigns: %{current_user: current_user, map_slug: map_slug}} = socket
@@ -278,15 +285,49 @@ defmodule WandererAppWeb.MapCoreEventHandler do
         _,
         %{
           assigns: %{
+            map_id: map_id,
             map_user_settings: map_user_settings
           }
         } = socket
       ) do
-    {:ok, user_settings} =
-      map_user_settings
-      |> WandererApp.MapUserSettingsRepo.to_form_data()
+    with {:ok, user_settings} <-
+           WandererApp.MapUserSettingsRepo.to_form_data(map_user_settings),
+         {:ok, system_labels} <- WandererApp.MapRepo.get_system_labels(map_id) do
+      {:reply,
+       %{user_settings: Map.put(user_settings, "system_labels", system_labels)}, socket}
+    else
+      error ->
+        Logger.error("Failed to load map settings: #{inspect(error)}")
+        {:reply, %{error: "failed_to_load_settings"}, socket}
+    end
+  end
 
-    {:reply, %{user_settings: user_settings}, socket}
+  def handle_ui_event(
+        "update_map_system_labels",
+        %{"system_labels" => labels},
+        %{assigns: %{map_id: map_id, user_permissions: user_permissions}} = socket
+      ) do
+    # The label list is the map's, shared by everybody on it, so changing it is the map's
+    # managers' call - a member may put a label on a system, but not redefine what labels mean.
+    if user_permissions.manage_map do
+      case WandererApp.MapRepo.update_system_labels(map_id, labels) do
+        {:ok, _map, normalized_labels} ->
+          :ok =
+            WandererApp.Map.Server.Impl.broadcast!(
+              map_id,
+              :map_system_labels_updated,
+              normalized_labels
+            )
+
+          {:reply, %{success: true, system_labels: normalized_labels}, socket}
+
+        {:error, reason} ->
+          Logger.warning("Failed to update map system labels: #{inspect(reason)}")
+          {:reply, %{success: false, error: "invalid_system_labels"}, socket}
+      end
+    else
+      {:reply, %{success: false, error: "unauthorized"}, socket}
+    end
   end
 
   def handle_ui_event(
@@ -308,7 +349,11 @@ defmodule WandererAppWeb.MapCoreEventHandler do
         "system_auto_tag",
         "system_custom_label_name",
         "bookmark_return_hole_ignore",
-        "bookmark_return_hole_symbol"
+        "bookmark_return_hole_symbol",
+        "connection_bubble_color",
+        "connection_bubble_size",
+        "connection_bubble_border",
+        "connection_bubble_opacity"
       ])
       |> Jason.encode!()
 

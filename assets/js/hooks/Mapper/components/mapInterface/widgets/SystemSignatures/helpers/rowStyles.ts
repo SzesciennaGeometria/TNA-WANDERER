@@ -1,6 +1,7 @@
 import {ExtendedSystemSignature, SignatureGroup} from '@/hooks/Mapper/types';
 import clsx from 'clsx';
-import {getRowBackgroundColor} from './getRowBackgroundColor';
+import { parseSignatureCustomInfo } from '@/hooks/Mapper/helpers/parseSignatureCustomInfo';
+import { getRowBackgroundColor } from './getRowBackgroundColor';
 import classes from './rowStyles.module.scss';
 
 export function getSignatureRowClass(
@@ -10,11 +11,14 @@ export function getSignatureRowClass(
   glowingRows?: Map<string, { isNew: boolean }>,
 ): string {
   const isSelected = selectedSignatures.some(s => s.eve_id === row.eve_id);
+  const isBubbled = parseSignatureCustomInfo(row.custom_info).isBubbled === true;
 
   const baseCls = [
     classes.TableRowCompact,
     getRowBackgroundColor(row.inserted_at ? new Date(row.inserted_at) : undefined),
     'transition duration-200 my-2 hover:bg-purple-400/20',
+    // a bubbled hole is the one you most want to notice in the list
+    isBubbled && classes.BubbledRow,
   ];
 
   if (isSelected) {

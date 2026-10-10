@@ -1,22 +1,7 @@
 import { InterfaceStoredSettings } from '@/hooks/Mapper/mapRootProvider/types.ts';
+import { SystemLabelDefinition } from '@/hooks/Mapper/constants/labels.ts';
 
-export enum UserSettingsRemoteProps {
-  link_signature_on_splash = 'link_signature_on_splash',
-  select_on_spash = 'select_on_spash',
-  show_animated_border = 'show_animated_border',
-  show_animated_outline = 'show_animated_outline',
-  disable_animated_outlineborder = 'disable_animated_outlineborder',
-  delete_connection_with_sigs = 'delete_connection_with_sigs',
-  bookmark_name_format = 'bookmark_name_format',
-  bookmark_custom_mapping = 'bookmark_custom_mapping',
-  bookmark_wormholes_start_at_zero = 'bookmark_wormholes_start_at_zero',
-  bookmark_auto_copy = 'bookmark_auto_copy',
-  bookmark_auto_temp_name = 'bookmark_auto_temp_name',
-  system_auto_tag = 'system_auto_tag',
-  system_custom_label_name = 'system_custom_label_name',
-  bookmark_return_hole_ignore = 'bookmark_return_hole_ignore',
-  bookmark_return_hole_symbol = 'bookmark_return_hole_symbol',
-}
+export { UserSettingsRemoteProps } from '@/hooks/Mapper/constants/userSettings.ts';
 
 export type UserSettingsRemote = {
   link_signature_on_splash: boolean;
@@ -32,8 +17,14 @@ export type UserSettingsRemote = {
   bookmark_auto_temp_name: string;
   system_auto_tag: string;
   system_custom_label_name: string;
+  system_labels: SystemLabelDefinition[];
   bookmark_return_hole_ignore: boolean;
   bookmark_return_hole_symbol: string;
+  // null, empty or zero: follow the theme
+  connection_bubble_color: string | null;
+  connection_bubble_size: number | null;
+  connection_bubble_border: number | null;
+  connection_bubble_opacity: number | null;
 };
 
 export type UserSettings = UserSettingsRemote & InterfaceStoredSettings;
@@ -41,10 +32,16 @@ export type UserSettings = UserSettingsRemote & InterfaceStoredSettings;
 export type SettingsListItem = {
   prop: keyof UserSettings;
   label: string;
-  type: 'checkbox' | 'dropdown' | 'text';
+  type: 'checkbox' | 'dropdown' | 'text' | 'template' | 'color' | 'number';
   options?: { label: string; value: string }[];
   dropdownScrollHeight?: string;
   placeholder?: string;
   helperText?: string;
   dependsOn?: keyof UserSettings;
+  // 'number' only: the range offered, and the unit shown after the field
+  min?: number;
+  max?: number;
+  suffix?: string;
+  // 'color' and 'number': what the theme uses when the setting is left empty
+  fallback?: string;
 };
