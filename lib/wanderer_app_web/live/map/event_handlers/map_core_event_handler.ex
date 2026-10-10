@@ -293,8 +293,7 @@ defmodule WandererAppWeb.MapCoreEventHandler do
     with {:ok, user_settings} <-
            WandererApp.MapUserSettingsRepo.to_form_data(map_user_settings),
          {:ok, system_labels} <- WandererApp.MapRepo.get_system_labels(map_id) do
-      {:reply,
-       %{user_settings: Map.put(user_settings, "system_labels", system_labels)}, socket}
+      {:reply, %{user_settings: Map.put(user_settings, "system_labels", system_labels)}, socket}
     else
       error ->
         Logger.error("Failed to load map settings: #{inspect(error)}")

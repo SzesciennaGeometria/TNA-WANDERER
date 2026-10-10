@@ -191,8 +191,8 @@ defmodule WandererApp.Map.Operations.Transfer do
              character_id
            ) do
       if MapSet.member?(existing_ids, solar_system_id) do
-       # a system already on the map keeps what it has, but takes what it is missing: somebody
-       # importing a chain wants the notes and the colours that come with it
+        # a system already on the map keeps what it has, but takes what it is missing: somebody
+        # importing a chain wants the notes and the colours that come with it
         fill_missing_system_attributes(map_id, solar_system_id, system)
         false
       else
@@ -219,9 +219,10 @@ defmodule WandererApp.Map.Operations.Transfer do
 
   defp apply_system_attributes(map_id, solar_system_id, system) do
     Enum.each(@system_attributes, fn {key, attribute, fun} ->
-     apply_attribute(map_id, solar_system_id, system, {key, attribute, fun})
+      apply_attribute(map_id, solar_system_id, system, {key, attribute, fun})
     end)
   end
+
   defp fill_missing_system_attributes(map_id, solar_system_id, system) do
     case WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(map_id, solar_system_id) do
       {:ok, current} when not is_nil(current) ->

@@ -383,7 +383,10 @@ defmodule WandererApp.Api.Map do
 
     attribute :system_labels, :string do
       allow_nil?(false)
-      default("[{\"id\":\"a\",\"name\":\"A\",\"color\":\"#2d803b\"},{\"id\":\"b\",\"name\":\"B\",\"color\":\"#3d94af\"},{\"id\":\"c\",\"name\":\"C\",\"color\":\"#3d94af\"},{\"id\":\"1\",\"name\":\"1\",\"color\":\"#563daf\"},{\"id\":\"2\",\"name\":\"2\",\"color\":\"#8f3daf\"},{\"id\":\"3\",\"name\":\"3\",\"color\":\"#3d65af\"}]")
+
+      default(
+        "[{\"id\":\"a\",\"name\":\"A\",\"color\":\"#2d803b\"},{\"id\":\"b\",\"name\":\"B\",\"color\":\"#3d94af\"},{\"id\":\"c\",\"name\":\"C\",\"color\":\"#3d94af\"},{\"id\":\"1\",\"name\":\"1\",\"color\":\"#563daf\"},{\"id\":\"2\",\"name\":\"2\",\"color\":\"#8f3daf\"},{\"id\":\"3\",\"name\":\"3\",\"color\":\"#3d65af\"}]"
+      )
     end
 
     attribute :scope, :atom do
