@@ -25,7 +25,6 @@ export interface ContextMenuConnectionProps {
   onChangeShipSizeStatus(state: ShipSizeStatus): void;
   onChangeType(type: ConnectionType): void;
   onToggleMassSave(isLocked: boolean): void;
-  onToggleBridge(isBridge: boolean): void;
   onToggleDangerous(dangerous: boolean): void;
   onChangeBubbled(bubbled: BubbleState): void;
   onHide(): void;
@@ -40,7 +39,6 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
   onChangeShipSizeStatus,
   onChangeType,
   onToggleMassSave,
-  onToggleBridge,
   onToggleDangerous,
   onChangeBubbled,
   onHide,
@@ -166,7 +164,6 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
     onChangeType,
     onChangeShipSizeStatus,
     onToggleMassSave,
-    onToggleBridge,
     onChangeMassState,
   ]);
 

@@ -5,9 +5,6 @@ export { UserSettingsRemoteProps } from '@/hooks/Mapper/constants/userSettings.t
 
 export type UserSettingsRemote = {
   link_signature_on_splash: boolean;
-  show_animated_border: boolean;
-  show_animated_outline: boolean;
-  disable_animated_outlineborder: boolean;
   select_on_spash: boolean;
   delete_connection_with_sigs: boolean;
   bookmark_name_format: string;
