@@ -1,4 +1,11 @@
-import { ConnectionType, MassState, ShipSizeStatus, SolarSystemConnection, TimeStatus } from '@/hooks/Mapper/types';
+import {
+  BubbleState,
+  ConnectionType,
+  MassState,
+  ShipSizeStatus,
+  SolarSystemConnection,
+  TimeStatus,
+} from '@/hooks/Mapper/types';
 import clsx from 'clsx';
 import { PrimeIcons } from 'primereact/api';
 import { ContextMenu } from 'primereact/contextmenu';
@@ -9,8 +16,6 @@ import { LifetimeActionsWrapper } from '@/hooks/Mapper/components/map/components
 import { MassStatusActionsWrapper } from '@/hooks/Mapper/components/map/components/ContextMenuConnection/MassStatusActionsWrapper.tsx';
 import { ShipSizeActionsWrapper } from '@/hooks/Mapper/components/map/components/ContextMenuConnection/ShipSizeActionsWrapper.tsx';
 import classes from './ContextMenuConnection.module.scss';
-import { getSystemStaticInfo } from '@/hooks/Mapper/mapRootProvider/hooks/useLoadSystemStatic.ts';
-import { isNullsecSpace } from '@/hooks/Mapper/components/map/helpers/isKnownSpace.ts';
 
 export interface ContextMenuConnectionProps {
   contextMenuRef: RefObject<ContextMenu>;
@@ -20,7 +25,8 @@ export interface ContextMenuConnectionProps {
   onChangeShipSizeStatus(state: ShipSizeStatus): void;
   onChangeType(type: ConnectionType): void;
   onToggleMassSave(isLocked: boolean): void;
-  onToggleBridge(isBridge: boolean): void;
+  onToggleDangerous(dangerous: boolean): void;
+  onChangeBubbled(bubbled: BubbleState): void;
   onHide(): void;
   edge?: Edge<SolarSystemConnection>;
 }
@@ -33,7 +39,8 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
   onChangeShipSizeStatus,
   onChangeType,
   onToggleMassSave,
-  onToggleBridge,
+  onToggleDangerous,
+  onChangeBubbled,
   onHide,
   edge,
 }) => {
@@ -42,13 +49,34 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
       return [];
     }
 
-    const sourceInfo = getSystemStaticInfo(edge.data?.source);
-    const targetInfo = getSystemStaticInfo(edge.data?.target);
-
-    const bothNullsec =
-      sourceInfo && targetInfo && isNullsecSpace(sourceInfo.system_class) && isNullsecSpace(targetInfo.system_class);
-
     const isFrigateSize = edge.data?.ship_size_type === ShipSizeStatus.small;
+
+    const isDangerous = edge.data?.dangerous === true;
+    const bubbled = edge.data?.bubbled ?? BubbleState.none;
+
+    const safetyItems: MenuItem[] = [
+      {
+        label: 'Dangerous',
+        icon: clsx(PrimeIcons.EXCLAMATION_TRIANGLE, { 'text-red-400': isDangerous }),
+        className: clsx({ [classes.ConnectionSave]: isDangerous }),
+        command: () => onToggleDangerous(!isDangerous),
+      },
+      {
+        label: 'Bubbled',
+        icon: PrimeIcons.CIRCLE,
+        className: clsx({ [classes.ConnectionSave]: bubbled !== BubbleState.none }),
+        items: [
+          { state: BubbleState.none, label: 'None' },
+          { state: BubbleState.source, label: 'Source side' },
+          { state: BubbleState.target, label: 'Target side' },
+          { state: BubbleState.both, label: 'Both sides' },
+        ].map(({ state, label }) => ({
+          label,
+          icon: state === bubbled ? PrimeIcons.CHECK : PrimeIcons.CIRCLE,
+          command: () => onChangeBubbled(state),
+        })),
+      },
+    ];
 
     if (edge.data?.type === ConnectionType.bridge) {
       return [
@@ -57,6 +85,7 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
           icon: 'pi hero-arrow-uturn-left',
           command: () => onChangeType(ConnectionType.wormhole),
         },
+        ...safetyItems,
         {
           label: 'Disconnect',
           icon: PrimeIcons.TRASH,
@@ -67,6 +96,7 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
 
     if (edge.data?.type === ConnectionType.gate) {
       return [
+        ...safetyItems,
         {
           label: 'Disconnect',
           icon: PrimeIcons.TRASH,
@@ -118,10 +148,7 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
         icon: PrimeIcons.LOCK,
         command: () => onToggleMassSave(!edge.data?.locked),
       },
-      ...(bothNullsec
-        ? [
-          ]
-        : []),
+      ...safetyItems,
       {
         label: 'Disconnect',
         icon: PrimeIcons.TRASH,
@@ -129,13 +156,14 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
       },
     ];
   }, [
+    onToggleDangerous,
+    onChangeBubbled,
     edge,
     onChangeTimeState,
     onDeleteConnection,
     onChangeType,
     onChangeShipSizeStatus,
     onToggleMassSave,
-    onToggleBridge,
     onChangeMassState,
   ]);
 

@@ -45,7 +45,9 @@ defmodule WandererApp.Map.Operations.Transfer do
          "map" => %{
            "name" => map.name,
            "slug" => map.slug,
-           "description" => map.description
+           "description" => map.description,
+           # per-system labels only point at ids; the names and colours live on the map
+           "system_labels" => WandererApp.MapRepo.system_labels_to_form_data(map)
          },
          "systems" => Enum.map(systems, &export_system/1),
          "connections" => Enum.map(connections, &export_connection/1),
@@ -75,6 +77,8 @@ defmodule WandererApp.Map.Operations.Transfer do
     signatures = if include_signatures, do: Map.get(data, "signatures", []), else: []
 
     existing_ids = existing_solar_system_ids(map_id)
+
+    merge_system_labels(map_id, get_in(data, ["map", "system_labels"]))
 
     imported_systems =
       systems
@@ -187,8 +191,8 @@ defmodule WandererApp.Map.Operations.Transfer do
              character_id
            ) do
       if MapSet.member?(existing_ids, solar_system_id) do
-       # a system already on the map keeps what it has, but takes what it is missing: somebody
-       # importing a chain wants the notes and the colours that come with it
+        # a system already on the map keeps what it has, but takes what it is missing: somebody
+        # importing a chain wants the notes and the colours that come with it
         fill_missing_system_attributes(map_id, solar_system_id, system)
         false
       else
@@ -215,9 +219,10 @@ defmodule WandererApp.Map.Operations.Transfer do
 
   defp apply_system_attributes(map_id, solar_system_id, system) do
     Enum.each(@system_attributes, fn {key, attribute, fun} ->
-     apply_attribute(map_id, solar_system_id, system, {key, attribute, fun})
+      apply_attribute(map_id, solar_system_id, system, {key, attribute, fun})
     end)
   end
+
   defp fill_missing_system_attributes(map_id, solar_system_id, system) do
     case WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(map_id, solar_system_id) do
       {:ok, current} when not is_nil(current) ->
@@ -370,6 +375,33 @@ defmodule WandererApp.Map.Operations.Transfer do
       _ -> "0"
     end
   end
+
+  # The target map's own labels win: a document only adds the definitions for ids the target
+  # does not know yet, so importing never renames or recolours a label somebody here set up.
+  defp merge_system_labels(map_id, incoming) when is_list(incoming) do
+    with {:ok, current} <- WandererApp.MapRepo.get_system_labels(map_id) do
+      known = MapSet.new(current, & &1["id"])
+
+      additions =
+        incoming
+        |> Enum.filter(&is_map/1)
+        |> Enum.reject(&MapSet.member?(known, &1["id"]))
+
+      if additions != [] do
+        case WandererApp.MapRepo.update_system_labels(map_id, current ++ additions) do
+          {:ok, _map, _labels} ->
+            :ok
+
+          {:error, reason} ->
+            Logger.warning("[Transfer] kept the target's labels as they were: #{inspect(reason)}")
+        end
+      end
+    end
+
+    :ok
+  end
+
+  defp merge_system_labels(_map_id, _incoming), do: :ok
 
   defp position(%{"x" => x, "y" => y}) when is_number(x) and is_number(y),
     do: %{"x" => round(x), "y" => round(y)}

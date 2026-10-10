@@ -62,8 +62,13 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
           )}
 
           {nodeVars.labelsInfo.map(x => (
-            <div key={x.id} className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES[x.id])}>
-              {x.shortName}
+            <div
+              key={x.id}
+              className={clsx(classes.Bookmark)}
+              style={{ backgroundColor: x.color }}
+              title={x.description || undefined}
+            >
+              {x.name}
             </div>
           ))}
         </div>
@@ -137,6 +142,11 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
 
               <div className="flex items-center gap-1 justify-end">
                 <div className={clsx('flex items-center gap-1')}>
+                  {nodeVars.hasBubbledSignature && (
+                    <WdTooltipWrapper content="A signature in this system is bubbled" position={TooltipPosition.top}>
+                      <i className={clsx(PrimeIcons.EXCLAMATION_TRIANGLE, 'text-orange-400 text-[10px]')} />
+                    </WdTooltipWrapper>
+                  )}
                   {nodeVars.locked && <i className={clsx(PrimeIcons.LOCK, classes.lockIcon)} />}
                   {nodeVars.hubs.includes(nodeVars.solarSystemId) && (
                     <i className={clsx(PrimeIcons.MAP_MARKER, classes.mapMarker)} />
@@ -157,19 +167,13 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
         <>
           {nodeVars.unsplashedLeft.length > 0 && (
             <div className={classes.Unsplashed}>
-              <UnsplashedSignatureColumn
-                signatures={nodeVars.unsplashedLeft}
-                wormholesData={nodeVars.wormholesData}
-              />
+              <UnsplashedSignatureColumn signatures={nodeVars.unsplashedLeft} wormholesData={nodeVars.wormholesData} />
             </div>
           )}
 
           {nodeVars.unsplashedRight.length > 0 && (
             <div className={clsx(classes.Unsplashed, classes['Unsplashed--right'])}>
-              <UnsplashedSignatureColumn
-                signatures={nodeVars.unsplashedRight}
-                wormholesData={nodeVars.wormholesData}
-              />
+              <UnsplashedSignatureColumn signatures={nodeVars.unsplashedRight} wormholesData={nodeVars.wormholesData} />
             </div>
           )}
         </>

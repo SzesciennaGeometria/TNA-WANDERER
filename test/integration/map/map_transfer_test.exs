@@ -125,6 +125,31 @@ defmodule WandererApp.Map.MapTransferTest do
       cleanup_test_data(source.map_id)
       cleanup_test_data(target.map_id)
     end
+
+    test "brings the label definitions along, without touching the target's own" do
+      source = start_test_map()
+      target = start_test_map()
+
+      {:ok, _map, _labels} =
+        WandererApp.MapRepo.update_system_labels(source.map_id, [
+          %{"id" => "a", "name" => "Theirs", "color" => "#111111"},
+          %{"id" => "s", "name" => "S", "color" => "#2d803b", "description" => "static to HS"}
+        ])
+
+      {:ok, document} = Transfer.export(source.map_id)
+
+      {:ok, _stats} =
+        Transfer.import(target.map_id, document, target.user_id, target.character_id)
+
+      {:ok, labels} = WandererApp.MapRepo.get_system_labels(target.map_id)
+      by_id = Map.new(labels, &{&1["id"], &1})
+
+      assert by_id["a"]["name"] == "A"
+      assert by_id["s"]["description"] == "static to HS"
+
+      cleanup_test_data(source.map_id)
+      cleanup_test_data(target.map_id)
+    end
   end
 
   describe "import/5 with a document it cannot read" do
