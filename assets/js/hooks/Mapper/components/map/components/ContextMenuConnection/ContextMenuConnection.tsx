@@ -5,6 +5,7 @@ import {
   ShipSizeStatus,
   SolarSystemConnection,
   TimeStatus,
+  UserPermission,
 } from '@/hooks/Mapper/types';
 import clsx from 'clsx';
 import { PrimeIcons } from 'primereact/api';
@@ -16,6 +17,8 @@ import { LifetimeActionsWrapper } from '@/hooks/Mapper/components/map/components
 import { MassStatusActionsWrapper } from '@/hooks/Mapper/components/map/components/ContextMenuConnection/MassStatusActionsWrapper.tsx';
 import { ShipSizeActionsWrapper } from '@/hooks/Mapper/components/map/components/ContextMenuConnection/ShipSizeActionsWrapper.tsx';
 import classes from './ContextMenuConnection.module.scss';
+import { useMapState } from '@/hooks/Mapper/components/map/MapProvider.tsx';
+import { checkPermissions } from '@/hooks/Mapper/components/map/helpers';
 
 export interface ContextMenuConnectionProps {
   contextMenuRef: RefObject<ContextMenu>;
@@ -44,9 +47,24 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
   onHide,
   edge,
 }) => {
+  const {
+    data: { userPermissions },
+  } = useMapState();
+
   const items: MenuItem[] = useMemo(() => {
     if (!edge) {
       return [];
+    }
+
+    // the server only takes these from someone allowed to make them, so a viewer is not offered
+    // options that would do nothing when clicked
+    const canEdit = checkPermissions(userPermissions, UserPermission.UPDATE_SYSTEM);
+    const disconnect: MenuItem[] = checkPermissions(userPermissions, UserPermission.DELETE_CONNECTION)
+      ? [{ label: 'Disconnect', icon: PrimeIcons.TRASH, command: onDeleteConnection }]
+      : [];
+
+    if (!canEdit) {
+      return disconnect;
     }
 
     const isFrigateSize = edge.data?.ship_size_type === ShipSizeStatus.small;
@@ -86,23 +104,12 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
           command: () => onChangeType(ConnectionType.wormhole),
         },
         ...safetyItems,
-        {
-          label: 'Disconnect',
-          icon: PrimeIcons.TRASH,
-          command: onDeleteConnection,
-        },
+        ...disconnect,
       ];
     }
 
     if (edge.data?.type === ConnectionType.gate) {
-      return [
-        ...safetyItems,
-        {
-          label: 'Disconnect',
-          icon: PrimeIcons.TRASH,
-          command: onDeleteConnection,
-        },
-      ];
+      return [...safetyItems, ...disconnect];
     }
 
     return [
@@ -149,13 +156,10 @@ export const ContextMenuConnection: React.FC<ContextMenuConnectionProps> = ({
         command: () => onToggleMassSave(!edge.data?.locked),
       },
       ...safetyItems,
-      {
-        label: 'Disconnect',
-        icon: PrimeIcons.TRASH,
-        command: onDeleteConnection,
-      },
+      ...disconnect,
     ];
   }, [
+    userPermissions,
     onToggleDangerous,
     onChangeBubbled,
     edge,
