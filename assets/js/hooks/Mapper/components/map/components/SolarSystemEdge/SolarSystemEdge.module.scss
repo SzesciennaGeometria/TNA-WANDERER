@@ -200,6 +200,16 @@
   }
 }
 
+// the badges on the middle of a connection take the same colours as what they stand for, so
+// a theme that recolours the bubble or the dangerous glow recolours its badge too
+.BubbleBadge {
+  background-color: var(--rf-edge-bubble, #ffb03a);
+}
+
+.DangerousBadge {
+  background-color: var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040));
+}
+
 .icon {
   width: var(--rf-edge-label-icon-size, 8px);
   height: var(--rf-edge-label-icon-size, 8px);
