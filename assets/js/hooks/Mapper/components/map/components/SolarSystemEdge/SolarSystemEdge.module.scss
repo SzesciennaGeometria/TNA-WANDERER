@@ -1,37 +1,49 @@
 @use '@/hooks/Mapper/components/map/styles/eve-common-variables';
 
-// A red outer border for a connection marked dangerous: the same geometry as the edge, drawn
-// beneath it and wider, so whatever colour the edge carries on top - EOL, critical, mass, gate -
-// stays exactly as it was. Themes can tune it with --rf-edge-dangerous (colour),
-// --rf-edge-dangerous-opacity, --rf-edge-dangerous-border (extra width each side) and
-// --rf-edge-dangerous-linecap.
-
+// A connection marked dangerous sits on a dark band with a red glow around it: the same geometry
+// as the edge, drawn beneath it and wider, so whatever colour the edge carries on top - EOL,
+// critical, mass, gate - stays exactly as it was. Themes can tune it with:
+//   --rf-edge-dangerous        glow colour (defaults to the theme's "dangerous" status colour)
+//   --rf-edge-dangerous-core   colour of the band under the edge
+//   --rf-edge-dangerous-border how far the band reaches past the edge on each side
+//   --rf-edge-dangerous-rim    blur of the sharp outline right at the band's edge
+//   --rf-edge-dangerous-glow   blur of the soft glow further out
+//   --rf-edge-dangerous-linecap
 .DangerousUnderlay {
+  // follow the back path's own width so the band is always the same margin outside it
   --rf-edge-dangerous-base-width: var(--rf-edge-time-normal-width, 3px);
+  --rf-edge-dangerous-color: var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040));
 
-  &.time1 { --rf-edge-dangerous-base-width: var(--rf-edge-time-critical-width, 4px); }
-  &.time4 { --rf-edge-dangerous-base-width: var(--rf-edge-time-eol-width, 4px); }
+  &.time1 {
+    --rf-edge-dangerous-base-width: var(--rf-edge-time-critical-width, 4px);
+  }
+
+  &.time4 {
+    --rf-edge-dangerous-base-width: var(--rf-edge-time-eol-width, 4px);
+  }
+
   &.Tick {
     --rf-edge-dangerous-base-width: var(--rf-edge-time-normal-thick-width, 5px);
-    &.time1 { --rf-edge-dangerous-base-width: var(--rf-edge-time-critical-thick-width, 5px); }
-    &.time4 { --rf-edge-dangerous-base-width: var(--rf-edge-time-eol-thick-width, 5px); }
+
+    &.time1 {
+      --rf-edge-dangerous-base-width: var(--rf-edge-time-critical-thick-width, 5px);
+    }
+
+    &.time4 {
+      --rf-edge-dangerous-base-width: var(--rf-edge-time-eol-thick-width, 5px);
+    }
   }
 
   fill: none;
+  stroke: var(--rf-edge-dangerous-core, var(--rf-edge-mass-normal, #2c3844));
+  stroke-width: calc(var(--rf-edge-dangerous-base-width) + 2 * var(--rf-edge-dangerous-border, 2px));
   stroke-linecap: var(--rf-edge-dangerous-linecap, butt);
   pointer-events: none;
-
-  stroke: var(--rf-edge-mass-normal, #2c3844);
-  stroke-opacity: 1;
-
-  stroke-width: calc(var(--rf-edge-dangerous-base-width) + 4px);
-
-    filter:
-      drop-shadow(0 0 0.5px var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040)))
-      drop-shadow(0 0 0.5px var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040)))
-      drop-shadow(0 0 2px var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040)))
-      drop-shadow(0 0 2px var(--rf-edge-dangerous, var(--eve-solar-system-status-color-dangerous, #d54040)));
-
+  // a sharp rim and a soft glow, each laid twice so the red reads at full strength
+  filter: drop-shadow(0 0 var(--rf-edge-dangerous-rim, 0.5px) var(--rf-edge-dangerous-color))
+    drop-shadow(0 0 var(--rf-edge-dangerous-rim, 0.5px) var(--rf-edge-dangerous-color))
+    drop-shadow(0 0 var(--rf-edge-dangerous-glow, 2px) var(--rf-edge-dangerous-color))
+    drop-shadow(0 0 var(--rf-edge-dangerous-glow, 2px) var(--rf-edge-dangerous-color));
 }
 
 .EdgePathBack {
@@ -109,8 +121,6 @@
   stroke: var(--rf-edge-mass-normal, #2c3844);
   stroke-width: var(--rf-edge-mass-normal-width, 2px);
 }
-
-
 
 .EdgePathFront {
   fill: none;
