@@ -222,7 +222,8 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
               position={TooltipPosition.top}
               className={clsx(
                 classes.LinkLabel,
-                'pointer-events-auto bg-cyan-400 rounded opacity-100 cursor-auto text-neutral-900',
+                classes.BubbleBadge,
+                'pointer-events-auto rounded opacity-100 cursor-auto text-neutral-900',
               )}
             >
               <span className={clsx(PrimeIcons.CIRCLE, classes.icon)} />
@@ -235,7 +236,8 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
               position={TooltipPosition.top}
               className={clsx(
                 classes.LinkLabel,
-                'pointer-events-auto bg-red-400 rounded opacity-100 cursor-auto text-neutral-900',
+                classes.DangerousBadge,
+                'pointer-events-auto rounded opacity-100 cursor-auto text-neutral-900',
               )}
             >
               <span className={clsx(PrimeIcons.EXCLAMATION_TRIANGLE, classes.icon)} />
@@ -256,12 +258,11 @@ export const SolarSystemEdge = ({ id, source, target, markerEnd, style, data }: 
 
           {isBridge && (
             <WdTooltipWrapper
-              content={isDangerous ? 'Ansiblex Jump Bridge - marked dangerous' : 'Ansiblex Jump Bridge'}
+              content="Ansiblex Jump Bridge"
               position={TooltipPosition.top}
               className={clsx(
                 classes.LinkLabel,
-                'pointer-events-auto rounded opacity-100 cursor-auto text-neutral-900',
-                'bg-lime-300',
+                'pointer-events-auto bg-lime-300 rounded opacity-100 cursor-auto text-neutral-900',
               )}
             >
               B
