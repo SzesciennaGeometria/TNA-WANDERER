@@ -32,7 +32,7 @@ defmodule WandererApp.Map.MapTransferTest do
 
       {:ok, document} = Transfer.export(source.map_id)
 
-      assert document["version"] == 1
+      assert document["version"] == 2
       assert length(document["systems"]) == 2
       assert length(document["connections"]) == 1
       assert length(document["signatures"]) == 1
@@ -61,6 +61,43 @@ defmodule WandererApp.Map.MapTransferTest do
 
       {:ok, signatures} = MapSystemSignature.by_system_id(system.id)
       assert [%{eve_id: "ABC-123", name: "Wormhole"}] = signatures
+
+      cleanup_test_data(source.map_id)
+      cleanup_test_data(target.map_id)
+    end
+
+    test "carries hidden systems as intel: they stay hidden, with their notes and signatures" do
+      source = start_test_map()
+      target = start_test_map()
+
+      seed_source_map(source)
+      :ok = Server.delete_systems(source.map_id, [@system_a], source.user_id, source.character_id)
+
+      {:ok, document} = Transfer.export(source.map_id)
+
+      hidden = Enum.find(document["systems"], &(&1["solar_system_id"] == @system_a))
+      assert hidden["visible"] == false
+      assert hidden["description"] == "staging"
+      assert document["hubs"] == []
+      assert document["structures"] == []
+
+      {:ok, stats} =
+        Transfer.import(target.map_id, document, target.user_id, target.character_id)
+
+      assert stats.systems == 2
+      assert wait_for_system_on_map(target.map_id, @system_b)
+      refute system_visible?(target.map_id, @system_a)
+
+      {:ok, system} =
+        WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(target.map_id, @system_a)
+
+      assert system.visible == false
+      assert system.description == "staging"
+      assert system.tag == "A"
+      assert system.status == 1
+
+      {:ok, signatures} = MapSystemSignature.by_system_id(system.id)
+      assert [%{eve_id: "ABC-123"}] = signatures
 
       cleanup_test_data(source.map_id)
       cleanup_test_data(target.map_id)
