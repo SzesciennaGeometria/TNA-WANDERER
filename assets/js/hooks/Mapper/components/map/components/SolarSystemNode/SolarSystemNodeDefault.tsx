@@ -64,13 +64,8 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
           )}
 
           {nodeVars.labelsInfo.map(x => (
-            <div
-              key={x.id}
-              className={clsx(classes.Bookmark)}
-              style={{ backgroundColor: x.color }}
-              title={x.description || undefined}
-            >
-              {x.name}
+            <div key={x.id} className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES[x.id])}>
+              {x.shortName}
             </div>
           ))}
         </div>
@@ -148,11 +143,6 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
 
               <div className="flex items-center gap-0.5 justify-end">
                 <div className={classes.StatusIcons}>
-                  {nodeVars.hasBubbledSignature && (
-                    <WdTooltipWrapper content="A signature in this system is bubbled" position={TooltipPosition.top}>
-                      <i className={clsx(PrimeIcons.EXCLAMATION_TRIANGLE, 'text-orange-400 text-[10px]')} />
-                    </WdTooltipWrapper>
-                  )}
                   {nodeVars.locked && <i className={clsx(PrimeIcons.LOCK, classes.lockIcon)} />}
                   {nodeVars.hubs.includes(nodeVars.solarSystemId) && (
                     <i className={clsx(PrimeIcons.MAP_MARKER, classes.mapMarker)} />
@@ -161,9 +151,9 @@ export const SolarSystemNodeDefault = memo((props: NodeProps<MapSolarSystemType>
                     <WdTooltipWrapper
                       className={classes.descriptionIconWrapper}
                       position={TooltipPosition.top}
-                      content={`System have description`}
+                      content={`System has description`}
                     >
-                      <i className={clsx('pi hero-chat-bubble-bottom-center-text', classes.descriptionIcon)} />
+                      <i className={clsx('pi pi-align-left', classes.descriptionIcon)} />
                     </WdTooltipWrapper>
                   )}
                 </div>

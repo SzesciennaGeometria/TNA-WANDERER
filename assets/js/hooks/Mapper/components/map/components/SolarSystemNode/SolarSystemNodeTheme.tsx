@@ -62,13 +62,8 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
           )}
 
           {nodeVars.labelsInfo.map(x => (
-            <div
-              key={x.id}
-              className={clsx(classes.Bookmark)}
-              style={{ backgroundColor: x.color }}
-              title={x.description || undefined}
-            >
-              {x.name}
+            <div key={x.id} className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES[x.id])}>
+              {x.shortName}
             </div>
           ))}
         </div>
@@ -145,15 +140,6 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
                   {nodeVars.locked && <i className={clsx(PrimeIcons.LOCK, classes.lockIcon)} />}
                   {nodeVars.hubs.includes(nodeVars.solarSystemId) && (
                     <i className={clsx(PrimeIcons.MAP_MARKER, classes.mapMarker)} />
-                  )}
-                  {nodeVars.description != null && nodeVars.description !== '' && (
-                    <WdTooltipWrapper
-                      className={classes.descriptionIconWrapper}
-                      position={TooltipPosition.top}
-                      content={`System has description`}
-                    >
-                      <i className={clsx('pi pi-pen-to-square', classes.descriptionIcon)} />
-                    </WdTooltipWrapper>
                   )}
                 </div>
 
