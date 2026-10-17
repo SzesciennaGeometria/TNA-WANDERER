@@ -62,8 +62,13 @@ export const SolarSystemNodeTheme = memo((props: NodeProps<MapSolarSystemType>) 
           )}
 
           {nodeVars.labelsInfo.map(x => (
-            <div key={x.id} className={clsx(classes.Bookmark, MARKER_BOOKMARK_BG_STYLES[x.id])}>
-              {x.shortName}
+            <div
+              key={x.id}
+              className={clsx(classes.Bookmark)}
+              style={{ backgroundColor: x.color }}
+              title={x.description || undefined}
+            >
+              {x.name}
             </div>
           ))}
         </div>
