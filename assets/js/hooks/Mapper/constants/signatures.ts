@@ -1,4 +1,4 @@
-import { SignatureGroup, SignatureKind } from '@/hooks/Mapper/types';
+import {SignatureGroup, SignatureKind} from '@/hooks/Mapper/types';
 
 export const SIGNATURE_WINDOW_ID = 'system_signatures_window';
 

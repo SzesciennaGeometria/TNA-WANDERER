@@ -15,9 +15,28 @@ defmodule WandererApp.Map.Operations.Transfer do
   require Logger
 
   alias WandererApp.Api.MapSystemSignature
+  alias WandererApp.Api.MapSystemStructure
   alias WandererApp.Map.Server
 
-  @export_version 1
+  # Version 2 carries the whole map: hidden systems (with their notes, statuses and signatures),
+  # hubs, structures, and who scanned each signature and when. Version 1 documents still import.
+  @export_version 2
+  @import_versions [1, 2]
+
+  @structure_fields [
+    :solar_system_id,
+    :solar_system_name,
+    :structure_type_id,
+    :structure_type,
+    :character_eve_id,
+    :name,
+    :notes,
+    :owner_name,
+    :owner_ticker,
+    :owner_id,
+    :status,
+    :end_time
+  ]
 
   @type stats :: %{
           systems: non_neg_integer(),
@@ -36,7 +55,7 @@ defmodule WandererApp.Map.Operations.Transfer do
     include_signatures = Keyword.get(opts, :include_signatures, true)
 
     with {:ok, map} <- WandererApp.MapRepo.get(map_id),
-         {:ok, systems} <- WandererApp.MapSystemRepo.get_visible_by_map(map_id),
+         {:ok, systems} <- WandererApp.MapSystemRepo.get_all_by_map(map_id),
          {:ok, connections} <- WandererApp.MapConnectionRepo.get_by_map(map_id) do
       {:ok,
        %{
@@ -49,7 +68,9 @@ defmodule WandererApp.Map.Operations.Transfer do
          },
          "systems" => Enum.map(systems, &export_system/1),
          "connections" => Enum.map(connections, &export_connection/1),
-         "signatures" => export_signatures(systems, include_signatures)
+         "signatures" => export_signatures(systems, include_signatures),
+         "structures" => export_structures(systems),
+         "hubs" => map.hubs || []
        }}
     end
   end
@@ -67,7 +88,8 @@ defmodule WandererApp.Map.Operations.Transfer do
           {:ok, stats()} | {:error, term()}
   def import(map_id, data, user_id, character_id, opts \\ [])
 
-  def import(map_id, %{"version" => @export_version} = data, user_id, character_id, opts) do
+  def import(map_id, %{"version" => version} = data, user_id, character_id, opts)
+      when version in @import_versions do
     include_signatures = Keyword.get(opts, :include_signatures, true)
 
     systems = Map.get(data, "systems", [])
@@ -76,18 +98,26 @@ defmodule WandererApp.Map.Operations.Transfer do
 
     existing_ids = existing_solar_system_ids(map_id)
 
+    {hidden, shown} =
+      systems |> Enum.filter(&is_map/1) |> Enum.split_with(&(&1["visible"] == false))
+
     imported_systems =
-      systems
-      |> Enum.filter(&is_map/1)
+      shown
       |> Enum.map(&import_system(map_id, &1, user_id, character_id, existing_ids))
       |> Enum.count(& &1)
 
+    imported_hidden = hidden |> Enum.map(&import_hidden_system(map_id, &1)) |> Enum.count(& &1)
+
     imported_connections = import_connections(map_id, connections, user_id, character_id)
     imported_signatures = import_signatures(map_id, signatures, character_id)
+    imported_structures = import_structures(map_id, Map.get(data, "structures", []), character_id)
+    import_hubs(map_id, Map.get(data, "hubs", []))
+    imported_systems = imported_systems + imported_hidden
 
     Logger.info(
-      "Imported #{imported_systems} systems, #{imported_connections} connections, " <>
-        "#{imported_signatures} signatures into map #{map_id}"
+      "Imported #{imported_systems} systems (#{imported_hidden} hidden), " <>
+        "#{imported_connections} connections, #{imported_signatures} signatures, " <>
+        "#{imported_structures} structures into map #{map_id}"
     )
 
     {:ok,
@@ -116,7 +146,9 @@ defmodule WandererApp.Map.Operations.Transfer do
       "status" => system.status,
       "tag" => system.tag,
       "temporary_name" => system.temporary_name,
-      "locked" => system.locked
+      "locked" => system.locked,
+      "linked_sig_eve_id" => system.linked_sig_eve_id,
+      "visible" => system.visible
     }
   end
 
@@ -159,11 +191,134 @@ defmodule WandererApp.Map.Operations.Transfer do
       "kind" => signature.kind,
       "group" => signature.group,
       "type" => signature.type,
-      "custom_info" => signature.custom_info
+      "custom_info" => signature.custom_info,
+      "linked_system_id" => signature.linked_system_id,
+      "character_eve_id" => signature.character_eve_id,
+      "inserted_at" => signature.inserted_at,
+      "updated_at" => signature.updated_at
     }
   end
 
+  defp export_structures(systems) do
+    systems
+    |> Enum.flat_map(fn system ->
+      case MapSystemStructure.by_system_id(system.id) do
+        {:ok, structures} -> structures
+        _ -> []
+      end
+    end)
+    |> Enum.map(fn structure ->
+      structure
+      |> Map.take(@structure_fields)
+      |> Map.new(fn {key, value} -> {Atom.to_string(key), value} end)
+    end)
+  end
+
   # -- import helpers ------------------------------------------------------------------------
+
+  # A hidden system is intel, not chain: it goes straight into the map's records, hidden, with
+  # everything the document says about it, and nothing is shown to people looking at the map.
+  # One the target already has (hidden or not) keeps what it has and takes what it is missing.
+  defp import_hidden_system(map_id, system) do
+    with {:ok, solar_system_id} <- parse_solar_system_id(system["solar_system_id"]) do
+      case WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(map_id, solar_system_id) do
+        {:ok, current} when not is_nil(current) ->
+          fill_missing_record_attributes(current, system)
+          false
+
+        _ ->
+          create_hidden_system(map_id, solar_system_id, system)
+      end
+    else
+      _ ->
+        Logger.warning("[Transfer] skipped hidden system #{inspect(system)}")
+        false
+    end
+  end
+
+  defp create_hidden_system(map_id, solar_system_id, system) do
+    %{"x" => x, "y" => y} = position(system["position"]) || %{"x" => 0, "y" => 0}
+
+    attrs = %{
+      map_id: map_id,
+      solar_system_id: solar_system_id,
+      name: system["name"] || to_string(solar_system_id),
+      position_x: x,
+      position_y: y,
+      visible: false,
+      locked: system["locked"] == true,
+      status: system["status"] || 0
+    }
+
+    case WandererApp.MapSystemRepo.upsert(attrs) do
+      {:ok, created} ->
+        fill_missing_record_attributes(created, system)
+        true
+
+      {:error, reason} ->
+        Logger.warning("[Transfer] skipped hidden system #{solar_system_id}: #{inspect(reason)}")
+        false
+    end
+  end
+
+  @record_attributes [
+    {"custom_name", :custom_name, :update_custom_name},
+    {"description", :description, :update_description},
+    {"labels", :labels, :update_labels},
+    {"status", :status, :update_status},
+    {"tag", :tag, :update_tag},
+    {"temporary_name", :temporary_name, :update_temporary_name},
+    {"locked", :locked, :update_locked},
+    {"linked_sig_eve_id", :linked_sig_eve_id, :update_linked_sig_eve_id}
+  ]
+
+  defp fill_missing_record_attributes(record, system) do
+    Enum.reduce(@record_attributes, record, fn {key, attribute, fun}, current ->
+      value = Map.get(system, key)
+
+      if blank?(Map.get(current, attribute)) and value not in [nil, "", false] do
+        case apply(WandererApp.MapSystemRepo, fun, [current, %{attribute => value}]) do
+          {:ok, updated} -> updated
+          _ -> current
+        end
+      else
+        current
+      end
+    end)
+  end
+
+  defp import_structures(map_id, structures, character_id) do
+    character_eve_id = importing_character_eve_id(character_id)
+
+    structures
+    |> Enum.filter(&is_map/1)
+    |> Enum.count(fn structure ->
+      with {:ok, solar_system_id} <- parse_solar_system_id(structure["solar_system_id"]),
+           {:ok, system} when not is_nil(system) <-
+             WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(map_id, solar_system_id) do
+        attrs =
+          @structure_fields
+          |> Map.new(fn field -> {field, structure[Atom.to_string(field)]} end)
+          |> Map.put(:system_id, system.id)
+          |> Map.put(:solar_system_id, solar_system_id)
+          |> Map.update!(:character_eve_id, &(&1 || character_eve_id))
+
+        match?({:ok, _}, MapSystemStructure.create(attrs))
+      else
+        _ -> false
+      end
+    end)
+  end
+
+  defp import_hubs(map_id, hubs) do
+    hubs
+    |> Enum.filter(&(is_binary(&1) or is_integer(&1)))
+    |> Enum.each(fn hub ->
+      with {:ok, solar_system_id} <- parse_solar_system_id(hub) do
+        Server.add_hub(map_id, %{solar_system_id: solar_system_id})
+      end
+    end)
+  end
 
   # Deletion on a map is a soft `visible: false`, and `Server.add_system` decides a system is
   # missing on exactly that basis. Counting the hidden rows as present would let a deleted system
@@ -184,8 +339,10 @@ defmodule WandererApp.Map.Operations.Transfer do
              user_id,
              character_id
            ) do
-      # a system that was already on the map keeps whatever the map has for it
       if MapSet.member?(existing_ids, solar_system_id) do
+        # a system already on the map keeps what it has, but takes what it is missing: somebody
+        # importing a chain wants the notes and the colours that come with it
+        fill_missing_system_attributes(map_id, solar_system_id, system)
         false
       else
         apply_system_attributes(map_id, solar_system_id, system)
@@ -205,20 +362,48 @@ defmodule WandererApp.Map.Operations.Transfer do
     {"status", :status, :update_system_status},
     {"tag", :tag, :update_system_tag},
     {"temporary_name", :temporary_name, :update_system_temporary_name},
-    {"locked", :locked, :update_system_locked}
+    {"locked", :locked, :update_system_locked},
+    {"linked_sig_eve_id", :linked_sig_eve_id, :update_system_linked_sig_eve_id}
   ]
 
   defp apply_system_attributes(map_id, solar_system_id, system) do
     Enum.each(@system_attributes, fn {key, attribute, fun} ->
-      case Map.get(system, key) do
-        value when value in [nil, "", false] ->
-          :ok
-
-        value ->
-          apply(Server, fun, [map_id, %{:solar_system_id => solar_system_id, attribute => value}])
-      end
+      apply_attribute(map_id, solar_system_id, system, {key, attribute, fun})
     end)
   end
+
+  defp fill_missing_system_attributes(map_id, solar_system_id, system) do
+    case WandererApp.MapSystemRepo.get_by_map_and_solar_system_id(map_id, solar_system_id) do
+      {:ok, current} when not is_nil(current) ->
+        Enum.each(@system_attributes, fn {_key, attribute, _fun} = definition ->
+          if blank?(Map.get(current, attribute)) do
+            apply_attribute(map_id, solar_system_id, system, definition)
+          end
+        end)
+
+      _ ->
+        apply_system_attributes(map_id, solar_system_id, system)
+    end
+  end
+
+  defp apply_attribute(map_id, solar_system_id, system, {key, attribute, fun}) do
+    case Map.get(system, key) do
+      value when value in [nil, "", false] ->
+        :ok
+
+      value ->
+        apply(Server, fun, [map_id, %{:solar_system_id => solar_system_id, attribute => value}])
+    end
+  end
+
+  # status 0 is "nothing said about this system", which an import is free to fill in
+  defp blank?(nil), do: true
+  defp blank?(""), do: true
+  defp blank?(0), do: true
+  defp blank?(false), do: true
+  defp blank?([]), do: true
+  defp blank?("[]"), do: true
+  defp blank?(_value), do: false
 
   defp import_connections(map_id, connections, user_id, character_id) do
     existing_pairs = existing_connection_pairs(map_id)
@@ -304,11 +489,15 @@ defmodule WandererApp.Map.Operations.Transfer do
           "kind",
           "group",
           "type",
-          "custom_info"
+          "custom_info",
+          "linked_system_id"
         ])
         |> Map.new(fn {key, value} -> {String.to_existing_atom(key), value} end)
         |> Map.put(:system_id, system_id)
-        |> Map.put(:character_eve_id, character_eve_id)
+        |> Map.put(
+          :character_eve_id,
+          to_string(signature["character_eve_id"] || character_eve_id)
+        )
 
       case MapSystemSignature.create(attrs) do
         {:ok, _} ->
@@ -330,8 +519,8 @@ defmodule WandererApp.Map.Operations.Transfer do
     end
   end
 
-  # `character_eve_id` is required on a signature, and the character who scanned it on the
-  # exporting side means nothing here - the import is attributed to whoever ran it.
+  # `character_eve_id` is required on a signature or a structure. A version 2 document names who
+  # scanned each one; otherwise the import is attributed to whoever ran it.
   defp importing_character_eve_id(character_id) do
     case WandererApp.Character.get_character(character_id) do
       {:ok, %{eve_id: eve_id}} when not is_nil(eve_id) -> to_string(eve_id)

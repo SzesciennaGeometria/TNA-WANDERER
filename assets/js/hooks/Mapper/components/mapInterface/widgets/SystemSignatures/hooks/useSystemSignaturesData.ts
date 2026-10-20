@@ -1,14 +1,14 @@
-import { useMapEventListener } from '@/hooks/Mapper/events';
-import { parseSignatures } from '@/hooks/Mapper/helpers';
-import { Commands, ExtendedSystemSignature, SignatureKind } from '@/hooks/Mapper/types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {useMapEventListener} from '@/hooks/Mapper/events';
+import {parseSignatures} from '@/hooks/Mapper/helpers';
+import {Commands, ExtendedSystemSignature, SignatureKind} from '@/hooks/Mapper/types';
+import {useCallback, useEffect, useMemo, useRef, useState  from 'react';
 import useRefState from 'react-usestateref';
 
-import { SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures.ts';
-import { getGlowingRowsTimeoutMs } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
-import { getSignatureUpdateGlows } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/helpers';
-import { GlowingRowInfo, UseSystemSignaturesDataProps } from './types';
-import { useSignatureFetching } from './useSignatureFetching';
+import {SETTINGS_KEYS } from '@/hooks/Mapper/constants/signatures.ts';
+import {getGlowingRowsTimeoutMs } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/constants.ts';
+import {getSignatureUpdateGlows } from '@/hooks/Mapper/components/mapInterface/widgets/SystemSignatures/helpers';
+import {GlowingRowInfo, UseSystemSignaturesDataProps } from './types';
+import {useSignatureFetching } from './useSignatureFetching';
 
 const SIGNATURE_KINDS = new Set<string>(Object.values(SignatureKind));
 
@@ -19,10 +19,10 @@ const deduplicateSignatures = (signatures: ExtendedSystemSignature[]): ExtendedS
 };
 
 export const useSystemSignaturesData = ({
-  systemId,
-  settings,
-  onLazyDeleteChange,
-}: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
+                                          systemId,
+                                          settings,
+                                          onLazyDeleteChange,
+                                        }: Omit<UseSystemSignaturesDataProps, 'deletionTiming'> & {
   onSignatureDeleted?: (deletedSignatures: ExtendedSystemSignature[]) => void;
 }) => {
   const [signatures, setSignatures, signaturesRef] = useRefState<ExtendedSystemSignature[]>([]);
@@ -36,7 +36,7 @@ export const useSystemSignaturesData = ({
 
   const glowingRowsTimeout = useMemo(() => getGlowingRowsTimeoutMs(settings), [settings]);
 
-  const { handleGetSignatures, handleUpdateSignatures } = useSignatureFetching({
+  const {handleGetSignatures, handleUpdateSignatures} = useSignatureFetching({
     systemId,
     settings,
     signaturesRef,

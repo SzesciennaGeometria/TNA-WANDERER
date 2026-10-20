@@ -97,9 +97,6 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
 
   --eve-solar-system-status-unknown: transparent;
   --eve-solar-system-status-color-unknown: transparent;
-
-
-
   --eve-solar-system-status-home: linear-gradient(45deg, var(--eve-solar-system-status-color-background), transparent);
   --eve-solar-system-status-color-home:          #{$homeBase};
   --eve-solar-system-status-color-background:    #{$homeBackground};
@@ -112,8 +109,6 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-lookingFor: linear-gradient(275deg, #{$lookingForAlpha}, transparent);
   --eve-solar-system-status-color-lookingFor:        #{$lookingForBase};
   --eve-solar-system-status-color-lookingFor-dark15: #{$lookingForDark15};
-
-
   --eve-solar-system-status-warning: linear-gradient(275deg, #906518a6, transparent);
   --eve-solar-system-status-color-warning: #ffb93b;
   --eve-solar-system-status-target: linear-gradient(275deg, #b439ff6b, transparent);
@@ -122,12 +117,12 @@ $homeDark30: color.adjust($homeBase, $lightness: -30%);
   --eve-solar-system-status-color-dangerous: #d54040;
   --eve-solar-system-status-color-rally: #1b84ec66;
 
-
-
   --conn-time-eol: #7452c3e3;
   --conn-frigate: #325d88;
   --conn-bridge: rgba(135, 185, 93, 0.85);
   --conn-save: rgba(155, 102, 45, 0.85);
+  --conn-dangerous: rgba(213, 64, 64, 0.85);
+  --conn-bubbled: rgba(72, 209, 204, 0.85);
   --selected-item-bg: rgba(98, 98, 98, 0.33);
 
   --selected-system-shadow: 0 0 10px #9a1af1c2;

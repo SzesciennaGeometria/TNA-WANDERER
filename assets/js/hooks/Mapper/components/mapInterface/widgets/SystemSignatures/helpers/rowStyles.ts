@@ -1,5 +1,6 @@
-import { ExtendedSystemSignature, SignatureGroup } from '@/hooks/Mapper/types';
+import {ExtendedSystemSignature, SignatureGroup} from '@/hooks/Mapper/types';
 import clsx from 'clsx';
+import { parseSignatureCustomInfo } from '@/hooks/Mapper/helpers/parseSignatureCustomInfo';
 import { getRowBackgroundColor } from './getRowBackgroundColor';
 import classes from './rowStyles.module.scss';
 import { GlowingRowInfo } from '../hooks/types';
@@ -31,14 +32,19 @@ export function getSignatureRowClass(
   row: ExtendedSystemSignature,
   selectedSignatures: ExtendedSystemSignature[],
   colorByType?: boolean,
+  glowingRows?: Map<string, { isNew: boolean }>,
   glowingRows?: Map<string, GlowingRowInfo>,
   systemId?: string,
 ): string {
   const isSelected = selectedSignatures.some(s => s.eve_id === row.eve_id);
+  const isBubbled = parseSignatureCustomInfo(row.custom_info).isBubbled === true;
 
   const baseCls = [
     classes.TableRowCompact,
     getRowBackgroundColor(row.inserted_at ? new Date(row.inserted_at) : undefined),
+    'transition duration-200 my-2 hover:bg-purple-400/20',
+    // a bubbled hole is the one you most want to notice in the list
+    isBubbled && classes.BubbledRow,
     BASE_ROW_CLASSES,
   ];
   const colorByTypeClasses = colorByType ? getColorByTypeClasses(row) : undefined;
@@ -55,6 +61,8 @@ export function getSignatureRowClass(
   let glowClasses: string | undefined;
   if (glowInfo && glowInfo.systemId === systemId) {
     glowClasses = glowInfo.isNew ? NEW_ROW_GLOW_CLASSES : EXISTING_ROW_GLOW_CLASSES;
+    // Default for color by type - apply same color as CosmicSignature (red) and small text size
+    return clsx([...baseCls, '[&_td:nth-child(-n+3)]:text-rose-900/100']);
   }
 
   return clsx(baseCls, colorByTypeClasses, glowClasses);

@@ -38,13 +38,8 @@
   flex-direction: column;
   padding: var(--rf-node-padding, 2px 6px);
   font-size: var(--rf-node-font-size, 10px);
-
-
   background-color: var(--rf-node-bg-color, #202020) !important;
   color: var(--rf-text-color, #ffffff);
-
-
-
   box-shadow: 0 0 5px rgba(v.$dark-bg, 0.5);
   border: 1px solid color.adjust(v.$pastel-blue, $lightness: -10%);
   border-radius: var(--rf-node-border-radius, 5px);
@@ -354,8 +349,6 @@
   height: var(--rf-node-bottom-height, 20px);
   color: var(--rf-node-bottom-color, #ffffff);
   text-shadow: var(--rf-node-bottom-text-shadow);
-
-
 
   .hasLocalCounter {
     margin-right: 2px;
