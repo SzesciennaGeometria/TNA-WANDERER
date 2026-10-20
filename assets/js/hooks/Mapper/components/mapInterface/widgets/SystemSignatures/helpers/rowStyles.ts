@@ -1,4 +1,4 @@
-import {ExtendedSystemSignature, SignatureGroup} from '@/hooks/Mapper/types';
+import { ExtendedSystemSignature, SignatureGroup } from '@/hooks/Mapper/types';
 import clsx from 'clsx';
 import { parseSignatureCustomInfo } from '@/hooks/Mapper/helpers/parseSignatureCustomInfo';
 import { getRowBackgroundColor } from './getRowBackgroundColor';
@@ -32,8 +32,7 @@ export function getSignatureRowClass(
   row: ExtendedSystemSignature,
   selectedSignatures: ExtendedSystemSignature[],
   colorByType?: boolean,
-  glowingRows?: Map<string, { isNew: boolean }>,
-  glowingRows?: Map<string, GlowingRowInfo>,
+  glowingRows?: Map<string, GlowingRowInfo, { isNew: boolean }>,
   systemId?: string,
 ): string {
   const isSelected = selectedSignatures.some(s => s.eve_id === row.eve_id);

@@ -14,15 +14,12 @@ export const to_7: MigrationStructure = {
         ...signatureSettings,
         glowingrows_timing: signatureSettings.glowingrows_timing ?? SIGNATURES_GLOWINGROWS_TIMING.GLOWDEFAULT,
       },
+      interface: {
+        ...prev?.interface,
+        show_animated_border: prev?.interface?.show_animated_border ?? false,
+        show_animated_outline: prev?.interface?.show_animated_outline ?? false,
+        disable_animated_outlineborder: prev?.interface?.disable_animated_outlineborder ?? false,
+      },
     };
   },
-  up: prev => ({
-    ...prev,
-    interface: {
-      ...prev?.interface,
-      show_animated_border: prev?.interface?.show_animated_border ?? false,
-      show_animated_outline: prev?.interface?.show_animated_outline ?? false,
-      disable_animated_outlineborder: prev?.interface?.disable_animated_outlineborder ?? false,
-    },
-  }),
 };
